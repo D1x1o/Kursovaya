@@ -83,6 +83,8 @@ namespace Kursovaya
                         if (pwd_db.ToString() == actual_pwd)
                         {
                             // новая форма меню
+                            MessageBox.Show("Вход выполнен!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                         }
                         else
                         {
@@ -95,8 +97,7 @@ namespace Kursovaya
                 }
             }
             catch (Exception ex) { MessageBox.Show($"{ex.Message}"); loginTextBox.Text = "";
-                pwdTextBox.Text = "";
-            }
+                pwdTextBox.Text = "";}
         }
 
 
