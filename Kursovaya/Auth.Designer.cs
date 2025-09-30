@@ -88,7 +88,7 @@ namespace Kursovaya
             // 
             // LogInButton
             // 
-            this.LogInButton.Location = new System.Drawing.Point(59, 245);
+            this.LogInButton.Location = new System.Drawing.Point(62, 244);
             this.LogInButton.Name = "LogInButton";
             this.LogInButton.Size = new System.Drawing.Size(129, 32);
             this.LogInButton.TabIndex = 4;

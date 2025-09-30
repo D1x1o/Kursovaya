@@ -56,6 +56,24 @@
     <Compile Include="Auth.Designer.cs">
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProdExpert\ExpertMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProdExpert\ExpertMenu.Designer.cs">
+      <DependentUpon>ExpertMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProdExpert\ProdInStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProdExpert\ProdInStock.Designer.cs">
+      <DependentUpon>ProdInStock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProdExpert\FormProdSupply.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProdExpert\FormProdSupply.Designer.cs">
+      <DependentUpon>FormProdSupply.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.Designer.cs">
@@ -63,8 +81,41 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="User\UserOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\UserOrder.Designer.cs">
+      <DependentUpon>UserOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\UserCart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\UserCart.Designer.cs">
+      <DependentUpon>UserCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\UserProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\UserProduct.Designer.cs">
+      <DependentUpon>UserProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User\UserMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User\UserMenu.Designer.cs">
+      <DependentUpon>UserMenu.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProdExpert\ExpertMenu.resx">
+      <DependentUpon>ExpertMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProdExpert\ProdInStock.resx">
+      <DependentUpon>ProdInStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProdExpert\FormProdSupply.resx">
+      <DependentUpon>FormProdSupply.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -76,6 +127,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="User\UserOrder.resx">
+      <DependentUpon>UserOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\UserCart.resx">
+      <DependentUpon>UserCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\UserMenu.resx">
+      <DependentUpon>UserMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User\UserProduct.resx">
+      <DependentUpon>UserProduct.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -42,23 +42,28 @@ namespace Kursovaya
                 else
                 {
                     MessageBox.Show("Капча введена не верно!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Captcha();
+                    Captcha(); loginTextBox.Text = "";
+                    pwdTextBox.Text = "";
+                }
+            }
+            else
+            {
+                if (loginTextBox.Text.Length > 3 && pwdTextBox.Text.Length > 3) // Проверка длинны пароля
+                {
+                    CheckUser();
+                }
+                else
+                {
+                    MessageBox.Show("Логин или пароль слишком короткие!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                    loginTextBox.Text = "";
+                    pwdTextBox.Text = "";
                 }
             }
 
 
 
 
-            if(loginTextBox.Text.Length > 3 && pwdTextBox.Text.Length > 3) // Проверка длинны пароля
-            {
-                CheckUser();
-            }
-            else
-            {
-                MessageBox.Show("Логин или пароль слишком короткие!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
-                loginTextBox.Text = "";
-                pwdTextBox.Text = "";
-            }
+            
 
             
         }
@@ -75,23 +80,52 @@ namespace Kursovaya
                     object pwd_db = cmd.ExecuteScalar();
                     if (pwd_db == null)
                     {
-                        MessageBox.Show("Логин или пароль введены не верно!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                        MessageBox.Show("Логин или пароль введены не верно!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        AuthAtt++; loginTextBox.Text = "";
+                        pwdTextBox.Text = "";
+                        Captcha();
+                        this.Height = 530;
                     }
                     else
                     {
                         string actual_pwd = GetHashPwd(pwdTextBox.Text);
                         if (pwd_db.ToString() == actual_pwd)
                         {
-                            // новая форма меню
-                            MessageBox.Show("Вход выполнен!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                            int role = GetUserRole();
+                            if(role == 1)
+                            {
+                                // новая форма меню юзера
+                                MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                User.UserMenu menu = new User.UserMenu();
+                                Hide();
+                                menu.ShowDialog();
+                                Show();
+                                loginTextBox.Text = "";
+                                pwdTextBox.Text = "";
+                            }
+                            else if(role == 2)
+                            {
+                                MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                ProdExpert.ExpertMenu menu = new ProdExpert.ExpertMenu();
+                                Hide();
+                                menu.ShowDialog();
+                                Show();
+                                loginTextBox.Text = "";
+                                pwdTextBox.Text = "";
+                            }
+                            else if(role == 3)
+                            {
+                                // форма админа
+                            }
                         }
                         else
                         {
                             MessageBox.Show("Логин или пароль введены не верно!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             loginTextBox.Text = "";
                             pwdTextBox.Text = "";
-                            AuthAtt++;                           
+                            AuthAtt++;
+                            this.Height = 530;
+                            Captcha();
                         }
                     }
                 }
@@ -159,6 +193,34 @@ namespace Kursovaya
         private void ReCaptcha_Click(object sender, EventArgs e)
         {
             Captcha();
+        }
+
+
+        private int GetUserRole()
+        {
+            string query = $"SELECT role FROM staff WHERE login = '{loginTextBox.Text.Trim()}';";
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    if (cmd.ExecuteScalar() == null)
+                    {
+                        
+                    }
+                    else
+                    {
+                        return Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                }                
+            }
+            catch (Exception EX)
+            {
+                MessageBox.Show($"{EX.Message}"); loginTextBox.Text = "";
+                pwdTextBox.Text = "";
+            }
+            return 0;
         }
     }
 }
