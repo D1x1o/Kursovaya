@@ -115,7 +115,13 @@ namespace Kursovaya
                             }
                             else if(role == 3)
                             {
-                                // форма админа
+                                MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                Administrator.AdminMenu menu = new Administrator.AdminMenu();
+                                Hide();
+                                menu.ShowDialog();
+                                Show();
+                                loginTextBox.Text = "";
+                                pwdTextBox.Text = "";
                             }
                         }
                         else

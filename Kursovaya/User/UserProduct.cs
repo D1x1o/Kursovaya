@@ -19,7 +19,10 @@ namespace Kursovaya.User
 
         private void ShowCart_Click(object sender, EventArgs e)
         {
-
+            UserCart prod = new UserCart();
+            Hide();
+            prod.ShowDialog();
+            Show();
         }
     }
 }

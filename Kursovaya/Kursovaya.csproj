@@ -49,6 +49,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administrator\AdminMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administrator\AdminMenu.Designer.cs">
+      <DependentUpon>AdminMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator\ProdPic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administrator\ProdPic.Designer.cs">
+      <DependentUpon>ProdPic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator\Prod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administrator\Prod.Designer.cs">
+      <DependentUpon>Prod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator\Orders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administrator\Orders.Designer.cs">
+      <DependentUpon>Orders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator\Users.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administrator\Users.Designer.cs">
+      <DependentUpon>Users.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConnectionString.cs" />
     <Compile Include="Auth.cs">
       <SubType>Form</SubType>
@@ -105,6 +135,21 @@
     <Compile Include="User\UserMenu.Designer.cs">
       <DependentUpon>UserMenu.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Administrator\AdminMenu.resx">
+      <DependentUpon>AdminMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administrator\Orders.resx">
+      <DependentUpon>Orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administrator\Prod.resx">
+      <DependentUpon>Prod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administrator\ProdPic.resx">
+      <DependentUpon>ProdPic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administrator\Users.resx">
+      <DependentUpon>Users.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
     </EmbeddedResource>
