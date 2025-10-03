@@ -228,5 +228,11 @@ namespace Kursovaya
             }
             return 0;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            loginTextBox.Text = "petr";
+            pwdTextBox.Text = "password";
+        }
     }
 }

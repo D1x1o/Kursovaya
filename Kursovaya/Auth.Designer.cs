@@ -39,6 +39,7 @@ namespace Kursovaya
             this.label4 = new System.Windows.Forms.Label();
             this.ReCaptcha = new System.Windows.Forms.Button();
             this.CaptcaImg = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CaptcaImg)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,11 +132,22 @@ namespace Kursovaya
             this.CaptcaImg.TabIndex = 5;
             this.CaptcaImg.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(46, 244);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(10, 32);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Auth
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(254, 311);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.ReCaptcha);
             this.Controls.Add(this.CaptchaTextBox);
             this.Controls.Add(this.CaptcaImg);
@@ -172,6 +184,7 @@ namespace Kursovaya
         private System.Windows.Forms.TextBox CaptchaTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button ReCaptcha;
+        private System.Windows.Forms.Button button1;
     }
 }
 
