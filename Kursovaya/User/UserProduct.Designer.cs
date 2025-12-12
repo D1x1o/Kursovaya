@@ -47,6 +47,7 @@ namespace Kursovaya.User
             this.label1 = new System.Windows.Forms.Label();
             this.filterLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,19 +55,22 @@ namespace Kursovaya.User
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 158);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1081, 508);
+            this.dataGridView1.Size = new System.Drawing.Size(1207, 512);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // ShowProc
             // 
             this.ShowProc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ShowProc.Location = new System.Drawing.Point(12, 12);
             this.ShowProc.Name = "ShowProc";
-            this.ShowProc.Size = new System.Drawing.Size(70, 71);
+            this.ShowProc.Size = new System.Drawing.Size(176, 36);
             this.ShowProc.TabIndex = 1;
             this.ShowProc.Text = "Процессоры";
             this.ShowProc.UseVisualStyleBackColor = true;
@@ -75,9 +79,9 @@ namespace Kursovaya.User
             // ShowVideoCards
             // 
             this.ShowVideoCards.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowVideoCards.Location = new System.Drawing.Point(88, 12);
+            this.ShowVideoCards.Location = new System.Drawing.Point(12, 54);
             this.ShowVideoCards.Name = "ShowVideoCards";
-            this.ShowVideoCards.Size = new System.Drawing.Size(70, 71);
+            this.ShowVideoCards.Size = new System.Drawing.Size(176, 36);
             this.ShowVideoCards.TabIndex = 1;
             this.ShowVideoCards.Text = "Видеокарты";
             this.ShowVideoCards.UseVisualStyleBackColor = true;
@@ -86,9 +90,9 @@ namespace Kursovaya.User
             // ShowMotherBoard
             // 
             this.ShowMotherBoard.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowMotherBoard.Location = new System.Drawing.Point(164, 12);
+            this.ShowMotherBoard.Location = new System.Drawing.Point(194, 12);
             this.ShowMotherBoard.Name = "ShowMotherBoard";
-            this.ShowMotherBoard.Size = new System.Drawing.Size(70, 71);
+            this.ShowMotherBoard.Size = new System.Drawing.Size(177, 36);
             this.ShowMotherBoard.TabIndex = 1;
             this.ShowMotherBoard.Text = "Материнские платы";
             this.ShowMotherBoard.UseVisualStyleBackColor = true;
@@ -97,9 +101,9 @@ namespace Kursovaya.User
             // ShowRam
             // 
             this.ShowRam.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowRam.Location = new System.Drawing.Point(240, 12);
+            this.ShowRam.Location = new System.Drawing.Point(194, 54);
             this.ShowRam.Name = "ShowRam";
-            this.ShowRam.Size = new System.Drawing.Size(70, 71);
+            this.ShowRam.Size = new System.Drawing.Size(177, 36);
             this.ShowRam.TabIndex = 1;
             this.ShowRam.Text = "Оперативная память";
             this.ShowRam.UseVisualStyleBackColor = true;
@@ -108,9 +112,9 @@ namespace Kursovaya.User
             // ShowDrivers
             // 
             this.ShowDrivers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowDrivers.Location = new System.Drawing.Point(316, 12);
+            this.ShowDrivers.Location = new System.Drawing.Point(377, 12);
             this.ShowDrivers.Name = "ShowDrivers";
-            this.ShowDrivers.Size = new System.Drawing.Size(70, 71);
+            this.ShowDrivers.Size = new System.Drawing.Size(175, 36);
             this.ShowDrivers.TabIndex = 1;
             this.ShowDrivers.Text = "Накопители";
             this.ShowDrivers.UseVisualStyleBackColor = true;
@@ -119,9 +123,9 @@ namespace Kursovaya.User
             // ShowPowerSuplier
             // 
             this.ShowPowerSuplier.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowPowerSuplier.Location = new System.Drawing.Point(392, 12);
+            this.ShowPowerSuplier.Location = new System.Drawing.Point(377, 54);
             this.ShowPowerSuplier.Name = "ShowPowerSuplier";
-            this.ShowPowerSuplier.Size = new System.Drawing.Size(70, 71);
+            this.ShowPowerSuplier.Size = new System.Drawing.Size(175, 36);
             this.ShowPowerSuplier.TabIndex = 1;
             this.ShowPowerSuplier.Text = "Блоки питания";
             this.ShowPowerSuplier.UseVisualStyleBackColor = true;
@@ -130,9 +134,9 @@ namespace Kursovaya.User
             // ShowCases
             // 
             this.ShowCases.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowCases.Location = new System.Drawing.Point(468, 12);
+            this.ShowCases.Location = new System.Drawing.Point(558, 12);
             this.ShowCases.Name = "ShowCases";
-            this.ShowCases.Size = new System.Drawing.Size(70, 71);
+            this.ShowCases.Size = new System.Drawing.Size(164, 36);
             this.ShowCases.TabIndex = 1;
             this.ShowCases.Text = "Корпусы";
             this.ShowCases.UseVisualStyleBackColor = true;
@@ -141,9 +145,9 @@ namespace Kursovaya.User
             // ShowCaseFan
             // 
             this.ShowCaseFan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowCaseFan.Location = new System.Drawing.Point(544, 12);
+            this.ShowCaseFan.Location = new System.Drawing.Point(728, 12);
             this.ShowCaseFan.Name = "ShowCaseFan";
-            this.ShowCaseFan.Size = new System.Drawing.Size(70, 71);
+            this.ShowCaseFan.Size = new System.Drawing.Size(183, 36);
             this.ShowCaseFan.TabIndex = 1;
             this.ShowCaseFan.Text = "Корпусные кулеры";
             this.ShowCaseFan.UseVisualStyleBackColor = true;
@@ -152,9 +156,9 @@ namespace Kursovaya.User
             // ShowCpuFan
             // 
             this.ShowCpuFan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowCpuFan.Location = new System.Drawing.Point(620, 12);
+            this.ShowCpuFan.Location = new System.Drawing.Point(558, 54);
             this.ShowCpuFan.Name = "ShowCpuFan";
-            this.ShowCpuFan.Size = new System.Drawing.Size(70, 71);
+            this.ShowCpuFan.Size = new System.Drawing.Size(164, 36);
             this.ShowCpuFan.TabIndex = 1;
             this.ShowCpuFan.Text = "Кулеры";
             this.ShowCpuFan.UseVisualStyleBackColor = true;
@@ -163,9 +167,9 @@ namespace Kursovaya.User
             // ShowTermo
             // 
             this.ShowTermo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowTermo.Location = new System.Drawing.Point(696, 12);
+            this.ShowTermo.Location = new System.Drawing.Point(728, 54);
             this.ShowTermo.Name = "ShowTermo";
-            this.ShowTermo.Size = new System.Drawing.Size(70, 71);
+            this.ShowTermo.Size = new System.Drawing.Size(183, 36);
             this.ShowTermo.TabIndex = 1;
             this.ShowTermo.Text = "Термопаста";
             this.ShowTermo.UseVisualStyleBackColor = true;
@@ -173,9 +177,9 @@ namespace Kursovaya.User
             // 
             // ShowCart
             // 
-            this.ShowCart.Location = new System.Drawing.Point(868, 12);
+            this.ShowCart.Location = new System.Drawing.Point(1020, 10);
             this.ShowCart.Name = "ShowCart";
-            this.ShowCart.Size = new System.Drawing.Size(225, 71);
+            this.ShowCart.Size = new System.Drawing.Size(199, 58);
             this.ShowCart.TabIndex = 1;
             this.ShowCart.Text = "Корзина";
             this.ShowCart.UseVisualStyleBackColor = true;
@@ -185,7 +189,7 @@ namespace Kursovaya.User
             // 
             this.SearchTextBox.Location = new System.Drawing.Point(12, 120);
             this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(619, 29);
+            this.SearchTextBox.Size = new System.Drawing.Size(498, 29);
             this.SearchTextBox.TabIndex = 2;
             this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             // 
@@ -193,9 +197,9 @@ namespace Kursovaya.User
             // 
             this.SortComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SortComboBox.FormattingEnabled = true;
-            this.SortComboBox.Location = new System.Drawing.Point(868, 120);
+            this.SortComboBox.Location = new System.Drawing.Point(1020, 117);
             this.SortComboBox.Name = "SortComboBox";
-            this.SortComboBox.Size = new System.Drawing.Size(225, 32);
+            this.SortComboBox.Size = new System.Drawing.Size(199, 32);
             this.SortComboBox.TabIndex = 3;
             this.SortComboBox.SelectedIndexChanged += new System.EventHandler(this.SortComboBox_SelectedIndexChanged);
             // 
@@ -203,16 +207,16 @@ namespace Kursovaya.User
             // 
             this.FilterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FilterComboBox.FormattingEnabled = true;
-            this.FilterComboBox.Location = new System.Drawing.Point(637, 120);
+            this.FilterComboBox.Location = new System.Drawing.Point(790, 118);
             this.FilterComboBox.Name = "FilterComboBox";
-            this.FilterComboBox.Size = new System.Drawing.Size(225, 32);
+            this.FilterComboBox.Size = new System.Drawing.Size(224, 32);
             this.FilterComboBox.TabIndex = 3;
             this.FilterComboBox.SelectedIndexChanged += new System.EventHandler(this.FilterComboBox_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(864, 93);
+            this.label1.Location = new System.Drawing.Point(1016, 91);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 24);
             this.label1.TabIndex = 4;
@@ -221,7 +225,7 @@ namespace Kursovaya.User
             // filterLabel
             // 
             this.filterLabel.AutoSize = true;
-            this.filterLabel.Location = new System.Drawing.Point(633, 93);
+            this.filterLabel.Location = new System.Drawing.Point(786, 91);
             this.filterLabel.Name = "filterLabel";
             this.filterLabel.Size = new System.Drawing.Size(166, 24);
             this.filterLabel.TabIndex = 4;
@@ -236,11 +240,22 @@ namespace Kursovaya.User
             this.label3.TabIndex = 4;
             this.label3.Text = "Наименование";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(928, 28);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(76, 40);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // UserProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1105, 678);
+            this.ClientSize = new System.Drawing.Size(1231, 682);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.filterLabel);
             this.Controls.Add(this.label1);
@@ -260,6 +275,7 @@ namespace Kursovaya.User
             this.Controls.Add(this.ShowProc);
             this.Controls.Add(this.dataGridView1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "UserProduct";
@@ -292,5 +308,6 @@ namespace Kursovaya.User
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label filterLabel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button1;
     }
 }

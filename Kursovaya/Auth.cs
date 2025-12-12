@@ -16,16 +16,20 @@ namespace Kursovaya
     public partial class Auth : Form
     {
         int AuthAtt = 0;
-        string ConnStr = ConnectionString.GetConnectionString();
+        
         public Auth()
         {
             InitializeComponent();
-            //this.Height = 350;
+            if (!TestDataBaseConn())
+            {
+                EditConn ed = new EditConn();
+                ed.ShowDialog();
+            }
         }
+        string ConnStr = ConnectionString.GetConnectionString();
         bool inCaptcha = false;
         private void LogInButton_Click(object sender, EventArgs e)
-        {
-            
+        {            
             if (AuthAtt >= 1 && !inCaptcha)
             {
                 this.Height = 530;
@@ -67,7 +71,17 @@ namespace Kursovaya
 
             
         }
-
+        private void getUserID()
+        {
+            using (MySqlConnection conn = new MySqlConnection(ConnStr))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand($"SELECT id from staff where login = '{loginTextBox.Text.Trim()}';", conn);
+                int user_id = Convert.ToInt32(cmd.ExecuteScalar());
+                user.Default.userID = user_id;
+                //MessageBox.Show($"{user_id}");
+            }
+        } 
         private void CheckUser()
         {
             string query = $"SELECT password FROM staff WHERE login = '{loginTextBox.Text.Trim()}';";
@@ -95,6 +109,7 @@ namespace Kursovaya
                             if(role == 1)
                             {
                                 // новая форма меню юзера
+                                getUserID();
                                 MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                                 User.UserMenu menu = new User.UserMenu();
                                 Hide();
@@ -233,6 +248,37 @@ namespace Kursovaya
         {
             loginTextBox.Text = "petr";
             pwdTextBox.Text = "password";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"{GetHashPwd(pwdTextBox.Text)}");
+            using(StreamWriter wr = new StreamWriter("hash.txt"))
+            {
+                wr.WriteLine(GetHashPwd(pwdTextBox.Text));
+            }
+        }
+
+        private bool TestDataBaseConn()
+        {            
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    return true;
+                }
+            }
+            catch (Exception) { MessageBox.Show("Ошибка подключения к базе данных!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+
+            }
+        }
+
+        private void connedit_Click(object sender, EventArgs e)
+        {
+            EditConn ec = new EditConn();
+            ec.ShowDialog();
         }
     }
 }

@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data">
-      <HintPath>..\..\..\PR06\PR06\PR06\bin\Debug\MySql.Data.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector NET 9.5\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -87,6 +87,12 @@
     <Compile Include="Auth.Designer.cs">
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditConn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditConn.Designer.cs">
+      <DependentUpon>EditConn.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProdExpert\ExpertMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +117,11 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="user.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>user.settings</DependentUpon>
     </Compile>
     <Compile Include="User\UserOrder.cs">
       <SubType>Form</SubType>
@@ -153,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditConn.resx">
+      <DependentUpon>EditConn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProdExpert\ExpertMenu.resx">
       <DependentUpon>ExpertMenu.cs</DependentUpon>
@@ -197,6 +211,10 @@
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="user.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>user.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
