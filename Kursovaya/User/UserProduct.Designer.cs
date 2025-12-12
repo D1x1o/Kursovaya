@@ -47,7 +47,6 @@ namespace Kursovaya.User
             this.label1 = new System.Windows.Forms.Label();
             this.filterLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -240,22 +239,11 @@ namespace Kursovaya.User
             this.label3.TabIndex = 4;
             this.label3.Text = "Наименование";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(928, 28);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(76, 40);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "test";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // UserProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1231, 682);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.filterLabel);
             this.Controls.Add(this.label1);
@@ -308,6 +296,5 @@ namespace Kursovaya.User
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label filterLabel;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
     }
 }

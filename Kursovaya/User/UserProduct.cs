@@ -36,7 +36,7 @@ namespace Kursovaya.User
             InitializeComponent();
             FillSortCombobox();
             FillFilterCombobox("processors");
-            FillThemeDataGridView("", $"{theme}", "Не выбрано", "По убыванию");            
+            //FillThemeDataGridView("", $"{theme}", "Не выбрано", "По убыванию");            
         }
 
         private void ShowCart_Click(object sender, EventArgs e)
@@ -47,10 +47,10 @@ namespace Kursovaya.User
             Show();
         }
 
-       
+
         private void FillFilterCombobox(string theme)
         {
-            if(theme == "processors")
+            if (theme == "processors")
             {
                 filterLabel.Text = "Количество ядер";
                 FilterComboBox.Items.Clear();
@@ -178,70 +178,42 @@ namespace Kursovaya.User
 
         private void FillThemeDataGridView(string search, string theme, string Filter, string Sorting)
         {
-            string query = "SELECT * FROM ";
-            //понимаем что ищет клиент
-            if(theme == "processors") { query += "processors"; }
-            else if(theme == "case") { query += "cases"; }
-            else if (theme == "case_coolers") { query += "case_coolers"; }
-            else if (theme == "cpu_cooler") { query += "cpu_cooler"; }
-            else if (theme == "motherboards") { query += "motherboards"; }
-            else if (theme == "power_supplier") { query += "power_supplier"; }
-            else if (theme == "ram") { query += "ram"; }
-            else if (theme == "storage") { query += "storage"; }
-            else if (theme == "thermo_interface") { query += "thermo_interface"; }
-            else if (theme == "videocards") { query += "videocards"; }
-            //поиск по имени
-            query += " ";
-            if (search == "") { query += $" WHERE model LIKE '%%'"; }
-            else { query += $"WHERE model LIKE '%{search}%'"; }
-            //фильтрация
-            query += " ";
-            if (Filter != "Не выбрано") { query += " ";
-                if (theme == "processors") { query += "&& core_int"; }
-                else if (theme == "case") { query += "&& form_factor"; }
-                else if (theme == "case_coolers") { query += "&& scale"; }
-                else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                else if (theme == "power_supplier") { query += "&& power"; }
-                else if (theme == "ram") { query += "&& capacity_gb"; }
-                else if (theme == "storage") { query += "&& capacity_gb"; }
-                else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                else if (theme == "videocards") { query += "&& memory"; }
-                if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
-                else { query += $" = '{Filter}'"; }                
-            }
-            
-            if(SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
-            else { query += " ORDER BY cost ASC;"; }
-
+            // Получаем готовый запрос из fillDgv
+            string query = fillDgv(theme);
+            //MessageBox.Show(query);
 
             try
             {
-                using(MySqlConnection conn = new MySqlConnection(ConnStr))
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
                     conn.Open();
                     DataTable table = new DataTable();
                     MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
                     adapter.Fill(table);
-                    dataGridView1.DataSource = table;                    
+                    dataGridView1.DataSource = table;
                 }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
-            if (!dataGridView1.Columns.Contains("ActionColumn")){
+            // Добавляем кнопку "Добавить", если ещё нет
+            if (!dataGridView1.Columns.Contains("ActionColumn"))
+            {
                 DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
                 buttonColumn.Name = "ActionColumn";
                 buttonColumn.HeaderText = "Добавить";
                 buttonColumn.Text = "Добавить";
                 buttonColumn.UseColumnTextForButtonValue = true;
+                dataGridView1.AutoGenerateColumns = true;
                 dataGridView1.Columns.Add(buttonColumn);
                 dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.Columns.Count - 1;
             }
+
+            // Настройка столбцов
             Columns();
-
-
-            //dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-        }        
+        }
 
         private void FilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -264,19 +236,19 @@ namespace Kursovaya.User
             FillThemeDataGridView(SearchTextBox.Text, theme, filterValue, sortValue);
         }
         //кнопки
-        private void ShowProc_Click(object sender, EventArgs e){changeTheme("processors");}
-        private void ShowVideoCards_Click(object sender, EventArgs e){changeTheme("videocards");}
-        private void ShowMotherBoard_Click(object sender, EventArgs e){changeTheme("motherboards");}
+        private void ShowProc_Click(object sender, EventArgs e) { changeTheme("processors"); }
+        private void ShowVideoCards_Click(object sender, EventArgs e) { changeTheme("videocards"); }
+        private void ShowMotherBoard_Click(object sender, EventArgs e) { changeTheme("motherboards"); }
         private void ShowRam_Click(object sender, EventArgs e)
         {
             changeTheme("ram");
         }
-        private void ShowDrivers_Click(object sender, EventArgs e){changeTheme("storage");}
-        private void ShowPowerSuplier_Click(object sender, EventArgs e){changeTheme("power_supplier");}
-        private void ShowCases_Click(object sender, EventArgs e){changeTheme("case");}
-        private void ShowCaseFan_Click(object sender, EventArgs e){changeTheme("case_coolers");}
-        private void ShowCpuFan_Click(object sender, EventArgs e){changeTheme("cpu_cooler");}
-        private void ShowTermo_Click(object sender, EventArgs e){changeTheme("thermo_interface");}
+        private void ShowDrivers_Click(object sender, EventArgs e) { changeTheme("storage"); }
+        private void ShowPowerSuplier_Click(object sender, EventArgs e) { changeTheme("power_supplier"); }
+        private void ShowCases_Click(object sender, EventArgs e) { changeTheme("case"); }
+        private void ShowCaseFan_Click(object sender, EventArgs e) { changeTheme("case_coolers"); }
+        private void ShowCpuFan_Click(object sender, EventArgs e) { changeTheme("cpu_cooler"); }
+        private void ShowTermo_Click(object sender, EventArgs e) { changeTheme("thermo_interface"); }
         private void changeTheme(string buttonTheme)
         {
             theme = buttonTheme;
@@ -300,7 +272,7 @@ namespace Kursovaya.User
             else if (theme == "storage") { FillFilterCombobox("storage"); }
             else if (theme == "thermo_interface") { FillFilterCombobox("thermo_interface"); }
             else if (theme == "videocards") { FillFilterCombobox("videocards"); }
-            
+
         }
 
         private void Columns()
@@ -341,7 +313,7 @@ namespace Kursovaya.User
                 dataGridView1.Columns["form_factor"].HeaderText = "Размер";
                 dataGridView1.Columns["ram_support_type"].HeaderText = "Тип памяти";
                 dataGridView1.Columns["ram_slots"].HeaderText = "Кол-во слотов опер. памяти";
-                dataGridView1.Columns["cpu_socket"].HeaderText = "Сокет";                
+                dataGridView1.Columns["cpu_socket"].HeaderText = "Сокет";
                 dataGridView1.Columns["m2_ssd_slots"].Visible = false;
                 dataGridView1.Columns["ram_max_capacity"].Visible = false;
                 dataGridView1.Columns["chipset"].Visible = false;
@@ -451,7 +423,7 @@ namespace Kursovaya.User
 
         private void buttonsColor(string theme)
         {
-            if (theme == "processors"){ ShowProc.ForeColor = Color.Green;ShowProc.Text = "Процессоры✔"; }
+            if (theme == "processors") { ShowProc.ForeColor = Color.Green; ShowProc.Text = "Процессоры✔"; }
             else if (theme == "videocards") { ShowVideoCards.ForeColor = Color.Green; ShowVideoCards.Text = "Видеокарты✔"; }
             else if (theme == "motherboards") { ShowMotherBoard.ForeColor = Color.Green; ShowMotherBoard.Text = "Материнские платы✔"; }
             else if (theme == "ram") { ShowRam.ForeColor = Color.Green; ShowRam.Text = "Оперативная память✔"; }
@@ -468,24 +440,22 @@ namespace Kursovaya.User
         {
             if (e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "ActionColumn")
             {
-                dataGridView1.Columns["ActionColumn"].ReadOnly = false;                             // НЕ РАБОТАЕТ
-                dataGridView1.Rows[e.RowIndex].Cells["ActionColumn"].Value = "Выбрано";             // НЕ РАБОТАЕТ
                 buttonsColor(theme);
                 addIntoCart(theme, dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), user.Default.userID);
-                if(theme == "case")
+                if (theme == "case")
                 {
                     ArrChecked["cases"] = true;
                 }
                 else
                 {
                     ArrChecked[theme] = true;
-                }                    
-                string msg = "";
-                foreach (var dic in ArrChecked)
-                {
-                    msg += $"Ключ: {dic.Key} - Значение: {dic.Value};\n";
                 }
-                MessageBox.Show(msg);
+                //string msg = "";
+                //foreach (var dic in ArrChecked)
+                //{
+                //    msg += $"Ключ: {dic.Key} - Значение: {dic.Value};\n";
+                //}
+                //MessageBox.Show(msg);
 
 
 
@@ -511,26 +481,56 @@ namespace Kursovaya.User
 
         private string fillDgv(string theme)
         {
-            string Filter = FilterComboBox.SelectedItem.ToString();
+            string Filter = FilterComboBox.SelectedItem?.ToString() ?? "Не выбрано";
             string search = SearchTextBox.Text;
             string query = "";
             if (ArrChecked[theme])
             {
-                
-                //FillThemeDataGridView("", $"{theme}", "Не выбрано", "По убыванию");
-            }
-            else{
-                if(theme == "processors")
+                query = $"SELECT * FROM {theme}";
+                if (!string.IsNullOrEmpty(search))
                 {
+                    query += $" WHERE model LIKE '%{search}%'";
+                }
+                if (Filter != "Не выбрано")
+                {
+                    query += " ";
+                    if (theme == "processors") { query += "&& core_int"; }
+                    else if (theme == "case") { query += "&& form_factor"; }
+                    else if (theme == "case_coolers") { query += "&& scale"; }
+                    else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
+                    else if (theme == "motherboards") { query += "&& cpu_socket"; }
+                    else if (theme == "power_supplier") { query += "&& power"; }
+                    else if (theme == "ram") { query += "&& capacity_gb"; }
+                    else if (theme == "storage") { query += "&& capacity_gb"; }
+                    else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
+                    else if (theme == "videocards") { query += "&& memory"; }
+                    if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
+                    else { query += $" = '{Filter}'"; }
+                }
+                if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
+                else { query += " ORDER BY cost ASC;"; }
+            }
+            else
+            {
+                //Запрос фулл готов✅
+                if (theme == "processors")
+                {
+                    bool second = false;
                     query += "SELECT * FROM processors WHERE ";
                     if (ArrChecked["motherboards"])
                     {
-                        query += $"socket = '{getCharacteristic("cpu_socket", "motherboards", $"{userid}")}' ";                        
+                        query += $"socket = '{getCharacteristic("cpu_socket", "motherboards", $"{userid}")}' ";
+                        second = true;
                     }
                     if (ArrChecked["cpu_cooler"])
                     {
-                        query += $"thermal_power < '{getCharacteristic("max_heat_sink", "cpu_cooler", $"{userid}")}' ";
+                        if (second)
+                        {
+                            query += " AND ";
+                        }
+                        query += $"thermal_power < {getCharacteristic("max_heat_sink", "cpu_cooler", $"{userid}")} ";
                     }
+                    if (second) { query += " AND "; }
                     if (search == "") { query += $"model LIKE '%%' "; }
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
@@ -552,13 +552,17 @@ namespace Kursovaya.User
                     if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
                     else { query += " ORDER BY cost ASC;"; }
                 }
-                else if(theme == "videocards")
+                //Запрос фулл готов✅
+                else if (theme == "videocards")
                 {
                     query += "SELECT * FROM videocards WHERE ";
+                    bool second = false;
                     if (ArrChecked["cases"])
                     {
-                        query += $"gpu_lenght = '{getCharacteristic("max_lenght_videocard", "cases", $"{userid}")}' ";
-                    }                    
+                        query += $"gpu_lenght < {getCharacteristic("max_lenght_videocard", "cases", $"{userid}")} ";
+                        second = true;
+                    }
+                    if (second) { query += " AND "; }
                     if (search == "") { query += $"model LIKE '%%' "; }
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
@@ -580,13 +584,17 @@ namespace Kursovaya.User
                     if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
                     else { query += " ORDER BY cost ASC;"; }
                 }
+                //Запрос фулл готов✅
                 else if (theme == "ram")
                 {
                     query += "SELECT * FROM ram WHERE ";
+                    bool second = false;
                     if (ArrChecked["motherboards"])
                     {
                         query += $"ram_type = '{getCharacteristic("ram_support_type", "motherboards", $"{userid}")}' ";
+                        second = true;
                     }
+                    if (second) { query += " AND "; }
                     if (search == "") { query += $"model LIKE '%%' "; }
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
@@ -608,17 +616,22 @@ namespace Kursovaya.User
                     if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
                     else { query += " ORDER BY cost ASC;"; }
                 }
+                //Запрос фулл готов✅
                 else if (theme == "storage")
                 {
                     query += "SELECT * FROM storage WHERE ";
+                    bool second = false;
                     if (ArrChecked["motherboards"] && Convert.ToInt32(getCharacteristic("m2_ssd_slots", "motherboards", $"{userid}")) > 1)
                     {
-                        query += $"type_of_device = 'SSD' or type_of_device = 'HDD' or type_of_device = 'M.2 SSD' ";
+                        query += $"(type_of_device = 'SSD' or type_of_device = 'HDD' or type_of_device = 'M.2 SSD') ";
+                        second = true;
                     }
                     else
                     {
-                        query += $"type_of_device = 'SSD' or type_of_device = 'HDD' ";
+                        query += $"(type_of_device = 'SSD' or type_of_device = 'HDD') ";
+                        second = true;
                     }
+                    if (second) { query += " AND "; }
                     if (search == "") { query += $"model LIKE '%%' "; }
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
@@ -640,17 +653,26 @@ namespace Kursovaya.User
                     if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
                     else { query += " ORDER BY cost ASC;"; }
                 }
+                //Запрос фулл готов✅
                 else if (theme == "cpu_cooler")
                 {
+                    bool second = false;
                     query += "SELECT * FROM cpu_cooler WHERE ";
                     if (ArrChecked["motherboards"])
                     {
-                        query += $"socket = '{getCharacteristic("cpu_socket", "motherboards", $"{userid}")}' ";
+                        query += $"socket LIKE '%{getCharacteristic("cpu_socket", "motherboards", $"{userid}")}%' ";
+                        second = true;
                     }
                     if (ArrChecked["cases"])
                     {
-                        query += $"cooler_height > '{getCharacteristic("max_height_cpu_cooler", "cases", $"{userid}")}' ";
+                        if (second)
+                        {
+                            query += " AND ";
+                        }
+                        query += $"cooler_height < {getCharacteristic("max_height_cpu_cooler", "cases", $"{userid}")} ";
+                        second = true;
                     }
+                    if (second) { query += " AND "; }
                     if (search == "") { query += $"model LIKE '%%' "; }
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
@@ -672,28 +694,36 @@ namespace Kursovaya.User
                     if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
                     else { query += " ORDER BY cost ASC;"; }
                 }
+                //Запрос фулл готов✅
                 else if (theme == "case")
                 {
+                    bool second = false;
                     query += "SELECT * FROM cases WHERE ";
                     if (ArrChecked["motherboards"])
                     {
-                        if(getCharacteristic("form_factor", "motherboards", $"{userid}") == "ATX")
+                        if (getCharacteristic("form_factor", "motherboards", $"{userid}") == "ATX")
                         {
-                            query += $"form_factor = 'ATX' or form_factor = 'mATX' or form_factor = 'Mini-ITX' ";
+                            query += $"(form_factor = 'ATX') ";
                         }
                         else if (getCharacteristic("form_factor", "motherboards", $"{userid}") == "mATX")
                         {
-                            query += $"form_factor = 'mATX' or form_factor = 'Mini-ITX' ";
+                            query += $"(form_factor = 'mATX' or form_factor = 'ATX') ";
                         }
                         else
                         {
-                            query += $"form_factor = 'Mini-ITX' ";
+                            query += $"form_factor = 'Mini-ITX' or form_factor = 'mATX' or form_factor = 'Mini-ITX' ";
                         }
+                        second = true;
                     }
                     if (ArrChecked["cpu_cooler"])
                     {
-                        query += $"max_height_cpu_cooler > '{getCharacteristic("cooler_height", "cpu_cooler", $"{userid}")}' ";
+                        if (second)
+                        {
+                            query += " AND ";
+                        }
+                        query += $"max_height_cpu_cooler > {getCharacteristic("cooler_height", "cpu_cooler", $"{userid}")} ";
                     }
+                    if (second) { query += " AND "; }
                     if (search == "") { query += $"model LIKE '%%' "; }
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
@@ -715,24 +745,118 @@ namespace Kursovaya.User
                     if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
                     else { query += " ORDER BY cost ASC;"; }
                 }
+                //Запрос фулл готов✅
                 else if (theme == "motherboards")
                 {
+                    bool second = false;
                     query += "SELECT * FROM motherboards WHERE ";
                     if (ArrChecked["cases"])
                     {
                         if (getCharacteristic("form_factor", "cases", $"{userid}") == "ATX")
                         {
-                            query += $"form_factor = 'ATX' or form_factor = 'mATX' or form_factor = 'Mini-ITX' ";
+                            query += $"(form_factor = 'ATX' or form_factor = 'mATX' or form_factor = 'Mini-ITX') ";
                         }
                         else if (getCharacteristic("form_factor", "cases", $"{userid}") == "mATX")
                         {
-                            query += $"form_factor = 'mATX' or form_factor = 'Mini-ITX' ";
+                            query += $"(form_factor = 'mATX' or form_factor = 'Mini-ITX') ";
                         }
                         else
                         {
                             query += $"form_factor = 'Mini-ITX' ";
                         }
+                        second = true;
                     }
+                    if (ArrChecked["processors"])
+                    {
+                        if (second)
+                        {
+                            query += " AND ";
+                        }
+                        query += $"cpu_socket = '{getCharacteristic("socket", "processors", $"{userid}")}' ";
+                        second = true;
+                    }
+                    if (ArrChecked["ram"])
+                    {
+                        if (second)
+                        {
+                            query += " AND ";
+                        }
+                        query += $"ram_support_type = '{getCharacteristic("ram_type", "ram", $"{userid}")}' ";
+                        second = true;
+                    }
+                    if (second) { query += " AND "; }
+                    if (search == "") { query += $"model LIKE '%%' "; }
+                    else { query += $"model LIKE '%{search}%' "; }
+                    if (Filter != "Не выбрано")
+                    {
+                        query += " ";
+                        if (theme == "processors") { query += "&& core_int"; }
+                        else if (theme == "case") { query += "&& form_factor"; }
+                        else if (theme == "case_coolers") { query += "&& scale"; }
+                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "&& power"; }
+                        else if (theme == "ram") { query += "&& capacity_gb"; }
+                        else if (theme == "storage") { query += "&& capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
+                        else { query += $" = '{Filter}'"; }
+                    }
+                    if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
+                    else { query += " ORDER BY cost ASC;"; }
+                }
+                else if (theme == "power_supplier")
+                {
+                    query += "SELECT * FROM power_supplier WHERE ";
+                    if (search == "") { query += $"model LIKE '%%' "; }
+                    else { query += $"model LIKE '%{search}%' "; }
+                    if (Filter != "Не выбрано")
+                    {
+                        query += " AND ";
+                        if (theme == "processors") { query += "&& core_int"; }
+                        else if (theme == "case") { query += "&& form_factor"; }
+                        else if (theme == "case_coolers") { query += "&& scale"; }
+                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "&& power"; }
+                        else if (theme == "ram") { query += "&& capacity_gb"; }
+                        else if (theme == "storage") { query += "&& capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
+                        else { query += $" = '{Filter}'"; }
+                    }
+                    if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
+                    else { query += " ORDER BY cost ASC;"; }
+                }
+                else if (theme == "case_coolers")
+                {
+                    query += "SELECT * FROM case_coolers WHERE ";
+                    if (search == "") { query += $"model LIKE '%%' "; }
+                    else { query += $"model LIKE '%{search}%' "; }
+                    if (Filter != "Не выбрано")
+                    {
+                        query += " AND ";
+                        if (theme == "processors") { query += "&& core_int"; }
+                        else if (theme == "case") { query += "&& form_factor"; }
+                        else if (theme == "case_coolers") { query += "&& scale"; }
+                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "&& power"; }
+                        else if (theme == "ram") { query += "&& capacity_gb"; }
+                        else if (theme == "storage") { query += "&& capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
+                        else { query += $" = '{Filter}'"; }
+                    }
+                    if (SortComboBox.SelectedIndex == 0) { query += " ORDER BY cost DESC;"; }
+                    else { query += " ORDER BY cost ASC;"; }
+                }
+                else if (theme == "thermo_interface")
+                {
+                    query += "SELECT * FROM thermo_interface WHERE ";
                     if (search == "") { query += $"model LIKE '%%' "; }
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
@@ -771,12 +895,7 @@ namespace Kursovaya.User
                     return res;
                 }
             }
-            catch(Exception e) {  MessageBox.Show(e.Message); return ""; }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(fillDgv(theme));
+            catch (Exception e) { MessageBox.Show(e.Message); return ""; }
         }
     }
 }
