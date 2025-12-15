@@ -494,16 +494,16 @@ namespace Kursovaya.User
                 if (Filter != "Не выбрано")
                 {
                     query += " ";
-                    if (theme == "processors") { query += "&& core_int"; }
-                    else if (theme == "case") { query += "&& form_factor"; }
-                    else if (theme == "case_coolers") { query += "&& scale"; }
-                    else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                    else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                    else if (theme == "power_supplier") { query += "&& power"; }
-                    else if (theme == "ram") { query += "&& capacity_gb"; }
-                    else if (theme == "storage") { query += "&& capacity_gb"; }
-                    else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                    else if (theme == "videocards") { query += "&& memory"; }
+                    if (theme == "processors") { query += "  core_int"; }
+                    else if (theme == "case") { query += "  form_factor"; }
+                    else if (theme == "case_coolers") { query += "  scale"; }
+                    else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                    else if (theme == "motherboards") { query += "  cpu_socket"; }
+                    else if (theme == "power_supplier") { query += "  power"; }
+                    else if (theme == "ram") { query += "  capacity_gb"; }
+                    else if (theme == "storage") { query += "  capacity_gb"; }
+                    else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                    else if (theme == "videocards") { query += "  memory"; }
                     if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                     else { query += $" = '{Filter}'"; }
                 }
@@ -536,16 +536,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -568,16 +568,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -600,16 +600,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -637,16 +637,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -678,16 +678,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -729,16 +729,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -790,16 +790,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -814,16 +814,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " AND ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -838,16 +838,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " AND ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -862,16 +862,16 @@ namespace Kursovaya.User
                     if (Filter != "Не выбрано")
                     {
                         query += " ";
-                        if (theme == "processors") { query += "&& core_int"; }
-                        else if (theme == "case") { query += "&& form_factor"; }
-                        else if (theme == "case_coolers") { query += "&& scale"; }
-                        else if (theme == "cpu_cooler") { query += "&& max_heat_sink"; }
-                        else if (theme == "motherboards") { query += "&& cpu_socket"; }
-                        else if (theme == "power_supplier") { query += "&& power"; }
-                        else if (theme == "ram") { query += "&& capacity_gb"; }
-                        else if (theme == "storage") { query += "&& capacity_gb"; }
-                        else if (theme == "thermo_interface") { query += "&& thermal_conductivity"; }
-                        else if (theme == "videocards") { query += "&& memory"; }
+                        if (theme == "processors") { query += "  core_int"; }
+                        else if (theme == "case") { query += "  form_factor"; }
+                        else if (theme == "case_coolers") { query += "  scale"; }
+                        else if (theme == "cpu_cooler") { query += "  max_heat_sink"; }
+                        else if (theme == "motherboards") { query += "  cpu_socket"; }
+                        else if (theme == "power_supplier") { query += "  power"; }
+                        else if (theme == "ram") { query += "  capacity_gb"; }
+                        else if (theme == "storage") { query += "  capacity_gb"; }
+                        else if (theme == "thermo_interface") { query += "  thermal_conductivity"; }
+                        else if (theme == "videocards") { query += "  memory"; }
                         if (Filter.Contains("<") || Filter.Contains(">")) { query += $" {Filter}"; }
                         else { query += $" = '{Filter}'"; }
                     }
@@ -896,6 +896,12 @@ namespace Kursovaya.User
                 }
             }
             catch (Exception e) { MessageBox.Show(e.Message); return ""; }
+        }
+
+        private void btnResetFilter_Click(object sender, EventArgs e)
+        {
+            SortComboBox.SelectedIndex = 0;
+            FilterComboBox.SelectedIndex = 0;  
         }
     }
 }

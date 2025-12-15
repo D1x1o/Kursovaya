@@ -47,6 +47,7 @@ namespace Kursovaya.User
             this.label1 = new System.Windows.Forms.Label();
             this.filterLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnResetFilter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -196,7 +197,7 @@ namespace Kursovaya.User
             // 
             this.SortComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SortComboBox.FormattingEnabled = true;
-            this.SortComboBox.Location = new System.Drawing.Point(1020, 117);
+            this.SortComboBox.Location = new System.Drawing.Point(864, 120);
             this.SortComboBox.Name = "SortComboBox";
             this.SortComboBox.Size = new System.Drawing.Size(199, 32);
             this.SortComboBox.TabIndex = 3;
@@ -206,7 +207,7 @@ namespace Kursovaya.User
             // 
             this.FilterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FilterComboBox.FormattingEnabled = true;
-            this.FilterComboBox.Location = new System.Drawing.Point(790, 118);
+            this.FilterComboBox.Location = new System.Drawing.Point(634, 121);
             this.FilterComboBox.Name = "FilterComboBox";
             this.FilterComboBox.Size = new System.Drawing.Size(224, 32);
             this.FilterComboBox.TabIndex = 3;
@@ -215,7 +216,7 @@ namespace Kursovaya.User
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1016, 91);
+            this.label1.Location = new System.Drawing.Point(860, 94);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 24);
             this.label1.TabIndex = 4;
@@ -224,7 +225,7 @@ namespace Kursovaya.User
             // filterLabel
             // 
             this.filterLabel.AutoSize = true;
-            this.filterLabel.Location = new System.Drawing.Point(786, 91);
+            this.filterLabel.Location = new System.Drawing.Point(630, 94);
             this.filterLabel.Name = "filterLabel";
             this.filterLabel.Size = new System.Drawing.Size(166, 24);
             this.filterLabel.TabIndex = 4;
@@ -239,11 +240,22 @@ namespace Kursovaya.User
             this.label3.TabIndex = 4;
             this.label3.Text = "Наименование";
             // 
+            // btnResetFilter
+            // 
+            this.btnResetFilter.Location = new System.Drawing.Point(1069, 96);
+            this.btnResetFilter.Name = "btnResetFilter";
+            this.btnResetFilter.Size = new System.Drawing.Size(150, 57);
+            this.btnResetFilter.TabIndex = 5;
+            this.btnResetFilter.Text = "Сбросить фильтры";
+            this.btnResetFilter.UseVisualStyleBackColor = true;
+            this.btnResetFilter.Click += new System.EventHandler(this.btnResetFilter_Click);
+            // 
             // UserProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1231, 682);
+            this.Controls.Add(this.btnResetFilter);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.filterLabel);
             this.Controls.Add(this.label1);
@@ -296,5 +308,6 @@ namespace Kursovaya.User
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label filterLabel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnResetFilter;
     }
 }
