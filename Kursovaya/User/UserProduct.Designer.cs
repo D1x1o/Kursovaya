@@ -48,6 +48,10 @@ namespace Kursovaya.User
             this.filterLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnResetFilter = new System.Windows.Forms.Button();
+<<<<<<< HEAD
+            this.resetSelectedItems = new System.Windows.Forms.Button();
+=======
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -177,9 +181,10 @@ namespace Kursovaya.User
             // 
             // ShowCart
             // 
-            this.ShowCart.Location = new System.Drawing.Point(1020, 10);
+            this.ShowCart.Enabled = false;
+            this.ShowCart.Location = new System.Drawing.Point(1072, 12);
             this.ShowCart.Name = "ShowCart";
-            this.ShowCart.Size = new System.Drawing.Size(199, 58);
+            this.ShowCart.Size = new System.Drawing.Size(147, 136);
             this.ShowCart.TabIndex = 1;
             this.ShowCart.Text = "Корзина";
             this.ShowCart.UseVisualStyleBackColor = true;
@@ -189,7 +194,7 @@ namespace Kursovaya.User
             // 
             this.SearchTextBox.Location = new System.Drawing.Point(12, 120);
             this.SearchTextBox.Name = "SearchTextBox";
-            this.SearchTextBox.Size = new System.Drawing.Size(498, 29);
+            this.SearchTextBox.Size = new System.Drawing.Size(464, 29);
             this.SearchTextBox.TabIndex = 2;
             this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             // 
@@ -197,7 +202,11 @@ namespace Kursovaya.User
             // 
             this.SortComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SortComboBox.FormattingEnabled = true;
+<<<<<<< HEAD
+            this.SortComboBox.Location = new System.Drawing.Point(712, 116);
+=======
             this.SortComboBox.Location = new System.Drawing.Point(864, 120);
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.SortComboBox.Name = "SortComboBox";
             this.SortComboBox.Size = new System.Drawing.Size(199, 32);
             this.SortComboBox.TabIndex = 3;
@@ -207,7 +216,11 @@ namespace Kursovaya.User
             // 
             this.FilterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FilterComboBox.FormattingEnabled = true;
+<<<<<<< HEAD
+            this.FilterComboBox.Location = new System.Drawing.Point(482, 117);
+=======
             this.FilterComboBox.Location = new System.Drawing.Point(634, 121);
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.FilterComboBox.Name = "FilterComboBox";
             this.FilterComboBox.Size = new System.Drawing.Size(224, 32);
             this.FilterComboBox.TabIndex = 3;
@@ -216,7 +229,11 @@ namespace Kursovaya.User
             // label1
             // 
             this.label1.AutoSize = true;
+<<<<<<< HEAD
+            this.label1.Location = new System.Drawing.Point(708, 90);
+=======
             this.label1.Location = new System.Drawing.Point(860, 94);
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 24);
             this.label1.TabIndex = 4;
@@ -225,7 +242,11 @@ namespace Kursovaya.User
             // filterLabel
             // 
             this.filterLabel.AutoSize = true;
+<<<<<<< HEAD
+            this.filterLabel.Location = new System.Drawing.Point(478, 90);
+=======
             this.filterLabel.Location = new System.Drawing.Point(630, 94);
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.filterLabel.Name = "filterLabel";
             this.filterLabel.Size = new System.Drawing.Size(166, 24);
             this.filterLabel.TabIndex = 4;
@@ -242,19 +263,42 @@ namespace Kursovaya.User
             // 
             // btnResetFilter
             // 
+<<<<<<< HEAD
+            this.btnResetFilter.Location = new System.Drawing.Point(917, 93);
+            this.btnResetFilter.Name = "btnResetFilter";
+            this.btnResetFilter.Size = new System.Drawing.Size(149, 56);
+=======
             this.btnResetFilter.Location = new System.Drawing.Point(1069, 96);
             this.btnResetFilter.Name = "btnResetFilter";
             this.btnResetFilter.Size = new System.Drawing.Size(150, 57);
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.btnResetFilter.TabIndex = 5;
             this.btnResetFilter.Text = "Сбросить фильтры";
             this.btnResetFilter.UseVisualStyleBackColor = true;
             this.btnResetFilter.Click += new System.EventHandler(this.btnResetFilter_Click);
             // 
+<<<<<<< HEAD
+            // resetSelectedItems
+            // 
+            this.resetSelectedItems.Location = new System.Drawing.Point(917, 12);
+            this.resetSelectedItems.Name = "resetSelectedItems";
+            this.resetSelectedItems.Size = new System.Drawing.Size(149, 78);
+            this.resetSelectedItems.TabIndex = 6;
+            this.resetSelectedItems.Text = "Сбросить выбор";
+            this.resetSelectedItems.UseVisualStyleBackColor = true;
+            this.resetSelectedItems.Click += new System.EventHandler(this.resetSelectedItems_Click);
+            // 
+=======
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             // UserProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1231, 682);
+<<<<<<< HEAD
+            this.Controls.Add(this.resetSelectedItems);
+=======
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.Controls.Add(this.btnResetFilter);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.filterLabel);
@@ -309,5 +353,9 @@ namespace Kursovaya.User
         private System.Windows.Forms.Label filterLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnResetFilter;
+<<<<<<< HEAD
+        private System.Windows.Forms.Button resetSelectedItems;
+=======
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
     }
 }

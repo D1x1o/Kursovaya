@@ -14,7 +14,7 @@ namespace Kursovaya.User
 {
     public partial class UserProduct : Form
     {
-        Dictionary<string, bool> ArrChecked = new Dictionary<string, bool> {
+        public Dictionary<string, bool> ArrChecked = new Dictionary<string, bool> {
            {"processors", false},
            {"videocards", false},
            {"motherboards", false},
@@ -26,8 +26,7 @@ namespace Kursovaya.User
            {"cpu_cooler", false},
            {"thermo_interface", false},
            {"case", false}
-
-        };
+        };        
         int userid = user.Default.userID;
         string ConnStr = ConnectionString.GetConnectionString();
         string theme = "processors";
@@ -36,7 +35,18 @@ namespace Kursovaya.User
             InitializeComponent();
             FillSortCombobox();
             FillFilterCombobox("processors");
-            //FillThemeDataGridView("", $"{theme}", "Не выбрано", "По убыванию");            
+            //FillThemeDataGridView("", $"{theme}", "Не выбрано", "По убыванию");
+            checkedItems.Default.processors = false;
+            checkedItems.Default.videocards = false;
+            checkedItems.Default.motherboards = false;
+            checkedItems.Default.ram = false;
+            checkedItems.Default.storage = false;
+            checkedItems.Default.power_supplier = false;
+            checkedItems.Default.cases = false;
+            checkedItems.Default.case_coolers = false;
+            checkedItems.Default.thermo_interface = false;
+            checkedItems.Default.cpu_cooler = false;
+
         }
 
         private void ShowCart_Click(object sender, EventArgs e)
@@ -213,6 +223,7 @@ namespace Kursovaya.User
 
             // Настройка столбцов
             Columns();
+            dataGridView1.Columns["model"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
         }
 
         private void FilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -450,35 +461,19 @@ namespace Kursovaya.User
                 {
                     ArrChecked[theme] = true;
                 }
-                //string msg = "";
-                //foreach (var dic in ArrChecked)
-                //{
-                //    msg += $"Ключ: {dic.Key} - Значение: {dic.Value};\n";
-                //}
-                //MessageBox.Show(msg);
-
-
-
-
-
-
-
+                if (theme == "processors") { checkedItems.Default.processors = true; }
+                else if (theme == "videocards") { checkedItems.Default.videocards = true; }
+                else if (theme == "motherboards") { checkedItems.Default.motherboards = true; }
+                else if (theme == "ram") { checkedItems.Default.ram = true; }
+                else if (theme == "storage") { checkedItems.Default.storage = true; }
+                else if (theme == "power_supplier") { checkedItems.Default.power_supplier = true; }
+                else if (theme == "case_coolers") { checkedItems.Default.case_coolers = true; }
+                else if (theme == "case") { checkedItems.Default.cases = true; }
+                else if (theme == "cpu_cooler") { checkedItems.Default.cpu_cooler = true; }
+                else if (theme == "thermo_interface") { checkedItems.Default.thermo_interface = true; }
+                ShowCart.Enabled = true;
             }
         }
-
-        ////Кнопка добавления товара в сборку
-        //private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if(e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "ActionColumn")
-        //    {
-        //        //MessageBox.Show($"{dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString()}");
-        //        if(theme == "processors")
-        //        {
-        //            string query = "insert into config";
-        //        }
-        //    }
-        //}
-
         private string fillDgv(string theme)
         {
             string Filter = FilterComboBox.SelectedItem?.ToString() ?? "Не выбрано";
@@ -888,10 +883,18 @@ namespace Kursovaya.User
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
+                    string res = ""; 
                     conn.Open();
                     string query = $"Select {characteristic} From {selectedItemTable} where id =  (Select id_{selectedItemTable} from user_cart where iduser = {iduser})";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    string res = cmd.ExecuteScalar().ToString();
+                    if(cmd.ExecuteScalar() == null)
+                    {
+
+                    }
+                    else
+                    {
+                        res = cmd.ExecuteScalar().ToString();
+                    }                        
                     return res;
                 }
             }
@@ -903,5 +906,54 @@ namespace Kursovaya.User
             SortComboBox.SelectedIndex = 0;
             FilterComboBox.SelectedIndex = 0;  
         }
+<<<<<<< HEAD
+
+        private void resetSelectedItems_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult res = MessageBox.Show("Вы действительно хотите очистить выбранные товары?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (res == DialogResult.Yes) {
+                    using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                    {
+                        conn.Open();
+                        string query = $"UPDATE user_cart SET id_processors = 0,id_motherboards = 0,id_videocards = 0,id_ram = 0,count_ram = 0,id_cpu_cooler = 0,id_cases = 0,id_case_coolers = 0,count_case_fan = 0,id_thermo_interface = 0,id_storage = 0,id_power_supplier = 0 where iduser = {user.Default.userID}";
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Выбранные товары очищены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ShowCart.Enabled = false;
+                        buttonsColorUnchecked();
+                        ArrChecked["processors"] = false;
+                        ArrChecked["videocards"] = false;
+                        ArrChecked["motherboards"] = false;
+                        ArrChecked["ram"] = false;
+                        ArrChecked["storage"] = false;
+                        ArrChecked["power_supplier"] = false;
+                        ArrChecked["cases"] = false;
+                        ArrChecked["case_coolers"] = false;
+                        ArrChecked["cpu_cooler"] = false;
+                        ArrChecked["thermo_interface"] = false;
+                        ArrChecked["case"] = false;
+                    }
+                }
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message);}
+        }
+        private void buttonsColorUnchecked()
+        {
+            ShowProc.ForeColor = Color.Black; ShowProc.Text = "Процессоры"; 
+            ShowVideoCards.ForeColor = Color.Black; ShowVideoCards.Text = "Видеокарты"; 
+            ShowMotherBoard.ForeColor = Color.Black; ShowMotherBoard.Text = "Материнские платы"; 
+            ShowRam.ForeColor = Color.Black; ShowRam.Text = "Оперативная память"; 
+            ShowDrivers.ForeColor = Color.Black; ShowDrivers.Text = "Накопители"; 
+            ShowPowerSuplier.ForeColor = Color.Black; ShowPowerSuplier.Text = "Блоки питания"; 
+            ShowCaseFan.ForeColor = Color.Black; ShowCaseFan.Text = "Корпусные кулеры"; 
+            ShowCases.ForeColor = Color.Black; ShowCases.Text = "Корпусы"; 
+            ShowCpuFan.ForeColor = Color.Black; ShowCpuFan.Text = "Кулеры"; 
+            ShowTermo.ForeColor = Color.Black; ShowTermo.Text = "Термопаста"; 
+
+        }
+=======
+>>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
     }
 }

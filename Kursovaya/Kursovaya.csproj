@@ -118,6 +118,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="checkedItems.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>checkedItems.settings</DependentUpon>
+    </Compile>
     <Compile Include="user.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -211,6 +216,10 @@
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="checkedItems.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>checkedItems.Designer.cs</LastGenOutput>
     </None>
     <None Include="user.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
