@@ -38,8 +38,6 @@ namespace Kursovaya
             this.CaptchaTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.connedit = new System.Windows.Forms.Button();
             this.ReCaptcha = new System.Windows.Forms.Button();
             this.CaptcaImg = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.CaptcaImg)).BeginInit();
@@ -126,26 +124,6 @@ namespace Kursovaya
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(197, 244);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(26, 23);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // connedit
-            // 
-            this.connedit.Location = new System.Drawing.Point(197, 273);
-            this.connedit.Name = "connedit";
-            this.connedit.Size = new System.Drawing.Size(26, 23);
-            this.connedit.TabIndex = 9;
-            this.connedit.Text = "button2";
-            this.connedit.UseVisualStyleBackColor = true;
-            this.connedit.Click += new System.EventHandler(this.connedit_Click);
-            // 
             // ReCaptcha
             // 
             this.ReCaptcha.Image = global::Kursovaya.Properties.Resources._83733882;
@@ -169,8 +147,6 @@ namespace Kursovaya
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(254, 311);
-            this.Controls.Add(this.connedit);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ReCaptcha);
             this.Controls.Add(this.CaptchaTextBox);
@@ -209,8 +185,6 @@ namespace Kursovaya
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button ReCaptcha;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button connedit;
     }
 }
 

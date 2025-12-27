@@ -48,10 +48,7 @@ namespace Kursovaya.User
             this.filterLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnResetFilter = new System.Windows.Forms.Button();
-<<<<<<< HEAD
             this.resetSelectedItems = new System.Windows.Forms.Button();
-=======
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,7 +83,7 @@ namespace Kursovaya.User
             this.ShowVideoCards.Location = new System.Drawing.Point(12, 54);
             this.ShowVideoCards.Name = "ShowVideoCards";
             this.ShowVideoCards.Size = new System.Drawing.Size(176, 36);
-            this.ShowVideoCards.TabIndex = 1;
+            this.ShowVideoCards.TabIndex = 6;
             this.ShowVideoCards.Text = "Видеокарты";
             this.ShowVideoCards.UseVisualStyleBackColor = true;
             this.ShowVideoCards.Click += new System.EventHandler(this.ShowVideoCards_Click);
@@ -97,7 +94,7 @@ namespace Kursovaya.User
             this.ShowMotherBoard.Location = new System.Drawing.Point(194, 12);
             this.ShowMotherBoard.Name = "ShowMotherBoard";
             this.ShowMotherBoard.Size = new System.Drawing.Size(177, 36);
-            this.ShowMotherBoard.TabIndex = 1;
+            this.ShowMotherBoard.TabIndex = 2;
             this.ShowMotherBoard.Text = "Материнские платы";
             this.ShowMotherBoard.UseVisualStyleBackColor = true;
             this.ShowMotherBoard.Click += new System.EventHandler(this.ShowMotherBoard_Click);
@@ -108,7 +105,7 @@ namespace Kursovaya.User
             this.ShowRam.Location = new System.Drawing.Point(194, 54);
             this.ShowRam.Name = "ShowRam";
             this.ShowRam.Size = new System.Drawing.Size(177, 36);
-            this.ShowRam.TabIndex = 1;
+            this.ShowRam.TabIndex = 7;
             this.ShowRam.Text = "Оперативная память";
             this.ShowRam.UseVisualStyleBackColor = true;
             this.ShowRam.Click += new System.EventHandler(this.ShowRam_Click);
@@ -119,7 +116,7 @@ namespace Kursovaya.User
             this.ShowDrivers.Location = new System.Drawing.Point(377, 12);
             this.ShowDrivers.Name = "ShowDrivers";
             this.ShowDrivers.Size = new System.Drawing.Size(175, 36);
-            this.ShowDrivers.TabIndex = 1;
+            this.ShowDrivers.TabIndex = 3;
             this.ShowDrivers.Text = "Накопители";
             this.ShowDrivers.UseVisualStyleBackColor = true;
             this.ShowDrivers.Click += new System.EventHandler(this.ShowDrivers_Click);
@@ -130,7 +127,7 @@ namespace Kursovaya.User
             this.ShowPowerSuplier.Location = new System.Drawing.Point(377, 54);
             this.ShowPowerSuplier.Name = "ShowPowerSuplier";
             this.ShowPowerSuplier.Size = new System.Drawing.Size(175, 36);
-            this.ShowPowerSuplier.TabIndex = 1;
+            this.ShowPowerSuplier.TabIndex = 8;
             this.ShowPowerSuplier.Text = "Блоки питания";
             this.ShowPowerSuplier.UseVisualStyleBackColor = true;
             this.ShowPowerSuplier.Click += new System.EventHandler(this.ShowPowerSuplier_Click);
@@ -141,7 +138,7 @@ namespace Kursovaya.User
             this.ShowCases.Location = new System.Drawing.Point(558, 12);
             this.ShowCases.Name = "ShowCases";
             this.ShowCases.Size = new System.Drawing.Size(164, 36);
-            this.ShowCases.TabIndex = 1;
+            this.ShowCases.TabIndex = 4;
             this.ShowCases.Text = "Корпусы";
             this.ShowCases.UseVisualStyleBackColor = true;
             this.ShowCases.Click += new System.EventHandler(this.ShowCases_Click);
@@ -152,7 +149,7 @@ namespace Kursovaya.User
             this.ShowCaseFan.Location = new System.Drawing.Point(728, 12);
             this.ShowCaseFan.Name = "ShowCaseFan";
             this.ShowCaseFan.Size = new System.Drawing.Size(183, 36);
-            this.ShowCaseFan.TabIndex = 1;
+            this.ShowCaseFan.TabIndex = 5;
             this.ShowCaseFan.Text = "Корпусные кулеры";
             this.ShowCaseFan.UseVisualStyleBackColor = true;
             this.ShowCaseFan.Click += new System.EventHandler(this.ShowCaseFan_Click);
@@ -163,7 +160,7 @@ namespace Kursovaya.User
             this.ShowCpuFan.Location = new System.Drawing.Point(558, 54);
             this.ShowCpuFan.Name = "ShowCpuFan";
             this.ShowCpuFan.Size = new System.Drawing.Size(164, 36);
-            this.ShowCpuFan.TabIndex = 1;
+            this.ShowCpuFan.TabIndex = 9;
             this.ShowCpuFan.Text = "Кулеры";
             this.ShowCpuFan.UseVisualStyleBackColor = true;
             this.ShowCpuFan.Click += new System.EventHandler(this.ShowCpuFan_Click);
@@ -174,7 +171,7 @@ namespace Kursovaya.User
             this.ShowTermo.Location = new System.Drawing.Point(728, 54);
             this.ShowTermo.Name = "ShowTermo";
             this.ShowTermo.Size = new System.Drawing.Size(183, 36);
-            this.ShowTermo.TabIndex = 1;
+            this.ShowTermo.TabIndex = 10;
             this.ShowTermo.Text = "Термопаста";
             this.ShowTermo.UseVisualStyleBackColor = true;
             this.ShowTermo.Click += new System.EventHandler(this.ShowTermo_Click);
@@ -185,7 +182,7 @@ namespace Kursovaya.User
             this.ShowCart.Location = new System.Drawing.Point(1072, 12);
             this.ShowCart.Name = "ShowCart";
             this.ShowCart.Size = new System.Drawing.Size(147, 136);
-            this.ShowCart.TabIndex = 1;
+            this.ShowCart.TabIndex = 13;
             this.ShowCart.Text = "Корзина";
             this.ShowCart.UseVisualStyleBackColor = true;
             this.ShowCart.Click += new System.EventHandler(this.ShowCart_Click);
@@ -195,45 +192,33 @@ namespace Kursovaya.User
             this.SearchTextBox.Location = new System.Drawing.Point(12, 120);
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(464, 29);
-            this.SearchTextBox.TabIndex = 2;
+            this.SearchTextBox.TabIndex = 14;
             this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             // 
             // SortComboBox
             // 
             this.SortComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SortComboBox.FormattingEnabled = true;
-<<<<<<< HEAD
             this.SortComboBox.Location = new System.Drawing.Point(712, 116);
-=======
-            this.SortComboBox.Location = new System.Drawing.Point(864, 120);
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.SortComboBox.Name = "SortComboBox";
             this.SortComboBox.Size = new System.Drawing.Size(199, 32);
-            this.SortComboBox.TabIndex = 3;
+            this.SortComboBox.TabIndex = 16;
             this.SortComboBox.SelectedIndexChanged += new System.EventHandler(this.SortComboBox_SelectedIndexChanged);
             // 
             // FilterComboBox
             // 
             this.FilterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FilterComboBox.FormattingEnabled = true;
-<<<<<<< HEAD
             this.FilterComboBox.Location = new System.Drawing.Point(482, 117);
-=======
-            this.FilterComboBox.Location = new System.Drawing.Point(634, 121);
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.FilterComboBox.Name = "FilterComboBox";
             this.FilterComboBox.Size = new System.Drawing.Size(224, 32);
-            this.FilterComboBox.TabIndex = 3;
+            this.FilterComboBox.TabIndex = 15;
             this.FilterComboBox.SelectedIndexChanged += new System.EventHandler(this.FilterComboBox_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-<<<<<<< HEAD
             this.label1.Location = new System.Drawing.Point(708, 90);
-=======
-            this.label1.Location = new System.Drawing.Point(860, 94);
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 24);
             this.label1.TabIndex = 4;
@@ -242,11 +227,7 @@ namespace Kursovaya.User
             // filterLabel
             // 
             this.filterLabel.AutoSize = true;
-<<<<<<< HEAD
             this.filterLabel.Location = new System.Drawing.Point(478, 90);
-=======
-            this.filterLabel.Location = new System.Drawing.Point(630, 94);
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.filterLabel.Name = "filterLabel";
             this.filterLabel.Size = new System.Drawing.Size(166, 24);
             this.filterLabel.TabIndex = 4;
@@ -263,42 +244,30 @@ namespace Kursovaya.User
             // 
             // btnResetFilter
             // 
-<<<<<<< HEAD
             this.btnResetFilter.Location = new System.Drawing.Point(917, 93);
             this.btnResetFilter.Name = "btnResetFilter";
             this.btnResetFilter.Size = new System.Drawing.Size(149, 56);
-=======
-            this.btnResetFilter.Location = new System.Drawing.Point(1069, 96);
-            this.btnResetFilter.Name = "btnResetFilter";
-            this.btnResetFilter.Size = new System.Drawing.Size(150, 57);
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
-            this.btnResetFilter.TabIndex = 5;
+            this.btnResetFilter.TabIndex = 12;
             this.btnResetFilter.Text = "Сбросить фильтры";
             this.btnResetFilter.UseVisualStyleBackColor = true;
             this.btnResetFilter.Click += new System.EventHandler(this.btnResetFilter_Click);
             // 
-<<<<<<< HEAD
             // resetSelectedItems
             // 
             this.resetSelectedItems.Location = new System.Drawing.Point(917, 12);
             this.resetSelectedItems.Name = "resetSelectedItems";
             this.resetSelectedItems.Size = new System.Drawing.Size(149, 78);
-            this.resetSelectedItems.TabIndex = 6;
+            this.resetSelectedItems.TabIndex = 11;
             this.resetSelectedItems.Text = "Сбросить выбор";
             this.resetSelectedItems.UseVisualStyleBackColor = true;
             this.resetSelectedItems.Click += new System.EventHandler(this.resetSelectedItems_Click);
             // 
-=======
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             // UserProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1231, 682);
-<<<<<<< HEAD
             this.Controls.Add(this.resetSelectedItems);
-=======
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
             this.Controls.Add(this.btnResetFilter);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.filterLabel);
@@ -353,9 +322,6 @@ namespace Kursovaya.User
         private System.Windows.Forms.Label filterLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnResetFilter;
-<<<<<<< HEAD
         private System.Windows.Forms.Button resetSelectedItems;
-=======
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
     }
 }

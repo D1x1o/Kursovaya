@@ -31,6 +31,7 @@ namespace Kursovaya
             Settings.Default.user = serverUser.Text;
             Settings.Default.pwd = serverPassword.Text;
             MessageBox.Show("Данные для подключения сохранены!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information );
+            this.Hide();
         }
     }
 }

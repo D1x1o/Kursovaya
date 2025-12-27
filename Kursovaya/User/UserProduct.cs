@@ -46,6 +46,7 @@ namespace Kursovaya.User
             checkedItems.Default.case_coolers = false;
             checkedItems.Default.thermo_interface = false;
             checkedItems.Default.cpu_cooler = false;
+            loadChekedItems();           
 
         }
 
@@ -55,6 +56,7 @@ namespace Kursovaya.User
             Hide();
             prod.ShowDialog();
             Show();
+            loadItemsAll();
         }
 
 
@@ -250,10 +252,7 @@ namespace Kursovaya.User
         private void ShowProc_Click(object sender, EventArgs e) { changeTheme("processors"); }
         private void ShowVideoCards_Click(object sender, EventArgs e) { changeTheme("videocards"); }
         private void ShowMotherBoard_Click(object sender, EventArgs e) { changeTheme("motherboards"); }
-        private void ShowRam_Click(object sender, EventArgs e)
-        {
-            changeTheme("ram");
-        }
+        private void ShowRam_Click(object sender, EventArgs e) { changeTheme("ram"); }
         private void ShowDrivers_Click(object sender, EventArgs e) { changeTheme("storage"); }
         private void ShowPowerSuplier_Click(object sender, EventArgs e) { changeTheme("power_supplier"); }
         private void ShowCases_Click(object sender, EventArgs e) { changeTheme("case"); }
@@ -488,7 +487,7 @@ namespace Kursovaya.User
                 }
                 if (Filter != "Не выбрано")
                 {
-                    query += " ";
+                    query += " and ";
                     if (theme == "processors") { query += "  core_int"; }
                     else if (theme == "case") { query += "  form_factor"; }
                     else if (theme == "case_coolers") { query += "  scale"; }
@@ -530,7 +529,7 @@ namespace Kursovaya.User
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
                     {
-                        query += " ";
+                        query += " and ";
                         if (theme == "processors") { query += "  core_int"; }
                         else if (theme == "case") { query += "  form_factor"; }
                         else if (theme == "case_coolers") { query += "  scale"; }
@@ -562,7 +561,7 @@ namespace Kursovaya.User
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
                     {
-                        query += " ";
+                        query += " and ";
                         if (theme == "processors") { query += "  core_int"; }
                         else if (theme == "case") { query += "  form_factor"; }
                         else if (theme == "case_coolers") { query += "  scale"; }
@@ -594,7 +593,7 @@ namespace Kursovaya.User
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
                     {
-                        query += " ";
+                        query += " and ";
                         if (theme == "processors") { query += "  core_int"; }
                         else if (theme == "case") { query += "  form_factor"; }
                         else if (theme == "case_coolers") { query += "  scale"; }
@@ -631,7 +630,7 @@ namespace Kursovaya.User
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
                     {
-                        query += " ";
+                        query += " and ";
                         if (theme == "processors") { query += "  core_int"; }
                         else if (theme == "case") { query += "  form_factor"; }
                         else if (theme == "case_coolers") { query += "  scale"; }
@@ -672,7 +671,7 @@ namespace Kursovaya.User
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
                     {
-                        query += " ";
+                        query += " and ";
                         if (theme == "processors") { query += "  core_int"; }
                         else if (theme == "case") { query += "  form_factor"; }
                         else if (theme == "case_coolers") { query += "  scale"; }
@@ -723,7 +722,7 @@ namespace Kursovaya.User
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
                     {
-                        query += " ";
+                        query += " and ";
                         if (theme == "processors") { query += "  core_int"; }
                         else if (theme == "case") { query += "  form_factor"; }
                         else if (theme == "case_coolers") { query += "  scale"; }
@@ -784,7 +783,7 @@ namespace Kursovaya.User
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
                     {
-                        query += " ";
+                        query += " and ";
                         if (theme == "processors") { query += "  core_int"; }
                         else if (theme == "case") { query += "  form_factor"; }
                         else if (theme == "case_coolers") { query += "  scale"; }
@@ -856,7 +855,7 @@ namespace Kursovaya.User
                     else { query += $"model LIKE '%{search}%' "; }
                     if (Filter != "Не выбрано")
                     {
-                        query += " ";
+                        query += " and ";
                         if (theme == "processors") { query += "  core_int"; }
                         else if (theme == "case") { query += "  form_factor"; }
                         else if (theme == "case_coolers") { query += "  scale"; }
@@ -906,7 +905,6 @@ namespace Kursovaya.User
             SortComboBox.SelectedIndex = 0;
             FilterComboBox.SelectedIndex = 0;  
         }
-<<<<<<< HEAD
 
         private void resetSelectedItems_Click(object sender, EventArgs e)
         {
@@ -953,7 +951,212 @@ namespace Kursovaya.User
             ShowTermo.ForeColor = Color.Black; ShowTermo.Text = "Термопаста"; 
 
         }
-=======
->>>>>>> ca407f182d134c01ba77b83e088c341463ec0cce
+        private List<string> GetSelectedComponents()
+        {
+            List<string> components = new List<string>();
+
+            string query = @"
+            SELECT 
+                id_processors,
+                id_motherboards,
+                id_videocards,
+                id_ram,
+                id_cpu_cooler,
+                id_cases,
+                id_case_coolers,
+                id_thermo_interface,
+                id_storage,
+                id_power_supplier
+            FROM user_cart
+            WHERE iduser = @iduser
+            LIMIT 1;";
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    conn.Open();
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@iduser", user.Default.userID);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (!reader.Read())
+                                return components;
+
+                            if (reader.GetInt32("id_processors") != 0)
+                                components.Add("processors");
+
+                            if (reader.GetInt32("id_motherboards") != 0)
+                                components.Add("motherboards");
+
+                            if (reader.GetInt32("id_videocards") != 0)
+                                components.Add("videocards");
+
+                            if (reader.GetInt32("id_ram") != 0)
+                                components.Add("ram");
+
+                            if (reader.GetInt32("id_cpu_cooler") != 0)
+                                components.Add("cpu_cooler");
+
+                            if (reader.GetInt32("id_cases") != 0)
+                                components.Add("cases");
+
+                            if (reader.GetInt32("id_case_coolers") != 0)
+                                components.Add("case_coolers");
+
+                            if (reader.GetInt32("id_thermo_interface") != 0)
+                                components.Add("thermo_interface");
+
+                            if (reader.GetInt32("id_storage") != 0)
+                                components.Add("storage");
+
+                            if (reader.GetInt32("id_power_supplier") != 0)
+                                components.Add("power_supplier");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return components; };
+
+            return components;
+        }
+        private void loadChekedItems()
+        {
+            try
+            {
+                if (checkCart() == 0)
+                {
+                    DialogResult res = MessageBox.Show("Вы ранее выбрали комплектующие, начать новую сборку?", "Сборка", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (res == DialogResult.Yes)
+                    {
+                        DialogResult res2 = MessageBox.Show("Вы действительно хотите очистить ранее выбранные товары?", "Очистить выбор", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (res2 == DialogResult.Yes)
+                        {
+                            using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                            {
+                                conn.Open();
+                                string query = $"UPDATE user_cart SET id_processors = 0,id_motherboards = 0,id_videocards = 0,id_ram = 0,count_ram = 0,id_cpu_cooler = 0,id_cases = 0,id_case_coolers = 0,count_case_fan = 0,id_thermo_interface = 0,id_storage = 0,id_power_supplier = 0 where iduser = {user.Default.userID}";
+                                MySqlCommand cmd = new MySqlCommand(query, conn);
+                                cmd.ExecuteNonQuery();
+                                ShowCart.Enabled = false;
+                                buttonsColorUnchecked();
+                                ArrChecked["processors"] = false;
+                                ArrChecked["videocards"] = false;
+                                ArrChecked["motherboards"] = false;
+                                ArrChecked["ram"] = false;
+                                ArrChecked["storage"] = false;
+                                ArrChecked["power_supplier"] = false;
+                                ArrChecked["cases"] = false;
+                                ArrChecked["case_coolers"] = false;
+                                ArrChecked["cpu_cooler"] = false;
+                                ArrChecked["thermo_interface"] = false;
+                                ArrChecked["cases"] = false;
+                            }
+                        }
+                        else
+                        {
+                            loadChekedItems();
+                        }
+                    }
+                    else if (res == DialogResult.No)
+                    {
+                        List<string> itemsChecked = GetSelectedComponents();
+                        foreach (string item in itemsChecked)
+                        {
+                            ArrChecked[item] = true;
+                            ShowCart.Enabled = true;
+                            if (item == "processors") { ShowProc.ForeColor = Color.Green; ShowProc.Text = "Процессоры✔"; checkedItems.Default.processors = true; }
+                            else if (item == "videocards") { ShowVideoCards.ForeColor = Color.Green; ShowVideoCards.Text = "Видеокарты✔"; checkedItems.Default.videocards = true; }
+                            else if (item == "motherboards") { ShowMotherBoard.ForeColor = Color.Green; ShowMotherBoard.Text = "Материнские платы✔"; checkedItems.Default.motherboards = true; }
+                            else if (item == "ram") { ShowRam.ForeColor = Color.Green; ShowRam.Text = "Оперативная память✔"; checkedItems.Default.ram = true; }
+                            else if (item == "storage") { ShowDrivers.ForeColor = Color.Green; ShowDrivers.Text = "Накопители✔"; checkedItems.Default.storage = true; }
+                            else if (item == "power_supplier") { ShowPowerSuplier.ForeColor = Color.Green; ShowPowerSuplier.Text = "Блоки питания✔"; checkedItems.Default.power_supplier = true; }
+                            else if (item == "case_coolers") { ShowCaseFan.ForeColor = Color.Green; ShowCaseFan.Text = "Корпусные кулеры✔"; checkedItems.Default.case_coolers = true; }
+                            else if (item == "cases") { ShowCases.ForeColor = Color.Green; ShowCases.Text = "Корпусы✔"; checkedItems.Default.cases = true; }
+                            else if (item == "cpu_cooler") { ShowCpuFan.ForeColor = Color.Green; ShowCpuFan.Text = "Кулеры✔"; checkedItems.Default.cpu_cooler = true; }
+                            else if (item == "thermo_interface") { ShowTermo.ForeColor = Color.Green; ShowTermo.Text = "Термопаста✔"; checkedItems.Default.thermo_interface = true; }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private int checkCart()
+        {
+            try
+            {
+                string query = $"select COUNT(*) from user_cart where iduser = {user.Default.userID} and id_processors = 0 and id_motherboards = 0 and id_videocards = 0 and id_cpu_cooler = 0 and id_cases = 0 and id_case_coolers = 0 and  id_power_supplier = 0 and id_thermo_interface = 0 and id_ram = 0 and id_storage = 0 limit 1";
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    //проверка если в карзине не выбраны товары возвращаем 1
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    int res = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (res == 1)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return 1; }
+        }
+        private void loadItemsAll()
+        {
+            if (checkedItems.Default.processors){ShowProc.ForeColor = Color.Green; ShowProc.Text = "Процессоры✔"; checkedItems.Default.processors = true;}
+            else {ShowProc.ForeColor = Color.Black; ShowProc.Text = "Процессоры"; checkedItems.Default.processors = false;}
+
+            if (checkedItems.Default.videocards){ShowVideoCards.ForeColor = Color.Green; ShowVideoCards.Text = "Видеокарты✔"; checkedItems.Default.videocards = true;}
+            else { ShowVideoCards.ForeColor = Color.Black; ShowVideoCards.Text = "Видеокарты"; checkedItems.Default.videocards = false; }
+
+            if (checkedItems.Default.motherboards) { ShowMotherBoard.ForeColor = Color.Green; ShowMotherBoard.Text = "Материнские платы✔"; checkedItems.Default.motherboards = true; }
+            else { ShowMotherBoard.ForeColor = Color.Black; ShowMotherBoard.Text = "Материнские платы"; checkedItems.Default.motherboards = false; }
+
+            if (checkedItems.Default.ram) { ShowRam.ForeColor = Color.Green; ShowRam.Text = "Оперативная память✔"; checkedItems.Default.ram = true; }
+            else { ShowRam.ForeColor = Color.Black; ShowRam.Text = "Оперативная память"; checkedItems.Default.ram = false; }
+
+            if (checkedItems.Default.storage) { ShowDrivers.ForeColor = Color.Green; ShowDrivers.Text = "Накопители✔"; checkedItems.Default.storage = true; }
+            else { ShowDrivers.ForeColor = Color.Black; ShowDrivers.Text = "Накопители"; checkedItems.Default.storage = false; }
+
+            if (checkedItems.Default.power_supplier) { ShowPowerSuplier.ForeColor = Color.Green; ShowPowerSuplier.Text = "Блоки питания✔"; checkedItems.Default.power_supplier = true; }
+            else { ShowPowerSuplier.ForeColor = Color.Black; ShowPowerSuplier.Text = "Блоки питания"; checkedItems.Default.power_supplier = false; }
+
+            if (checkedItems.Default.case_coolers) { ShowCaseFan.ForeColor = Color.Green; ShowCaseFan.Text = "Корпусные кулеры✔"; checkedItems.Default.case_coolers = true; }
+            else { ShowCaseFan.ForeColor = Color.Black; ShowCaseFan.Text = "Корпусные кулеры"; checkedItems.Default.case_coolers = false; }
+
+            if (checkedItems.Default.cases) { ShowCases.ForeColor = Color.Green; ShowCases.Text = "Корпусы✔"; checkedItems.Default.cases = true; }
+            else { ShowCases.ForeColor = Color.Black; ShowCases.Text = "Корпусы"; checkedItems.Default.cases = false; }
+
+            if (checkedItems.Default.cpu_cooler) { ShowCpuFan.ForeColor = Color.Green; ShowCpuFan.Text = "Кулеры✔"; checkedItems.Default.cpu_cooler = true; }
+            else { ShowCpuFan.ForeColor = Color.Black; ShowCpuFan.Text = "Кулеры"; checkedItems.Default.cpu_cooler = false; }
+
+            if (checkedItems.Default.thermo_interface) { ShowTermo.ForeColor = Color.Green; ShowTermo.Text = "Термопаста✔"; checkedItems.Default.thermo_interface = true; }
+            else { ShowTermo.ForeColor = Color.Black; ShowTermo.Text = "Термопаста"; checkedItems.Default.thermo_interface = false; }
+            if(checkedItems.Default.processors == false &&
+                checkedItems.Default.motherboards == false &&
+                checkedItems.Default.videocards == false &&
+                checkedItems.Default.ram == false &&
+                checkedItems.Default.cases == false &&
+                checkedItems.Default.case_coolers == false &&
+                checkedItems.Default.cpu_cooler == false &&
+                checkedItems.Default.thermo_interface == false &&
+                checkedItems.Default.storage == false &&
+                checkedItems.Default.power_supplier == false)
+            {
+                ShowCart.Enabled = false;
+            }
+            else
+            {
+                ShowCart.Enabled = true;
+            }
+        }
     }
 }

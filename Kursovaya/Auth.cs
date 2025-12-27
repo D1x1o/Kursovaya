@@ -20,11 +20,7 @@ namespace Kursovaya
         public Auth()
         {
             InitializeComponent();
-            if (!TestDataBaseConn())
-            {
-                EditConn ed = new EditConn();
-                ed.ShowDialog();
-            }
+            TestDataBaseConn();
         }
         string ConnStr = ConnectionString.GetConnectionString();
         bool inCaptcha = false;
@@ -33,13 +29,13 @@ namespace Kursovaya
             if (AuthAtt >= 1 && !inCaptcha)
             {
                 this.Height = 530;
-                Captcha();
                 inCaptcha = true;
             }
             if (inCaptcha)
             {
                 if(CaptchaTextBox.Text.Trim() == captchaAnewer)
                 {
+                    inCaptcha = false;
                     CheckUser();
                     this.Height = 350;
                 }
@@ -250,29 +246,22 @@ namespace Kursovaya
             pwdTextBox.Text = "password";
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show($"{GetHashPwd(pwdTextBox.Text)}");
-            using(StreamWriter wr = new StreamWriter("hash.txt"))
-            {
-                wr.WriteLine(GetHashPwd(pwdTextBox.Text));
-            }
-        }
-
-        private bool TestDataBaseConn()
+        private void TestDataBaseConn()
         {            
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
                     conn.Open();
-                    return true;
                 }
             }
             catch (Exception) { MessageBox.Show("Ошибка подключения к базе данных!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-
+                {
+                    EditConn ed = new EditConn();
+                    ed.ShowDialog();
+                }
             }
+                
         }
 
         private void connedit_Click(object sender, EventArgs e)
