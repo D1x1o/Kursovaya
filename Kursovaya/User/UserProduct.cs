@@ -46,7 +46,9 @@ namespace Kursovaya.User
             checkedItems.Default.case_coolers = false;
             checkedItems.Default.thermo_interface = false;
             checkedItems.Default.cpu_cooler = false;
-            loadChekedItems();           
+            loadChekedItems();
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.RowHeadersVisible = false;
 
         }
 
@@ -287,6 +289,7 @@ namespace Kursovaya.User
 
         private void Columns()
         {
+            dataGridView1.Columns["image"].Visible = false;
             dataGridView1.Columns["id"].Visible = false;
             dataGridView1.Columns["cost"].HeaderText = "Стоимость";
             if (theme == "processors")
@@ -400,6 +403,7 @@ namespace Kursovaya.User
                 dataGridView1.Columns["packege_volume"].HeaderText = "Объём упаковки";
                 dataGridView1.Columns["shel_life"].HeaderText = "Срок годности  ";
                 dataGridView1.Columns["composition"].HeaderText = "Состав";
+                dataGridView1.Columns["composition"].DisplayIndex = dataGridView1.ColumnCount - 3;
             }
 
             dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
@@ -1157,6 +1161,18 @@ namespace Kursovaya.User
             {
                 ShowCart.Enabled = true;
             }
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {            
+            try
+            {
+                if (e.RowIndex != -1)
+                {
+                    UserProductCharacteristic newShowCharacteristic = new UserProductCharacteristic(theme, Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id"].Value));
+                    newShowCharacteristic.ShowDialog();
+                }                
+            }catch(Exception ex) { MessageBox.Show(ex.Message); }            
         }
     }
 }
