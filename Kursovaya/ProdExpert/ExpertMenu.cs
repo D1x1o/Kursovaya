@@ -32,5 +32,13 @@ namespace Kursovaya.ProdExpert
             prod.ShowDialog();
             Show();
         }
+
+        private void addPic_Click(object sender, EventArgs e)
+        {
+            FormAddPic addPic = new FormAddPic();
+            Hide();
+            addPic.ShowDialog();
+            Show();
+        }
     }
 }

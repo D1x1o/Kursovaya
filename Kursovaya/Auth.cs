@@ -269,5 +269,11 @@ namespace Kursovaya
             EditConn ec = new EditConn();
             ec.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            loginTextBox.Text = "ivan";
+            pwdTextBox.Text = "ivan";
+        }
     }
 }

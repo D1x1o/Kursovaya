@@ -31,6 +31,7 @@ namespace Kursovaya.ProdExpert
         {
             this.ProdInStock = new System.Windows.Forms.Button();
             this.FormDocSupplyProd = new System.Windows.Forms.Button();
+            this.addPic = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ProdInStock
@@ -45,7 +46,7 @@ namespace Kursovaya.ProdExpert
             // 
             // FormDocSupplyProd
             // 
-            this.FormDocSupplyProd.Location = new System.Drawing.Point(47, 101);
+            this.FormDocSupplyProd.Location = new System.Drawing.Point(47, 91);
             this.FormDocSupplyProd.Name = "FormDocSupplyProd";
             this.FormDocSupplyProd.Size = new System.Drawing.Size(227, 78);
             this.FormDocSupplyProd.TabIndex = 1;
@@ -53,11 +54,22 @@ namespace Kursovaya.ProdExpert
             this.FormDocSupplyProd.UseVisualStyleBackColor = true;
             this.FormDocSupplyProd.Click += new System.EventHandler(this.FormDocSupplyProd_Click);
             // 
+            // addPic
+            // 
+            this.addPic.Location = new System.Drawing.Point(47, 175);
+            this.addPic.Name = "addPic";
+            this.addPic.Size = new System.Drawing.Size(227, 82);
+            this.addPic.TabIndex = 1;
+            this.addPic.Text = "Добавить изображения для товаров";
+            this.addPic.UseVisualStyleBackColor = true;
+            this.addPic.Click += new System.EventHandler(this.addPic_Click);
+            // 
             // ExpertMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(315, 265);
+            this.ClientSize = new System.Drawing.Size(315, 294);
+            this.Controls.Add(this.addPic);
             this.Controls.Add(this.FormDocSupplyProd);
             this.Controls.Add(this.ProdInStock);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -75,5 +87,6 @@ namespace Kursovaya.ProdExpert
 
         private System.Windows.Forms.Button ProdInStock;
         private System.Windows.Forms.Button FormDocSupplyProd;
+        private System.Windows.Forms.Button addPic;
     }
 }
