@@ -257,7 +257,7 @@
     <Content Include="captchaImg\3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\3060-gigabyte.png">
+    <Content Include="img\gigabyte3060.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="img\no-image.png">

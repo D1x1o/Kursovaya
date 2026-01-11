@@ -151,7 +151,7 @@ namespace Kursovaya.User
                     }
                 }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) {string err = ex.Message; productPictureBox.Image = Image.FromFile("img/no-image.png"); }
         }
         public void setProductName(string theme, int idProduct)
         {
@@ -191,7 +191,5 @@ namespace Kursovaya.User
             
 
         }
-
-
     }
 }

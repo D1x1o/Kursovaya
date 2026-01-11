@@ -167,6 +167,7 @@ namespace Kursovaya.ProdExpert
                 dataGridView1.Columns["image"].HeaderText = "Изображение";
                 dataGridView1.Columns["ActionColumn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.Columns.Count - 1;
+                
             }
             catch (Exception e) { MessageBox.Show(e.Message); }
             if(dgvPage == 0)
@@ -226,7 +227,7 @@ namespace Kursovaya.ProdExpert
             }
             
         }
-
+        
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -263,11 +264,25 @@ namespace Kursovaya.ProdExpert
                             cmd.ExecuteNonQuery();
                         }
 
-                        MessageBox.Show($"Изображение успешно сохранено в {destPath}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"Изображение успешно сохранено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        fillDGV();
                     }
                 }
             }
             catch(Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "ActionColumn")
+            {
+                string imagePath = dataGridView1.Rows[e.RowIndex]
+                    .Cells["image"].Value?.ToString();
+
+                e.Value = string.IsNullOrWhiteSpace(imagePath)
+                    ? "Добавить изображение"
+                    : "Заменить изображение";
+            }
         }
     }
 }
