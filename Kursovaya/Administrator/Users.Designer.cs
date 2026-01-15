@@ -30,6 +30,22 @@ namespace Kursovaya.Administrator
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.userNameTextBox = new System.Windows.Forms.TextBox();
+            this.userSurnameTextBox = new System.Windows.Forms.TextBox();
+            this.userPatronymicTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.userLoginTextBox = new System.Windows.Forms.TextBox();
+            this.userPasswordTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.userPasswordConfirmTextBox = new System.Windows.Forms.TextBox();
+            this.userSaveChanges = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.userRoleComboBox = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -37,21 +53,187 @@ namespace Kursovaya.Administrator
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(578, 388);
+            this.dataGridView1.Size = new System.Drawing.Size(950, 226);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 241);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 24);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Имя";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(204, 241);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 24);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Фамилия";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(396, 241);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(98, 24);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Отчество";
+            // 
+            // userNameTextBox
+            // 
+            this.userNameTextBox.Location = new System.Drawing.Point(16, 268);
+            this.userNameTextBox.MaxLength = 100;
+            this.userNameTextBox.Name = "userNameTextBox";
+            this.userNameTextBox.Size = new System.Drawing.Size(186, 29);
+            this.userNameTextBox.TabIndex = 2;
+            this.userNameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userNameTextBox_KeyPress);
+            // 
+            // userSurnameTextBox
+            // 
+            this.userSurnameTextBox.Location = new System.Drawing.Point(208, 268);
+            this.userSurnameTextBox.MaxLength = 100;
+            this.userSurnameTextBox.Name = "userSurnameTextBox";
+            this.userSurnameTextBox.Size = new System.Drawing.Size(186, 29);
+            this.userSurnameTextBox.TabIndex = 2;
+            this.userSurnameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userSurnameTextBox_KeyPress);
+            // 
+            // userPatronymicTextBox
+            // 
+            this.userPatronymicTextBox.Location = new System.Drawing.Point(400, 268);
+            this.userPatronymicTextBox.MaxLength = 100;
+            this.userPatronymicTextBox.Name = "userPatronymicTextBox";
+            this.userPatronymicTextBox.Size = new System.Drawing.Size(211, 29);
+            this.userPatronymicTextBox.TabIndex = 2;
+            this.userPatronymicTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userPatronymicTextBox_KeyPress);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 308);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 24);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Логин";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(204, 308);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(76, 24);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Пароль";
+            // 
+            // userLoginTextBox
+            // 
+            this.userLoginTextBox.Location = new System.Drawing.Point(16, 335);
+            this.userLoginTextBox.MaxLength = 100;
+            this.userLoginTextBox.Name = "userLoginTextBox";
+            this.userLoginTextBox.Size = new System.Drawing.Size(186, 29);
+            this.userLoginTextBox.TabIndex = 2;
+            this.userLoginTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userLoginTextBox_KeyPress);
+            // 
+            // userPasswordTextBox
+            // 
+            this.userPasswordTextBox.Location = new System.Drawing.Point(208, 335);
+            this.userPasswordTextBox.MaxLength = 100;
+            this.userPasswordTextBox.Name = "userPasswordTextBox";
+            this.userPasswordTextBox.Size = new System.Drawing.Size(186, 29);
+            this.userPasswordTextBox.TabIndex = 2;
+            this.userPasswordTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userPasswordTextBox_KeyPress);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(396, 308);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(202, 24);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Подтвердите пароль";
+            // 
+            // userPasswordConfirmTextBox
+            // 
+            this.userPasswordConfirmTextBox.Location = new System.Drawing.Point(400, 335);
+            this.userPasswordConfirmTextBox.MaxLength = 100;
+            this.userPasswordConfirmTextBox.Name = "userPasswordConfirmTextBox";
+            this.userPasswordConfirmTextBox.Size = new System.Drawing.Size(211, 29);
+            this.userPasswordConfirmTextBox.TabIndex = 2;
+            this.userPasswordConfirmTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userPasswordConfirmTextBox_KeyPress);
+            // 
+            // userSaveChanges
+            // 
+            this.userSaveChanges.Location = new System.Drawing.Point(813, 295);
+            this.userSaveChanges.Name = "userSaveChanges";
+            this.userSaveChanges.Size = new System.Drawing.Size(149, 69);
+            this.userSaveChanges.TabIndex = 3;
+            this.userSaveChanges.Text = "Создать";
+            this.userSaveChanges.UseVisualStyleBackColor = true;
+            this.userSaveChanges.Click += new System.EventHandler(this.userSaveChanges_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label7.Location = new System.Drawing.Point(491, 247);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(120, 13);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "не обязательное поле";
+            // 
+            // userRoleComboBox
+            // 
+            this.userRoleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.userRoleComboBox.FormattingEnabled = true;
+            this.userRoleComboBox.Location = new System.Drawing.Point(617, 268);
+            this.userRoleComboBox.Name = "userRoleComboBox";
+            this.userRoleComboBox.Size = new System.Drawing.Size(190, 32);
+            this.userRoleComboBox.TabIndex = 5;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(617, 241);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(54, 24);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Роль";
             // 
             // Users
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(602, 412);
+            this.ClientSize = new System.Drawing.Size(974, 376);
+            this.Controls.Add(this.userRoleComboBox);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.userSaveChanges);
+            this.Controls.Add(this.userPasswordConfirmTextBox);
+            this.Controls.Add(this.userPasswordTextBox);
+            this.Controls.Add(this.userLoginTextBox);
+            this.Controls.Add(this.userPatronymicTextBox);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.userSurnameTextBox);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.userNameTextBox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "Users";
             this.ShowIcon = false;
@@ -59,11 +241,28 @@ namespace Kursovaya.Administrator
             this.Text = "Пользователи";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox userNameTextBox;
+        private System.Windows.Forms.TextBox userSurnameTextBox;
+        private System.Windows.Forms.TextBox userPatronymicTextBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox userLoginTextBox;
+        private System.Windows.Forms.TextBox userPasswordTextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox userPasswordConfirmTextBox;
+        private System.Windows.Forms.Button userSaveChanges;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox userRoleComboBox;
+        private System.Windows.Forms.Label label8;
     }
 }
