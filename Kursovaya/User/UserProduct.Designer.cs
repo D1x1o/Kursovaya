@@ -63,10 +63,10 @@ namespace Kursovaya.User
             this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.dataGridView1.Location = new System.Drawing.Point(26, 166);
+            this.dataGridView1.Location = new System.Drawing.Point(26, 182);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1207, 517);
+            this.dataGridView1.Size = new System.Drawing.Size(1207, 501);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
@@ -220,7 +220,7 @@ namespace Kursovaya.User
             this.ShowCart.ForeColor = System.Drawing.Color.White;
             this.ShowCart.Location = new System.Drawing.Point(1086, 23);
             this.ShowCart.Name = "ShowCart";
-            this.ShowCart.Size = new System.Drawing.Size(147, 136);
+            this.ShowCart.Size = new System.Drawing.Size(147, 144);
             this.ShowCart.TabIndex = 13;
             this.ShowCart.Text = "Корзина";
             this.ShowCart.UseVisualStyleBackColor = false;
@@ -230,7 +230,7 @@ namespace Kursovaya.User
             // 
             this.SearchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.SearchTextBox.ForeColor = System.Drawing.Color.White;
-            this.SearchTextBox.Location = new System.Drawing.Point(26, 131);
+            this.SearchTextBox.Location = new System.Drawing.Point(26, 138);
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(464, 29);
             this.SearchTextBox.TabIndex = 14;
@@ -243,7 +243,7 @@ namespace Kursovaya.User
             this.SortComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SortComboBox.ForeColor = System.Drawing.Color.White;
             this.SortComboBox.FormattingEnabled = true;
-            this.SortComboBox.Location = new System.Drawing.Point(726, 127);
+            this.SortComboBox.Location = new System.Drawing.Point(726, 134);
             this.SortComboBox.Name = "SortComboBox";
             this.SortComboBox.Size = new System.Drawing.Size(199, 32);
             this.SortComboBox.TabIndex = 16;
@@ -256,7 +256,7 @@ namespace Kursovaya.User
             this.FilterComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FilterComboBox.ForeColor = System.Drawing.Color.White;
             this.FilterComboBox.FormattingEnabled = true;
-            this.FilterComboBox.Location = new System.Drawing.Point(496, 128);
+            this.FilterComboBox.Location = new System.Drawing.Point(496, 135);
             this.FilterComboBox.Name = "FilterComboBox";
             this.FilterComboBox.Size = new System.Drawing.Size(224, 32);
             this.FilterComboBox.TabIndex = 15;
@@ -266,7 +266,7 @@ namespace Kursovaya.User
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(722, 101);
+            this.label1.Location = new System.Drawing.Point(722, 108);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 24);
             this.label1.TabIndex = 4;
@@ -276,7 +276,7 @@ namespace Kursovaya.User
             // 
             this.filterLabel.AutoSize = true;
             this.filterLabel.ForeColor = System.Drawing.Color.White;
-            this.filterLabel.Location = new System.Drawing.Point(492, 101);
+            this.filterLabel.Location = new System.Drawing.Point(492, 108);
             this.filterLabel.Name = "filterLabel";
             this.filterLabel.Size = new System.Drawing.Size(166, 24);
             this.filterLabel.TabIndex = 4;
@@ -286,7 +286,7 @@ namespace Kursovaya.User
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.Control;
-            this.label3.Location = new System.Drawing.Point(26, 104);
+            this.label3.Location = new System.Drawing.Point(26, 111);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(144, 24);
             this.label3.TabIndex = 4;
@@ -299,7 +299,7 @@ namespace Kursovaya.User
             this.btnResetFilter.ForeColor = System.Drawing.Color.White;
             this.btnResetFilter.Location = new System.Drawing.Point(931, 104);
             this.btnResetFilter.Name = "btnResetFilter";
-            this.btnResetFilter.Size = new System.Drawing.Size(149, 56);
+            this.btnResetFilter.Size = new System.Drawing.Size(149, 63);
             this.btnResetFilter.TabIndex = 12;
             this.btnResetFilter.Text = "Сбросить фильтры";
             this.btnResetFilter.UseVisualStyleBackColor = false;

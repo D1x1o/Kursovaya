@@ -31,6 +31,17 @@ namespace Kursovaya.User
             InitializeComponent();            
             fillDGV(user.Default.userID);
             checkBuildOption();
+            buildCheckBox.Checked = false;
+            if (checkAmount())
+            {
+                buildCheckBox.Checked = true;
+                buildPrice.Visible = true;
+            }
+            else
+            {
+                buildCheckBox.Checked = false;
+                buildPrice.Visible = false;
+            }
         }
         
         public void fillDGV(int iduser)
@@ -355,6 +366,7 @@ namespace Kursovaya.User
                             }
                         }
                     }
+                    mathEndPriceNew();
                     if (!dataGridView1.Columns.Contains("AmountInc"))
                     {
                         DataGridViewButtonColumn AmountInc = new DataGridViewButtonColumn();
@@ -407,6 +419,7 @@ namespace Kursovaya.User
                     deliveryCB.Enabled = false;
                     this.Hide();
                 }
+                
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -422,7 +435,7 @@ namespace Kursovaya.User
                 }
                 else
                 {
-                    cartSumm += Convert.ToInt32(dataGridView1.Rows[i].Cells["Cost"].Value.ToString().Replace(" ₽", "").Replace(" ", "").Trim());
+                    cartSumm += Convert.ToInt32(dataGridView1.Rows[i].Cells["Cost"].Value.ToString().Replace(" ₽", "").Replace(" ", "").Trim()) * Convert.ToInt32(dataGridView1.Rows[i].Cells["Amount"].Value);
                 }
             }
             return cartSumm;
@@ -442,21 +455,7 @@ namespace Kursovaya.User
             return new String(cost.Reverse().ToArray());
         }
 
-        private void buildCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (buildCheckBox.Checked)
-            {
-                cartSumLabel.Text = getMakedString(mathCartPrice(true).ToString()) + " ₽";
-                discountLabel.Text = getMakedString(Convert.ToInt32(mathCartPrice(true)/100*5).ToString()) + " ₽";
-                cartEndPrice.Text = getMakedString((mathCartPrice(true) - ((Convert.ToInt32(mathCartPrice(true)) / 100 * 5))).ToString()) + " ₽";
-            }
-            else if(buildCheckBox.Checked == false)
-            {
-                cartSumLabel.Text = getMakedString(mathCartPrice(false).ToString()) + " ₽";
-                discountLabel.Text = "0 ₽";
-                cartEndPrice.Text = cartSumLabel.Text;
-            }
-        }
+        
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -552,12 +551,79 @@ namespace Kursovaya.User
                 }
             }
             checkBuildOption();
+            if (checkAmount())
+            {
+                buildCheckBox.Enabled = true;
+            }
+            else
+            {
+                buildCheckBox.Enabled = false;
+                buildCheckBox.Checked = false;
+            }
+
+        }
+        private bool checkAmount()
+        {
+            Dictionary<string, int> components = new Dictionary<string, int>()
+    {
+        { "Процессор", 0 },
+        { "Материнская плата", 0 },
+        { "Видеокарта", 0 },
+        { "Кулер", 0 },
+        { "Корпус", 0 },
+        { "Корпусные кулеры", 0 },
+        { "Блок питания", 0 },
+        { "Термопаста", 0 },
+        { "Накопитель", 0 }
+        // ❗ Оперативную память намеренно НЕ добавляем
+    };
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (row.Cells["Amount"].Value == null) continue;
+
+                int amount = Convert.ToInt32(row.Cells["Amount"].Value);
+                if (amount <= 0) continue;
+
+                string type = row.Cells["type"].Value?.ToString();
+                if (type == null) continue;
+
+                if (components.ContainsKey(type))
+                {
+                    components[type] += amount;
+                }
+            }
+
+            foreach (var item in components)
+            {
+                switch (item.Key)
+                {
+                    case "Накопитель":
+                        if (item.Value < 1 || item.Value > 2)
+                            return false;
+                        break;
+
+                    case "Корпусные кулеры":
+                        if (item.Value < 1 || item.Value > 4)
+                            return false;
+                        break;
+
+                    default:
+                        if (item.Value != 1)
+                            return false;
+                        break;
+                }
+            }
+
+            return true;
         }
         private void checkBuildOption()
         {
             if (checkedItems.Default.processors == true
                 &&
                 checkedItems.Default.motherboards == true &&
+                
                 checkedItems.Default.videocards == true &&
                 checkedItems.Default.ram == true &&
                 checkedItems.Default.cases == true &&
@@ -610,5 +676,140 @@ namespace Kursovaya.User
             }
             catch (Exception e) { MessageBox.Show(e.Message); return ""; }
         }
+
+        private void deliveryCB_CheckedChanged(object sender, EventArgs e)
+        {
+            mathEndPriceNew();
+            if (deliveryCB.Checked)
+            {
+                deliveryPrice.Visible = true;
+                addresTextBox.Visible = true;
+                label2.Visible = true;
+            }
+            else
+            {
+                deliveryPrice.Visible = false;
+                addresTextBox.Visible = false;
+                label2.Visible = false;
+            }
+        }
+
+        private void ShowPrice()
+        {
+            //cartEndPrice.Text = getMakedString((mathCartPrice(true) - ((Convert.ToInt32(mathCartPrice(true)) / 100 * 5))).ToString()) + " ₽"; ;
+        }
+
+
+        private void mathEndPriceNew()
+        {
+            int total = 0;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                if (row.Cells["Amount"].Value == null ||
+                    row.Cells["Cost"].Value == null)
+                    continue;
+
+                int amount = Convert.ToInt32(row.Cells["Amount"].Value);
+                if (amount <= 0) continue;
+
+                int cost = Convert.ToInt32(row.Cells["Cost"].Value.ToString().Replace(" ₽", "").Replace(" ", "").Trim());
+
+                total += cost * amount;
+                
+                
+            }
+            if (deliveryCB.Checked && buildCheckBox.Checked)
+            {
+                total += 4000;
+                discountLabel.Text = "2 000 ₽";
+            }
+            else if (deliveryCB.Checked && buildCheckBox.Checked == false || deliveryCB.Checked == false && buildCheckBox.Checked)
+            {
+                total += 3000;
+                discountLabel.Text = "0 ₽";
+            }
+            else if (deliveryCB.Checked == false && buildCheckBox.Checked == false)
+            {
+                discountLabel.Text = "0 ₽";
+            }
+            cartSumLabel.Text = getMakedString(total.ToString()) + " ₽";
+            cartEndPrice.Text = getMakedString(total.ToString()) + " ₽";
+        }
+
+        private void buildCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            mathEndPriceNew();
+            if (buildCheckBox.Checked)
+            {
+                buildPrice.Visible = true;
+            }
+            else
+            {
+                
+                buildPrice.Visible = false;
+            }
+        }
+        public string Safe(string s) => string.IsNullOrEmpty(s) ? "0" : s;
+        private void makeBuyButton_Click(object sender, EventArgs e)
+        {
+            string processorValue = "", videoValue = "", motherValue = "", ramValue = "", powerValue = "", driverValue = "", thermoValue = "", caseValue = "", casefanValue = "", procfanValue = "";
+            int countProc = 0, countVideo = 0, countMother = 0, countRam = 0, countPower = 0, countDriver = 0, countThermo = 0, countCases = 0, countCasefan = 0, countProcfan = 0;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells["type"].Value?.ToString() == "Процессор") { processorValue = row.Cells["value"].Value?.ToString(); countProc = Convert.ToInt32(row.Cells["Amount"].Value); }
+                else if (row.Cells["type"].Value?.ToString() == "Видеокарта") { videoValue = row.Cells["value"].Value?.ToString(); countVideo = Convert.ToInt32(row.Cells["Amount"].Value); }
+                else if (row.Cells["type"].Value?.ToString() == "Материнская плата") { motherValue = row.Cells["value"].Value?.ToString(); countMother = Convert.ToInt32(row.Cells["Amount"].Value); }
+                else if (row.Cells["type"].Value?.ToString() == "Оперативная память") { ramValue = row.Cells["value"].Value?.ToString(); countRam = Convert.ToInt32(row.Cells["Amount"].Value); }
+                else if (row.Cells["type"].Value?.ToString() == "Блок питания") { powerValue = row.Cells["value"].Value?.ToString(); countPower = Convert.ToInt32(row.Cells["Amount"].Value); }
+                else if (row.Cells["type"].Value?.ToString() == "Кулер") { procfanValue = row.Cells["value"].Value?.ToString(); countProcfan = Convert.ToInt32(row.Cells["Amount"].Value); }
+                else if (row.Cells["type"].Value?.ToString() == "Корпус") { caseValue = row.Cells["value"].Value?.ToString(); countCases = Convert.ToInt32(row.Cells["Amount"].Value); }
+                else if (row.Cells["type"].Value?.ToString() == "Накопитель") { driverValue = row.Cells["value"].Value?.ToString(); countDriver = Convert.ToInt32(row.Cells["Amount"].Value); }
+                else if (row.Cells["type"].Value?.ToString() == "Термопаста") { thermoValue = row.Cells["value"].Value?.ToString(); countThermo = Convert.ToInt32(row.Cells["Amount"].Value); }
+                else if (row.Cells["type"].Value?.ToString() == "Корпусные кулеры") { casefanValue = row.Cells["value"].Value?.ToString(); countCasefan = Convert.ToInt32(row.Cells["Amount"].Value); }
+            }
+            
+            string query1 = $"SELECT id FROM processors WHERE concat(processors.produser, space(1), processors.model) = '{processorValue}'";
+            string query2 = $"SELECT id FROM videocards WHERE     concat(videocards.produser, space(1), videocards.vender, space(1), videocards.model) = '{videoValue}'";
+            string query3 = $"SELECT id FROM motherboards WHERE    concat(motherboards.produser, space(1), motherboards.model) = '{motherValue}'";
+            string query4 = $"SELECT id FROM ram WHERE       concat(ram.produser, space(1), ram.model, space(1), ram.capacity_gb, space(1), 'ГБ') = '{ramValue}'";
+            string query5 = $"SELECT id FROM power_supplier WHERE     concat(power_supplier.produser, space(1), power_supplier.model, space(1), power_supplier.power, space(1), 'ВАТТ') = '{powerValue}'";
+            string query6 = $"SELECT id FROM storage WHERE    concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') = '{driverValue}'";
+            string query7 = $"SELECT id FROM thermo_interface WHERE    concat(thermo_interface.produser, space(1), thermo_interface.model) = '{thermoValue}'";
+            string query8 = $"SELECT id FROM cases WHERE      concat(cases.produser, space(1), cases.model) = '{caseValue}'";
+            string query9 = $"SELECT id FROM case_coolers WHERE   concat(case_coolers.produser, space(1), case_coolers.model) = '{casefanValue}'";
+            string query0 = $"SELECT id FROM cpu_cooler WHERE   concat(cpu_cooler.produser, space(1), cpu_cooler.model) = '{procfanValue}'";
+            DateTime Date = DateTime.Now;
+            string formattedDate = Date.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime timePlus3Days = DateTime.Now.AddDays(3);
+            string formattedDatePlus3Days = timePlus3Days.ToString("yyyy-MM-dd HH:mm:ss");
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    MySqlCommand cmd1 = new MySqlCommand(query1, conn);
+                    MySqlCommand cmd2 = new MySqlCommand(query2, conn);
+                    MySqlCommand cmd3 = new MySqlCommand(query3, conn);
+                    MySqlCommand cmd4 = new MySqlCommand(query4, conn);
+                    MySqlCommand cmd5 = new MySqlCommand(query5, conn);
+                    MySqlCommand cmd6 = new MySqlCommand(query6, conn);
+                    MySqlCommand cmd7 = new MySqlCommand(query7, conn);
+                    MySqlCommand cmd8 = new MySqlCommand(query8, conn);
+                    MySqlCommand cmd9 = new MySqlCommand(query9, conn);
+                    MySqlCommand cmd0 = new MySqlCommand(query0, conn);
+                    string resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', '{deliveryCB.Enabled.ToString()}', '{addresTextBox.Text} ', '{formattedDate}', '{formattedDatePlus3Days}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1))";
+                    MySqlCommand cmdEnd = new MySqlCommand(resultQuery, conn);
+                    cmdEnd.ExecuteNonQuery();
+                    MessageBox.Show("Заказ успешно оформлен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        
     }    
 }

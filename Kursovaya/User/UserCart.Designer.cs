@@ -42,6 +42,9 @@ namespace Kursovaya.User
             this.label9 = new System.Windows.Forms.Label();
             this.discountLabel = new System.Windows.Forms.Label();
             this.cartEndPrice = new System.Windows.Forms.Label();
+            this.deliveryPrice = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.buildPrice = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,6 +58,7 @@ namespace Kursovaya.User
             this.deliveryCB.TabIndex = 1;
             this.deliveryCB.Text = "Доставка";
             this.deliveryCB.UseVisualStyleBackColor = true;
+            this.deliveryCB.CheckedChanged += new System.EventHandler(this.deliveryCB_CheckedChanged);
             // 
             // buildCheckBox
             // 
@@ -62,9 +66,9 @@ namespace Kursovaya.User
             this.buildCheckBox.Location = new System.Drawing.Point(1076, 48);
             this.buildCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.buildCheckBox.Name = "buildCheckBox";
-            this.buildCheckBox.Size = new System.Drawing.Size(288, 28);
+            this.buildCheckBox.Size = new System.Drawing.Size(99, 28);
             this.buildCheckBox.TabIndex = 2;
-            this.buildCheckBox.Text = "Сборка (Скидка на доставку)";
+            this.buildCheckBox.Text = "Сборка ";
             this.buildCheckBox.UseVisualStyleBackColor = true;
             this.buildCheckBox.CheckedChanged += new System.EventHandler(this.buildCheckBox_CheckedChanged);
             // 
@@ -83,6 +87,7 @@ namespace Kursovaya.User
             this.addresTextBox.Name = "addresTextBox";
             this.addresTextBox.Size = new System.Drawing.Size(344, 29);
             this.addresTextBox.TabIndex = 4;
+            this.addresTextBox.Visible = false;
             // 
             // label2
             // 
@@ -93,6 +98,7 @@ namespace Kursovaya.User
             this.label2.Size = new System.Drawing.Size(133, 20);
             this.label2.TabIndex = 3;
             this.label2.Text = "Адрес доставки";
+            this.label2.Visible = false;
             // 
             // label3
             // 
@@ -111,6 +117,7 @@ namespace Kursovaya.User
             this.makeBuyButton.TabIndex = 6;
             this.makeBuyButton.Text = "Заказать";
             this.makeBuyButton.UseVisualStyleBackColor = true;
+            this.makeBuyButton.Click += new System.EventHandler(this.makeBuyButton_Click);
             // 
             // label4
             // 
@@ -177,6 +184,35 @@ namespace Kursovaya.User
             this.cartEndPrice.Text = "0  ₽";
             this.cartEndPrice.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // deliveryPrice
+            // 
+            this.deliveryPrice.AutoSize = true;
+            this.deliveryPrice.Location = new System.Drawing.Point(1348, 81);
+            this.deliveryPrice.Name = "deliveryPrice";
+            this.deliveryPrice.Size = new System.Drawing.Size(71, 24);
+            this.deliveryPrice.TabIndex = 3;
+            this.deliveryPrice.Text = "3 000 ₽";
+            this.deliveryPrice.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(1166, 55);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(145, 16);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "(Скидка на доставку)";
+            // 
+            // buildPrice
+            // 
+            this.buildPrice.AutoSize = true;
+            this.buildPrice.Location = new System.Drawing.Point(1349, 52);
+            this.buildPrice.Name = "buildPrice";
+            this.buildPrice.Size = new System.Drawing.Size(71, 24);
+            this.buildPrice.TabIndex = 3;
+            this.buildPrice.Text = "3 000 ₽";
+            // 
             // UserCart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -192,6 +228,9 @@ namespace Kursovaya.User
             this.Controls.Add(this.label3);
             this.Controls.Add(this.addresTextBox);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.buildPrice);
+            this.Controls.Add(this.deliveryPrice);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buildCheckBox);
             this.Controls.Add(this.deliveryCB);
@@ -223,5 +262,8 @@ namespace Kursovaya.User
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label discountLabel;
         private System.Windows.Forms.Label cartEndPrice;
+        private System.Windows.Forms.Label deliveryPrice;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label buildPrice;
     }
 }
