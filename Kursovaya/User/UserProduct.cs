@@ -226,7 +226,6 @@ namespace Kursovaya.User
                 MessageBox.Show(ex.Message);
             }
 
-            // Добавляем кнопку "Добавить", если ещё нет
             if (!dataGridView1.Columns.Contains("ActionColumn"))
             {
                 DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();

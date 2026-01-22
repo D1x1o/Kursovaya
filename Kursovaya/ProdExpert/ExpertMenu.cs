@@ -40,5 +40,13 @@ namespace Kursovaya.ProdExpert
             addPic.ShowDialog();
             Show();
         }
+
+        private void EditProdButton_Click(object sender, EventArgs e)
+        {
+            FormEditProd EditProd = new FormEditProd();
+            Hide();
+            EditProd.ShowDialog();
+            Show();
+        }
     }
 }

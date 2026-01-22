@@ -99,6 +99,18 @@
     <Compile Include="ProdExpert\ExpertMenu.Designer.cs">
       <DependentUpon>ExpertMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProdExpert\FormEditingProd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProdExpert\FormEditingProd.Designer.cs">
+      <DependentUpon>FormEditingProd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProdExpert\FormEditProd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProdExpert\FormEditProd.Designer.cs">
+      <DependentUpon>FormEditProd.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProdExpert\FormAddPic.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +199,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProdExpert\ExpertMenu.resx">
       <DependentUpon>ExpertMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProdExpert\FormEditingProd.resx">
+      <DependentUpon>FormEditingProd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProdExpert\FormEditProd.resx">
+      <DependentUpon>FormEditProd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProdExpert\FormAddPic.resx">
       <DependentUpon>FormAddPic.cs</DependentUpon>

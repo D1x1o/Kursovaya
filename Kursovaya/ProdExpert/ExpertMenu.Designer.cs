@@ -32,43 +32,64 @@ namespace Kursovaya.ProdExpert
             this.ProdInStock = new System.Windows.Forms.Button();
             this.FormDocSupplyProd = new System.Windows.Forms.Button();
             this.addPic = new System.Windows.Forms.Button();
+            this.EditProdButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ProdInStock
             // 
+            this.ProdInStock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.ProdInStock.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ProdInStock.Location = new System.Drawing.Point(47, 23);
             this.ProdInStock.Name = "ProdInStock";
             this.ProdInStock.Size = new System.Drawing.Size(227, 62);
             this.ProdInStock.TabIndex = 0;
             this.ProdInStock.Text = "Остатки товара";
-            this.ProdInStock.UseVisualStyleBackColor = true;
+            this.ProdInStock.UseVisualStyleBackColor = false;
             this.ProdInStock.Click += new System.EventHandler(this.ProdInStock_Click);
             // 
             // FormDocSupplyProd
             // 
+            this.FormDocSupplyProd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.FormDocSupplyProd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FormDocSupplyProd.Location = new System.Drawing.Point(47, 91);
             this.FormDocSupplyProd.Name = "FormDocSupplyProd";
             this.FormDocSupplyProd.Size = new System.Drawing.Size(227, 78);
             this.FormDocSupplyProd.TabIndex = 1;
             this.FormDocSupplyProd.Text = "Формировать запрос поставки товаров";
-            this.FormDocSupplyProd.UseVisualStyleBackColor = true;
+            this.FormDocSupplyProd.UseVisualStyleBackColor = false;
             this.FormDocSupplyProd.Click += new System.EventHandler(this.FormDocSupplyProd_Click);
             // 
             // addPic
             // 
+            this.addPic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.addPic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addPic.Location = new System.Drawing.Point(47, 175);
             this.addPic.Name = "addPic";
             this.addPic.Size = new System.Drawing.Size(227, 82);
             this.addPic.TabIndex = 1;
             this.addPic.Text = "Добавить изображения для товаров";
-            this.addPic.UseVisualStyleBackColor = true;
+            this.addPic.UseVisualStyleBackColor = false;
             this.addPic.Click += new System.EventHandler(this.addPic_Click);
+            // 
+            // EditProdButton
+            // 
+            this.EditProdButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.EditProdButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EditProdButton.Location = new System.Drawing.Point(47, 263);
+            this.EditProdButton.Name = "EditProdButton";
+            this.EditProdButton.Size = new System.Drawing.Size(227, 82);
+            this.EditProdButton.TabIndex = 1;
+            this.EditProdButton.Text = "Редактирование товаров";
+            this.EditProdButton.UseVisualStyleBackColor = false;
+            this.EditProdButton.Click += new System.EventHandler(this.EditProdButton_Click);
             // 
             // ExpertMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(315, 294);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.ClientSize = new System.Drawing.Size(315, 359);
+            this.Controls.Add(this.EditProdButton);
             this.Controls.Add(this.addPic);
             this.Controls.Add(this.FormDocSupplyProd);
             this.Controls.Add(this.ProdInStock);
@@ -88,5 +109,6 @@ namespace Kursovaya.ProdExpert
         private System.Windows.Forms.Button ProdInStock;
         private System.Windows.Forms.Button FormDocSupplyProd;
         private System.Windows.Forms.Button addPic;
+        private System.Windows.Forms.Button EditProdButton;
     }
 }
