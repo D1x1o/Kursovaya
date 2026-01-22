@@ -148,7 +148,7 @@ namespace Kursovaya.ProdExpert
                         dataGridView1.ReadOnly = false;
 
                         // Первый столбец (название характеристики) — ТОЛЬКО ЧТЕНИЕ
-                        dataGridView1.Columns[0].ReadOnly = false; ////////////////////////////////////////////////////////////////
+                        dataGridView1.Columns[0].ReadOnly = true; ////////////////////////////////////////////////////////////////
 
                         // Второй столбец (значение) — МОЖНО РЕДАКТИРОВАТЬ
                         dataGridView1.Columns[1].ReadOnly = false;
