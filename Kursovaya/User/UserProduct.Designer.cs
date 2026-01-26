@@ -29,6 +29,7 @@ namespace Kursovaya.User
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserProduct));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ShowProc = new System.Windows.Forms.Button();
             this.ShowVideoCards = new System.Windows.Forms.Button();
@@ -50,6 +51,8 @@ namespace Kursovaya.User
             this.btnResetFilter = new System.Windows.Forms.Button();
             this.resetSelectedItems = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.anotherTablesСВ = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -66,7 +69,7 @@ namespace Kursovaya.User
             this.dataGridView1.Location = new System.Drawing.Point(26, 182);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1207, 501);
+            this.dataGridView1.Size = new System.Drawing.Size(1246, 501);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
@@ -218,9 +221,9 @@ namespace Kursovaya.User
             this.ShowCart.Enabled = false;
             this.ShowCart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowCart.ForeColor = System.Drawing.Color.White;
-            this.ShowCart.Location = new System.Drawing.Point(1086, 23);
+            this.ShowCart.Location = new System.Drawing.Point(931, 23);
             this.ShowCart.Name = "ShowCart";
-            this.ShowCart.Size = new System.Drawing.Size(147, 144);
+            this.ShowCart.Size = new System.Drawing.Size(159, 78);
             this.ShowCart.TabIndex = 13;
             this.ShowCart.Text = "Корзина";
             this.ShowCart.UseVisualStyleBackColor = false;
@@ -297,9 +300,9 @@ namespace Kursovaya.User
             this.btnResetFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.btnResetFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResetFilter.ForeColor = System.Drawing.Color.White;
-            this.btnResetFilter.Location = new System.Drawing.Point(931, 104);
+            this.btnResetFilter.Location = new System.Drawing.Point(931, 107);
             this.btnResetFilter.Name = "btnResetFilter";
-            this.btnResetFilter.Size = new System.Drawing.Size(149, 63);
+            this.btnResetFilter.Size = new System.Drawing.Size(159, 63);
             this.btnResetFilter.TabIndex = 12;
             this.btnResetFilter.Text = "Сбросить фильтры";
             this.btnResetFilter.UseVisualStyleBackColor = false;
@@ -310,9 +313,9 @@ namespace Kursovaya.User
             this.resetSelectedItems.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.resetSelectedItems.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.resetSelectedItems.ForeColor = System.Drawing.Color.White;
-            this.resetSelectedItems.Location = new System.Drawing.Point(931, 23);
+            this.resetSelectedItems.Location = new System.Drawing.Point(1100, 107);
             this.resetSelectedItems.Name = "resetSelectedItems";
-            this.resetSelectedItems.Size = new System.Drawing.Size(149, 78);
+            this.resetSelectedItems.Size = new System.Drawing.Size(159, 63);
             this.resetSelectedItems.TabIndex = 11;
             this.resetSelectedItems.Text = "Сбросить выбор";
             this.resetSelectedItems.UseVisualStyleBackColor = false;
@@ -321,6 +324,8 @@ namespace Kursovaya.User
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.anotherTablesСВ);
             this.panel1.Controls.Add(this.ShowRam);
             this.panel1.Controls.Add(this.dataGridView1);
             this.panel1.Controls.Add(this.resetSelectedItems);
@@ -343,21 +348,43 @@ namespace Kursovaya.User
             this.panel1.Controls.Add(this.ShowTermo);
             this.panel1.Location = new System.Drawing.Point(-14, -13);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1283, 762);
+            this.panel1.Size = new System.Drawing.Size(1527, 762);
             this.panel1.TabIndex = 17;
+            // 
+            // anotherTablesСВ
+            // 
+            this.anotherTablesСВ.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.anotherTablesСВ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.anotherTablesСВ.ForeColor = System.Drawing.Color.White;
+            this.anotherTablesСВ.FormattingEnabled = true;
+            this.anotherTablesСВ.Location = new System.Drawing.Point(1100, 65);
+            this.anotherTablesСВ.Name = "anotherTablesСВ";
+            this.anotherTablesСВ.Size = new System.Drawing.Size(159, 32);
+            this.anotherTablesСВ.TabIndex = 17;
+            this.anotherTablesСВ.SelectedIndexChanged += new System.EventHandler(this.anotherTablesСВ_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(1103, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(146, 24);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Другие товары";
             // 
             // UserProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1231, 682);
+            this.ClientSize = new System.Drawing.Size(1273, 682);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "UserProduct";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Конфигуратор";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -390,5 +417,7 @@ namespace Kursovaya.User
         private System.Windows.Forms.Button btnResetFilter;
         private System.Windows.Forms.Button resetSelectedItems;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox anotherTablesСВ;
     }
 }

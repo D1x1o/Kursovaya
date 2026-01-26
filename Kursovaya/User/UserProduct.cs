@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,11 +11,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Kursovaya.User
 {
     public partial class UserProduct : Form
     {
+        bool formLoading = true;
+
+        private JObject rootJson;
         public Dictionary<string, bool> ArrChecked = new Dictionary<string, bool> {
            {"processors", false},
            {"videocards", false},
@@ -33,10 +38,12 @@ namespace Kursovaya.User
         string theme = "processors";
         public UserProduct()
         {
+            formLoading = true;
             InitializeComponent();
             FillSortCombobox();
             FillFilterCombobox("processors");
-            //FillThemeDataGridView("", $"{theme}", "Не выбрано", "По убыванию");
+            
+            FillThemeDataGridView("", $"{theme}", "Не выбрано", "По убыванию");
             checkedItems.Default.processors = false;
             checkedItems.Default.videocards = false;
             checkedItems.Default.motherboards = false;
@@ -63,9 +70,110 @@ namespace Kursovaya.User
             dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect; 
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125); 
+            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
+            FillAnotherTables();
+            formLoading = false;
         }
+        public void FillAnotherTables()
+        {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
 
+            if (!File.Exists(path))
+            {
+                MessageBox.Show("Файл JSON не найден!");
+                return;
+            }
+
+            string json = File.ReadAllText(path);
+            rootJson = JObject.Parse(json); // сохраняем для использования при выборе
+
+            anotherTablesСВ.Items.Clear();
+
+            JArray tables = (JArray)rootJson["tables"];
+            foreach (JObject table in tables)
+            {
+                string tableDisplayName = table["displayName"].ToString();
+                anotherTablesСВ.Items.Add(tableDisplayName);
+            }
+
+            if (anotherTablesСВ.Items.Count > 0)
+                anotherTablesСВ.SelectedIndex = 0;
+
+            // Подписываемся на событие выбора
+            anotherTablesСВ.SelectedIndexChanged += anotherTablesСВ_SelectedIndexChanged;
+
+        }
+        private void FillAnotherTable()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    DataTable dt = new DataTable();
+                    string query = $"Select * From `{theme}` ";
+                    if(SearchTextBox.Text != "")
+                    {
+                        query += $"Where model like '%{SearchTextBox.Text}%' ";
+                    }
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        dt.Load(reader); 
+                    }
+                    dataGridView1.DataSource = dt;
+                    dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.Columns.Count - 1;
+                    FilterComboBox.Enabled = false;
+                    SortComboBox.Enabled = false;
+                }
+            }
+            catch (Exception e) { MessageBox.Show(e.Message); }
+        }
+        private void anotherTablesСВ_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (formLoading) return;
+            string selectedRuName = anotherTablesСВ.SelectedItem.ToString();
+
+            // Находим таблицу по русскому названию
+            JArray tables = (JArray)rootJson["tables"];
+            JObject selectedTable = tables
+                .FirstOrDefault(t => t["displayName"].ToString() == selectedRuName) as JObject;
+
+            if (selectedTable != null)
+            {
+                theme = selectedTable["systemName"].ToString(); // присваиваем глобальной переменной
+                FillAnotherTable();
+                renameHeadersAnotherTable();
+            }
+        }
+        public void renameHeadersAnotherTable()
+        {
+            // путь к JSON
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+            JObject root = JObject.Parse(File.ReadAllText(path));
+
+            // получаем таблицу по systemName (например, "users")
+            var tableJson = root["tables"]
+                .FirstOrDefault(t => t["systemName"].ToString() == theme);
+
+            if (tableJson != null)
+            {
+                var columnsJson = tableJson["columns"];
+
+                // перебираем столбцы DGV
+                foreach (DataGridViewColumn dgvCol in dataGridView1.Columns)
+                {
+                    // ищем соответствие по systemName
+                    var colJson = columnsJson
+                        .FirstOrDefault(c => c["systemName"].ToString() == dgvCol.Name);
+
+                    if (colJson != null)
+                    {
+                        dgvCol.HeaderText = colJson["displayName"].ToString();
+                    }
+                }
+            }
+        }
         private void ShowCart_Click(object sender, EventArgs e)
         {
             UserCart prod = new UserCart();
@@ -246,23 +354,50 @@ namespace Kursovaya.User
 
         private void FilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillThemeDataGridView(SearchTextBox.Text, theme, FilterComboBox.SelectedItem.ToString(), SortComboBox.SelectedItem.ToString());
+            if (theme == "processors" || theme == "videocards" || theme == "motherboards" || theme == "ram" || theme == "storage"
+                 || theme == "power_supplier" || theme == "case" || theme == "case_coolers" || theme == "cpu_cooler" || theme == "thermo_interface")
+            {
+                FillThemeDataGridView(SearchTextBox.Text, theme, FilterComboBox.SelectedItem.ToString(), SortComboBox.SelectedItem.ToString());
+
+            }
+            else
+            {
+                FillAnotherTable();
+            }
         }
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e)
         {
             string filterValue = FilterComboBox.SelectedItem?.ToString() ?? "Не выбрано";
             string sortValue = SortComboBox.SelectedItem?.ToString() ?? "По убыванию";
-
-            FillThemeDataGridView(SearchTextBox.Text, theme, filterValue, sortValue);
+            if(theme == "processors" || theme == "videocards" || theme == "motherboards" || theme == "ram" || theme == "storage"
+                 || theme == "power_supplier" || theme == "case" || theme == "case_coolers" || theme == "cpu_cooler" || theme == "thermo_interface")
+            {
+                FillThemeDataGridView(SearchTextBox.Text, theme, filterValue, sortValue);
+                
+            }
+            else
+            {
+                FillAnotherTable();
+            }
         }
 
         private void SortComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string sortValue = SortComboBox.SelectedItem?.ToString() ?? "По убыванию";
-            string filterValue = FilterComboBox.SelectedItem?.ToString() ?? "Не выбрано";
+            if (theme == "processors" || theme == "videocards" || theme == "motherboards" || theme == "ram" || theme == "storage"
+                || theme == "power_supplier" || theme == "case" || theme == "case_coolers" || theme == "cpu_cooler" || theme == "thermo_interface")
+            {
+                string sortValue = SortComboBox.SelectedItem?.ToString() ?? "По убыванию";
+                string filterValue = FilterComboBox.SelectedItem?.ToString() ?? "Не выбрано";
 
-            FillThemeDataGridView(SearchTextBox.Text, theme, filterValue, sortValue);
+                FillThemeDataGridView(SearchTextBox.Text, theme, filterValue, sortValue);
+
+            }
+            else
+            {
+                FillAnotherTable();
+            }
+           
         }
         //кнопки
         private void ShowProc_Click(object sender, EventArgs e) { changeTheme("processors"); }
@@ -494,6 +629,8 @@ namespace Kursovaya.User
         }
         private string fillDgv(string theme)
         {
+            FilterComboBox.Enabled = true;
+            SortComboBox.Enabled = true;
             string Filter = FilterComboBox.SelectedItem?.ToString() ?? "Не выбрано";
             string search = SearchTextBox.Text;
             string query = "";
@@ -744,6 +881,7 @@ namespace Kursovaya.User
                             query += " AND ";
                         }
                         query += $"max_height_cpu_cooler > {getCharacteristic("cooler_height", "cpu_cooler", $"{userid}")} ";
+                        second = true;
                     }
                     if (second) { query += " AND "; }
                     if (search == "") { query += $"model LIKE '%%' "; }
@@ -1226,5 +1364,7 @@ namespace Kursovaya.User
                 e.Handled = true; // Система больше не рисует кнопку
             }
         }
+
+        
     }
 }

@@ -29,6 +29,7 @@ namespace Kursovaya.Administrator
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminMenu));
             this.ShowUsers = new System.Windows.Forms.Button();
             this.ShowOrders = new System.Windows.Forms.Button();
             this.ShowProducts = new System.Windows.Forms.Button();
@@ -38,7 +39,7 @@ namespace Kursovaya.Administrator
             // ShowUsers
             // 
             this.ShowUsers.Location = new System.Drawing.Point(48, 15);
-            this.ShowUsers.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.ShowUsers.Margin = new System.Windows.Forms.Padding(6);
             this.ShowUsers.Name = "ShowUsers";
             this.ShowUsers.Size = new System.Drawing.Size(149, 42);
             this.ShowUsers.TabIndex = 0;
@@ -89,10 +90,10 @@ namespace Kursovaya.Administrator
             this.Controls.Add(this.ShowOrders);
             this.Controls.Add(this.ShowUsers);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "AdminMenu";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Меню администратора";
             this.ResumeLayout(false);

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEditProd));
             this.allPageLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.actualPageLabel = new System.Windows.Forms.Label();
@@ -187,10 +188,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.categoryComboBox);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "FormEditProd";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Редактирование товаров";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
