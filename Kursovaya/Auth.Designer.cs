@@ -49,6 +49,7 @@ namespace Kursovaya
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(33, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
@@ -58,6 +59,8 @@ namespace Kursovaya
             // 
             // loginTextBox
             // 
+            this.loginTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.loginTextBox.ForeColor = System.Drawing.Color.White;
             this.loginTextBox.Location = new System.Drawing.Point(41, 99);
             this.loginTextBox.Name = "loginTextBox";
             this.loginTextBox.Size = new System.Drawing.Size(167, 29);
@@ -65,6 +68,8 @@ namespace Kursovaya
             // 
             // pwdTextBox
             // 
+            this.pwdTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.pwdTextBox.ForeColor = System.Drawing.Color.White;
             this.pwdTextBox.Location = new System.Drawing.Point(41, 189);
             this.pwdTextBox.Name = "pwdTextBox";
             this.pwdTextBox.Size = new System.Drawing.Size(167, 29);
@@ -74,6 +79,7 @@ namespace Kursovaya
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(38, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(110, 18);
@@ -84,6 +90,7 @@ namespace Kursovaya
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(38, 168);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(120, 18);
@@ -92,12 +99,15 @@ namespace Kursovaya
             // 
             // LogInButton
             // 
+            this.LogInButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.LogInButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LogInButton.ForeColor = System.Drawing.Color.White;
             this.LogInButton.Location = new System.Drawing.Point(62, 244);
             this.LogInButton.Name = "LogInButton";
             this.LogInButton.Size = new System.Drawing.Size(129, 32);
             this.LogInButton.TabIndex = 4;
             this.LogInButton.Text = "Войти";
-            this.LogInButton.UseVisualStyleBackColor = true;
+            this.LogInButton.UseVisualStyleBackColor = false;
             this.LogInButton.Click += new System.EventHandler(this.LogInButton_Click);
             // 
             // CaptchaTextBox
@@ -169,6 +179,7 @@ namespace Kursovaya
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(254, 311);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);

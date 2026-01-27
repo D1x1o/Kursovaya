@@ -56,6 +56,7 @@ namespace Kursovaya.Administrator
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
@@ -67,6 +68,7 @@ namespace Kursovaya.Administrator
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(12, 241);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 24);
@@ -76,6 +78,7 @@ namespace Kursovaya.Administrator
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(204, 241);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(91, 24);
@@ -85,6 +88,7 @@ namespace Kursovaya.Administrator
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(396, 241);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(98, 24);
@@ -93,6 +97,8 @@ namespace Kursovaya.Administrator
             // 
             // userNameTextBox
             // 
+            this.userNameTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.userNameTextBox.ForeColor = System.Drawing.Color.White;
             this.userNameTextBox.Location = new System.Drawing.Point(16, 268);
             this.userNameTextBox.MaxLength = 100;
             this.userNameTextBox.Name = "userNameTextBox";
@@ -102,6 +108,8 @@ namespace Kursovaya.Administrator
             // 
             // userSurnameTextBox
             // 
+            this.userSurnameTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.userSurnameTextBox.ForeColor = System.Drawing.Color.White;
             this.userSurnameTextBox.Location = new System.Drawing.Point(208, 268);
             this.userSurnameTextBox.MaxLength = 100;
             this.userSurnameTextBox.Name = "userSurnameTextBox";
@@ -111,6 +119,8 @@ namespace Kursovaya.Administrator
             // 
             // userPatronymicTextBox
             // 
+            this.userPatronymicTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.userPatronymicTextBox.ForeColor = System.Drawing.Color.White;
             this.userPatronymicTextBox.Location = new System.Drawing.Point(400, 268);
             this.userPatronymicTextBox.MaxLength = 100;
             this.userPatronymicTextBox.Name = "userPatronymicTextBox";
@@ -121,6 +131,7 @@ namespace Kursovaya.Administrator
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(12, 308);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(64, 24);
@@ -130,6 +141,7 @@ namespace Kursovaya.Administrator
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(204, 308);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(76, 24);
@@ -138,6 +150,8 @@ namespace Kursovaya.Administrator
             // 
             // userLoginTextBox
             // 
+            this.userLoginTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.userLoginTextBox.ForeColor = System.Drawing.Color.White;
             this.userLoginTextBox.Location = new System.Drawing.Point(16, 335);
             this.userLoginTextBox.MaxLength = 100;
             this.userLoginTextBox.Name = "userLoginTextBox";
@@ -147,6 +161,8 @@ namespace Kursovaya.Administrator
             // 
             // userPasswordTextBox
             // 
+            this.userPasswordTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.userPasswordTextBox.ForeColor = System.Drawing.Color.White;
             this.userPasswordTextBox.Location = new System.Drawing.Point(208, 335);
             this.userPasswordTextBox.MaxLength = 100;
             this.userPasswordTextBox.Name = "userPasswordTextBox";
@@ -157,6 +173,7 @@ namespace Kursovaya.Administrator
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(396, 308);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(202, 24);
@@ -165,6 +182,8 @@ namespace Kursovaya.Administrator
             // 
             // userPasswordConfirmTextBox
             // 
+            this.userPasswordConfirmTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.userPasswordConfirmTextBox.ForeColor = System.Drawing.Color.White;
             this.userPasswordConfirmTextBox.Location = new System.Drawing.Point(400, 335);
             this.userPasswordConfirmTextBox.MaxLength = 100;
             this.userPasswordConfirmTextBox.Name = "userPasswordConfirmTextBox";
@@ -174,18 +193,22 @@ namespace Kursovaya.Administrator
             // 
             // userSaveChanges
             // 
+            this.userSaveChanges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.userSaveChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.userSaveChanges.ForeColor = System.Drawing.Color.White;
             this.userSaveChanges.Location = new System.Drawing.Point(813, 295);
             this.userSaveChanges.Name = "userSaveChanges";
             this.userSaveChanges.Size = new System.Drawing.Size(149, 69);
             this.userSaveChanges.TabIndex = 3;
             this.userSaveChanges.Text = "Создать";
-            this.userSaveChanges.UseVisualStyleBackColor = true;
+            this.userSaveChanges.UseVisualStyleBackColor = false;
             this.userSaveChanges.Click += new System.EventHandler(this.userSaveChanges_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(491, 247);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(120, 13);
@@ -194,7 +217,10 @@ namespace Kursovaya.Administrator
             // 
             // userRoleComboBox
             // 
+            this.userRoleComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.userRoleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.userRoleComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.userRoleComboBox.ForeColor = System.Drawing.Color.White;
             this.userRoleComboBox.FormattingEnabled = true;
             this.userRoleComboBox.Location = new System.Drawing.Point(617, 268);
             this.userRoleComboBox.Name = "userRoleComboBox";
@@ -204,6 +230,7 @@ namespace Kursovaya.Administrator
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(617, 241);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(54, 24);
@@ -214,6 +241,7 @@ namespace Kursovaya.Administrator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(974, 376);
             this.Controls.Add(this.userRoleComboBox);
             this.Controls.Add(this.label7);

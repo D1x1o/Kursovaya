@@ -45,7 +45,10 @@
             // 
             // categoryComboBox
             // 
+            this.categoryComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.categoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.categoryComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.categoryComboBox.ForeColor = System.Drawing.Color.White;
             this.categoryComboBox.FormattingEnabled = true;
             this.categoryComboBox.Location = new System.Drawing.Point(599, 12);
             this.categoryComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -69,6 +72,7 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 50);
             this.dataGridView1.Name = "dataGridView1";
@@ -79,6 +83,7 @@
             // 
             // searchTextBox
             // 
+            this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.searchTextBox.Enabled = false;
             this.searchTextBox.Location = new System.Drawing.Point(69, 12);
             this.searchTextBox.MaxLength = 50;
@@ -98,22 +103,26 @@
             // 
             // BackPageButton
             // 
+            this.BackPageButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.BackPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackPageButton.Location = new System.Drawing.Point(647, 387);
             this.BackPageButton.Name = "BackPageButton";
             this.BackPageButton.Size = new System.Drawing.Size(63, 40);
             this.BackPageButton.TabIndex = 4;
             this.BackPageButton.Text = "<";
-            this.BackPageButton.UseVisualStyleBackColor = true;
+            this.BackPageButton.UseVisualStyleBackColor = false;
             this.BackPageButton.Click += new System.EventHandler(this.BackPageButton_Click);
             // 
             // ForwardPageButton
             // 
+            this.ForwardPageButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.ForwardPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ForwardPageButton.Location = new System.Drawing.Point(716, 387);
             this.ForwardPageButton.Name = "ForwardPageButton";
             this.ForwardPageButton.Size = new System.Drawing.Size(63, 40);
             this.ForwardPageButton.TabIndex = 4;
             this.ForwardPageButton.Text = ">";
-            this.ForwardPageButton.UseVisualStyleBackColor = true;
+            this.ForwardPageButton.UseVisualStyleBackColor = false;
             this.ForwardPageButton.Click += new System.EventHandler(this.ForwardPageButton_Click);
             // 
             // label3
@@ -156,6 +165,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(792, 439);
             this.Controls.Add(this.allPageLabel);
             this.Controls.Add(this.label5);
@@ -169,6 +179,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.categoryComboBox);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);

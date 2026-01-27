@@ -61,6 +61,8 @@
             // 
             // serverAddres
             // 
+            this.serverAddres.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.serverAddres.ForeColor = System.Drawing.Color.White;
             this.serverAddres.Location = new System.Drawing.Point(29, 102);
             this.serverAddres.MaxLength = 20;
             this.serverAddres.Name = "serverAddres";
@@ -79,6 +81,8 @@
             // 
             // serverUser
             // 
+            this.serverUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.serverUser.ForeColor = System.Drawing.Color.White;
             this.serverUser.Location = new System.Drawing.Point(29, 163);
             this.serverUser.MaxLength = 100;
             this.serverUser.Name = "serverUser";
@@ -97,6 +101,8 @@
             // 
             // serverPassword
             // 
+            this.serverPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.serverPassword.ForeColor = System.Drawing.Color.White;
             this.serverPassword.Location = new System.Drawing.Point(29, 226);
             this.serverPassword.MaxLength = 100;
             this.serverPassword.Name = "serverPassword";
@@ -105,18 +111,21 @@
             // 
             // saveConnData
             // 
+            this.saveConnData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.saveConnData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveConnData.Location = new System.Drawing.Point(29, 306);
             this.saveConnData.Name = "saveConnData";
             this.saveConnData.Size = new System.Drawing.Size(196, 40);
             this.saveConnData.TabIndex = 3;
             this.saveConnData.Text = "Сохранить";
-            this.saveConnData.UseVisualStyleBackColor = true;
+            this.saveConnData.UseVisualStyleBackColor = false;
             this.saveConnData.Click += new System.EventHandler(this.saveConnData_Click);
             // 
             // EditConn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(258, 359);
             this.Controls.Add(this.saveConnData);
             this.Controls.Add(this.serverPassword);
@@ -127,6 +136,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "EditConn";

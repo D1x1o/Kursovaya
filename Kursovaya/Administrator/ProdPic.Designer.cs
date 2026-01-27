@@ -39,6 +39,7 @@ namespace Kursovaya.Administrator
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
@@ -48,17 +49,21 @@ namespace Kursovaya.Administrator
             // 
             // SelectPictureButton
             // 
+            this.SelectPictureButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.SelectPictureButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SelectPictureButton.ForeColor = System.Drawing.Color.White;
             this.SelectPictureButton.Location = new System.Drawing.Point(500, 372);
             this.SelectPictureButton.Name = "SelectPictureButton";
             this.SelectPictureButton.Size = new System.Drawing.Size(237, 38);
             this.SelectPictureButton.TabIndex = 1;
             this.SelectPictureButton.Text = "Выбрать изображение";
-            this.SelectPictureButton.UseVisualStyleBackColor = true;
+            this.SelectPictureButton.UseVisualStyleBackColor = false;
             // 
             // ProdPic
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(749, 422);
             this.Controls.Add(this.SelectPictureButton);
             this.Controls.Add(this.dataGridView1);
