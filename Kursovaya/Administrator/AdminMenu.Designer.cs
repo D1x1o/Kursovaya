@@ -33,7 +33,6 @@ namespace Kursovaya.Administrator
             this.ShowUsers = new System.Windows.Forms.Button();
             this.ShowOrders = new System.Windows.Forms.Button();
             this.ShowProducts = new System.Windows.Forms.Button();
-            this.AddProdPicture = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ShowUsers
@@ -78,27 +77,12 @@ namespace Kursovaya.Administrator
             this.ShowProducts.UseVisualStyleBackColor = false;
             this.ShowProducts.Click += new System.EventHandler(this.ShowProducts_Click);
             // 
-            // AddProdPicture
-            // 
-            this.AddProdPicture.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.AddProdPicture.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AddProdPicture.ForeColor = System.Drawing.Color.White;
-            this.AddProdPicture.Location = new System.Drawing.Point(48, 177);
-            this.AddProdPicture.Margin = new System.Windows.Forms.Padding(6);
-            this.AddProdPicture.Name = "AddProdPicture";
-            this.AddProdPicture.Size = new System.Drawing.Size(149, 58);
-            this.AddProdPicture.TabIndex = 0;
-            this.AddProdPicture.Text = "Изображения товаров";
-            this.AddProdPicture.UseVisualStyleBackColor = false;
-            this.AddProdPicture.Click += new System.EventHandler(this.AddProdPicture_Click);
-            // 
             // AdminMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
-            this.ClientSize = new System.Drawing.Size(250, 337);
-            this.Controls.Add(this.AddProdPicture);
+            this.ClientSize = new System.Drawing.Size(250, 227);
             this.Controls.Add(this.ShowProducts);
             this.Controls.Add(this.ShowOrders);
             this.Controls.Add(this.ShowUsers);
@@ -118,6 +102,5 @@ namespace Kursovaya.Administrator
         private System.Windows.Forms.Button ShowUsers;
         private System.Windows.Forms.Button ShowOrders;
         private System.Windows.Forms.Button ShowProducts;
-        private System.Windows.Forms.Button AddProdPicture;
     }
 }

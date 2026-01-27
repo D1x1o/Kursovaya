@@ -8,9 +8,12 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+// ФОРМА отображения подробных характеристик товара
 
 namespace Kursovaya.User
 {
@@ -20,9 +23,12 @@ namespace Kursovaya.User
         public UserProductCharacteristic(string theme, int idProduct)
         {
             InitializeComponent();
-            showProductCharacteristic(theme, idProduct);
-            setProductPicture(theme, idProduct);
-            setProductName(theme, idProduct);
+            showProductCharacteristic(theme, idProduct); // функция отображения характеристик
+            setProductPicture(theme, idProduct); // функция отображения изображения товара
+            setProductName(theme, idProduct); // функция установки названия товара
+            CopyDefaultImagesToAppData(); // копируем имеющиеся изображения в AppData
+
+            // настройки дизайна
             dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
             dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
             dataGridView1.DefaultCellStyle.ForeColor = Color.White;
@@ -32,7 +38,7 @@ namespace Kursovaya.User
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
         }
-
+        // функция отображения характеристик
         public void showProductCharacteristic(string theme, int idProduct)
         {
             try
@@ -137,6 +143,38 @@ namespace Kursovaya.User
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }            
         }
+
+        // копируем имеющиеся изображения в AppData
+        void CopyDefaultImagesToAppData()
+        {
+            try
+            {
+                string exeImgFolder = Path.Combine(Application.StartupPath, "img");
+
+                string appDataImgFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "pepeShop",
+                    "img"
+                );
+
+                Directory.CreateDirectory(appDataImgFolder);
+
+                string[] filesToCopy = { "no-image.png", "gigabyte3060.png" };
+
+                foreach (string fileName in filesToCopy)
+                {
+                    string sourcePath = Path.Combine(exeImgFolder, fileName);
+                    string destPath = Path.Combine(appDataImgFolder, fileName);
+
+                    if (File.Exists(sourcePath) && !File.Exists(destPath))
+                    {
+                        File.Copy(sourcePath, destPath);
+                    }
+                }
+            }
+            catch(Exception e) {  MessageBox.Show(e.Message); }
+        }
+        // функция отображения изображения товара
         public void setProductPicture(string theme, int idProduct)
         {
             try
@@ -150,17 +188,27 @@ namespace Kursovaya.User
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     if (cmd.ExecuteScalar().ToString() == "")
                     {
-                        productPictureBox.Image = Image.FromFile("img/no-image.png");
+                        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop");
+
+                        string imagePath = Path.Combine(imgFolder, "no-image.png");
+
+                        productPictureBox.Image = Image.FromFile(imagePath);
                     }
                     else
                     {
                         string path = cmd.ExecuteScalar().ToString();
-                        productPictureBox.Image = Image.FromFile(path);                        
+                        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop");
+
+                        string imagePath = Path.Combine(imgFolder, path);
+
+                        productPictureBox.Image = Image.FromFile(imagePath);
+                                        
                     }
                 }
             }
             catch (Exception ex) {string err = ex.Message; productPictureBox.Image = Image.FromFile("img/no-image.png"); }
         }
+        // функция установки названия товара
         public void setProductName(string theme, int idProduct)
         {
             try

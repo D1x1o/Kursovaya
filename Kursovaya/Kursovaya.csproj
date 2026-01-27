@@ -62,12 +62,6 @@
     <Compile Include="Administrator\AdminMenu.Designer.cs">
       <DependentUpon>AdminMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Administrator\ProdPic.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Administrator\ProdPic.Designer.cs">
-      <DependentUpon>ProdPic.cs</DependentUpon>
-    </Compile>
     <Compile Include="Administrator\Prod.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,9 +190,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Administrator\Prod.resx">
       <DependentUpon>Prod.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Administrator\ProdPic.resx">
-      <DependentUpon>ProdPic.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Administrator\Users.resx">
       <DependentUpon>Users.cs</DependentUpon>

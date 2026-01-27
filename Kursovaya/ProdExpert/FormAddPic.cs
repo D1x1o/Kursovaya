@@ -5,28 +5,34 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+// ФОРМА добавления изображений к товарам 
+
+
 namespace Kursovaya.ProdExpert
 {    
     public partial class FormAddPic : Form
     {
-        string theme = "";
+        string theme = ""; // переменная темы для понимания с какой категорией товаров работаем
         string connStr = ConnectionString.GetConnectionString();
-        int dgvPage = 0;
-        int pageOffset = 0;
-        int allPage = 0;
+        int dgvPage = 0; // страница
+        int pageOffset = 0; //сколько товаров помещается на странице, 0 - стандартное значение 
+        int allPage = 0; // всего страниц, 0 - стандартное значение 
         public FormAddPic()
         {
             InitializeComponent();
             actualPageLabel.Text = dgvPage.ToString();
-            allPageLabel.Text = "0";
-            SetComboBox();
-            CheckButtons();
+            allPageLabel.Text = "0"; 
+            SetComboBox(); // отображаем в выпадающем списке все категории
+            CheckButtons(); // проверяем состояние кнопок
+            // настройки дизайна 
             dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
             dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
             dataGridView1.DefaultCellStyle.ForeColor = Color.White;
@@ -37,6 +43,7 @@ namespace Kursovaya.ProdExpert
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
         }
 
+        // отображаем в выпадающем списке все категори
         public void SetComboBox()
         {
             categoryComboBox.Items.Clear();
@@ -52,6 +59,7 @@ namespace Kursovaya.ProdExpert
             categoryComboBox.Items.Add("Термопаста");
         }
 
+        // обработчик ввода в строку поиска
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
             dataGridView1.Columns.Clear();
@@ -60,7 +68,7 @@ namespace Kursovaya.ProdExpert
             actualPageLabel.Text = dgvPage.ToString();
             fillDGV();
         }
-
+        // обработчик выбора элемента в выпадающем списке
         private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             searchTextBox.Enabled = true;
@@ -73,7 +81,7 @@ namespace Kursovaya.ProdExpert
             
 
         }
-
+        // функция отображения данных
         private void fillDGV()
         {
             dataGridView1.Columns.Clear();
@@ -190,7 +198,7 @@ namespace Kursovaya.ProdExpert
 
 
 
-
+        // обработчик перелистывания страницы вперёд
         private void ForwardPageButton_Click(object sender, EventArgs e)
         {
             dataGridView1.Columns.Clear();
@@ -199,6 +207,7 @@ namespace Kursovaya.ProdExpert
             actualPageLabel.Text = dgvPage.ToString();
             fillDGV();
         }
+        // обработчик перелистывания страницы назад
         private void BackPageButton_Click(object sender, EventArgs e)
         {
             dataGridView1.Columns.Clear();
@@ -207,6 +216,7 @@ namespace Kursovaya.ProdExpert
             actualPageLabel.Text = dgvPage.ToString();
             fillDGV();
         }
+        // функция проверки состояния кнопок перелистывания страниц
         private void CheckButtons()
         {
             if (dgvPage == 0)
@@ -235,7 +245,8 @@ namespace Kursovaya.ProdExpert
             }
             
         }
-        
+
+        // обработчик нажатия на ячейку
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -255,7 +266,7 @@ namespace Kursovaya.ProdExpert
                             MessageBox.Show("Файл слишком большой! Выберите изображение меньше 5 МБ.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
-                        string imgFolder = System.IO.Path.Combine(Application.StartupPath, "img");
+                        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"pepeShop","img");
                         if (!System.IO.Directory.Exists(imgFolder))
                         {
                             System.IO.Directory.CreateDirectory(imgFolder);
@@ -280,6 +291,7 @@ namespace Kursovaya.ProdExpert
             catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
 
+        // обработчик изменения кнопок если картинка для товара уже установлена
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (dataGridView1.Columns[e.ColumnIndex].Name == "ActionColumn")

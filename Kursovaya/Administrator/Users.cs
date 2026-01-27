@@ -14,13 +14,15 @@ namespace Kursovaya.Administrator
 {
     public partial class Users : Form
     {
+        int idUserForDeleting;
         string connStr = ConnectionString.GetConnectionString();
         int idSelectedUser;
         public Users()
         {
             InitializeComponent();
-            fillComboBox();
-            filldgv();
+            fillComboBox(); // Заполняем выпадающие списки
+            filldgv(); // Отображаем всех пользователей
+            // Настраиваем дизайн для dataGridView
             dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
             dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
             dataGridView1.DefaultCellStyle.ForeColor = Color.White;
@@ -32,6 +34,7 @@ namespace Kursovaya.Administrator
             dataGridView1.RowHeadersVisible = false;
         }
 
+        // Функция заполнения выпадающего списка
         public void fillComboBox()
         {
             try
@@ -58,6 +61,7 @@ namespace Kursovaya.Administrator
             catch(Exception ex) { MessageBox.Show(ex.Message); }            
         }
 
+        // Функция отображения пользователей
         public void filldgv()
         {
             try
@@ -65,7 +69,7 @@ namespace Kursovaya.Administrator
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
                     conn.Open();
-                    string query = "SELECT staff.id, name, surname, patronymic, role_name, role, login, password FROM staff JOIN role ON staff.role = role.id;";
+                    string query = "SELECT staff.id, name, surname, patronymic, role_name, role, login, password, activity FROM staff JOIN role ON staff.role = role.id Where activity = 0;";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     DataTable dt = new DataTable();
                     dt.Load(cmd.ExecuteReader());
@@ -77,13 +81,17 @@ namespace Kursovaya.Administrator
                     dataGridView1.Columns["patronymic"].HeaderText = "Отчество";
                     dataGridView1.Columns["role_name"].HeaderText = "Роль";
                     dataGridView1.Columns["login"].HeaderText = "Логин";
-                    dataGridView1.Columns["password"].HeaderText = "Пароль";
-                    dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;                    
+                    dataGridView1.Columns["password"].Visible = false;
+                    dataGridView1.Columns["activity"].Visible = false;
+                    dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect; 
+                    
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
+
+        // Обработчик нажатий на ячейки dataGridView1
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -96,7 +104,17 @@ namespace Kursovaya.Administrator
                 idSelectedUser = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id"].Value);
                 userRoleComboBox.SelectedValue = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["role"].Value);
             }
+            if (e.RowIndex >= 0)
+            {
+                int idSelectedUser = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id"].Value);                
+                deleteUserButton.Enabled = true;
+                idUserForDeleting = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id"].Value);
+                
+            }
         }
+
+
+        // Функция добавления пользователя
         private void CreateUser()
         {
             if (userPasswordTextBox.Text == userPasswordConfirmTextBox.Text)
@@ -117,7 +135,7 @@ namespace Kursovaya.Administrator
                     MessageBox.Show("Пользователь с таким логином существует!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                string query = $"INSERT INTO staff (name, surname, patronymic, role, login, password) VALUES ('{userNameTextBox.Text}', '{userSurnameTextBox.Text}', '{userPatronymicTextBox.Text}', {userRoleComboBox.SelectedValue}, '{userLoginTextBox.Text.Trim()}', '{GetHashPwd(userPasswordTextBox.Text)}');";
+                string query = $"INSERT INTO staff (name, surname, patronymic, role, login, password, activity) VALUES ('{userNameTextBox.Text}', '{userSurnameTextBox.Text}', '{userPatronymicTextBox.Text}', {userRoleComboBox.SelectedValue}, '{userLoginTextBox.Text.Trim()}', '{GetHashPwd(userPasswordTextBox.Text)}', 0);";
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
                     conn.Open();
@@ -133,6 +151,8 @@ namespace Kursovaya.Administrator
             }
         }
 
+
+        // Функция сохранения изменений данных о пользователе
         private void SaveUserChanges()
         {
             try
@@ -161,7 +181,7 @@ namespace Kursovaya.Administrator
                                 conn.Open();
                                 MySqlCommand cmd = new MySqlCommand(query, conn);
                                 cmd.ExecuteNonQuery();
-                                MessageBox.Show("Данные о полmзователе изменены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                MessageBox.Show("Данные о пользователе изменены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                                 ClearTextBoxes();
                             }
                         }
@@ -194,6 +214,7 @@ namespace Kursovaya.Administrator
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
+        // Функция очистки полей ввода
         private void ClearTextBoxes()
         {
             userNameTextBox.Text = "";
@@ -205,6 +226,7 @@ namespace Kursovaya.Administrator
             userRoleComboBox.SelectedIndex = 0;
         }
 
+        // Обработчик состояния кнопки
         private void userSaveChanges_Click(object sender, EventArgs e)
         {
             if(userSaveChanges.Text == "Создать")
@@ -218,6 +240,8 @@ namespace Kursovaya.Administrator
                 filldgv();
             }                
         }
+
+        // Функция проверки уникальности логина
         private int checkUniqueLogin(string login)
         {
             try
@@ -241,6 +265,7 @@ namespace Kursovaya.Administrator
             catch (Exception ex) { MessageBox.Show(ex.Message); return 1; }
         }
 
+        // Обработчик ввода данных в поле ввода
         private void userNameTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Back)
@@ -251,7 +276,7 @@ namespace Kursovaya.Administrator
 
             e.Handled = true;
         }
-
+        // Обработчик ввода данных в поле ввода
         private void userSurnameTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Back)
@@ -262,7 +287,7 @@ namespace Kursovaya.Administrator
 
             e.Handled = true;
         }
-
+        // Обработчик ввода данных в поле ввода
         private void userPatronymicTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Back)
@@ -273,7 +298,7 @@ namespace Kursovaya.Administrator
 
             e.Handled = true;
         }
-
+        // Обработчик ввода данных в поле ввода
         private void userPasswordTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsControl(e.KeyChar))
@@ -291,7 +316,7 @@ namespace Kursovaya.Administrator
 
             e.Handled = true;
         }
-
+        // Обработчик ввода данных в поле ввода
         private void userPasswordConfirmTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsControl(e.KeyChar))
@@ -309,7 +334,7 @@ namespace Kursovaya.Administrator
 
             e.Handled = true;
         }
-
+        // Обработчик ввода данных в поле ввода
         private void userLoginTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsControl(e.KeyChar))
@@ -327,7 +352,7 @@ namespace Kursovaya.Administrator
 
             e.Handled = true;
         }
-
+        // Функция получения хэша пароля
         private string GetHashPwd(string pwd)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -342,6 +367,43 @@ namespace Kursovaya.Administrator
                 }
                 return result.ToString();
             }
+        }
+        // Обработчик нажатия кнопки удаления пользователя
+        private void deleteUserButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string fioUserForDeleting = "";
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (Convert.ToInt32(row.Cells["id"].Value) == idUserForDeleting)
+                    {
+                        fioUserForDeleting = row.Cells["surname"].Value.ToString() + " " + row.Cells["name"].Value.ToString();
+                        if (row.Cells["patronymic"].Value.ToString() != "") fioUserForDeleting += " " + row.Cells["patronymic"].Value.ToString();
+                    }
+                }
+                if(idUserForDeleting == user.Default.userID)
+                {
+                    MessageBox.Show($"Текущий пользователь не может быть удалён!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    DialogResult dr = MessageBox.Show($"Вы действительно хотите удалить пользователя {fioUserForDeleting}?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.Yes)
+                    {
+                        using (MySqlConnection conn = new MySqlConnection(connStr))
+                        {
+                            conn.Open();
+                            string query = $"UPDATE staff SET activity = 1 where id = {idUserForDeleting}";
+                            MySqlCommand cmd = new MySqlCommand(query, conn);
+                            cmd.ExecuteNonQuery();
+                            MessageBox.Show("Пользователь удалён!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            filldgv();
+                        }
+                    }
+                }                
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

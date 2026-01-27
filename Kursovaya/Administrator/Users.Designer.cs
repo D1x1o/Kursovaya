@@ -47,6 +47,7 @@ namespace Kursovaya.Administrator
             this.label7 = new System.Windows.Forms.Label();
             this.userRoleComboBox = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.deleteUserButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,7 +70,7 @@ namespace Kursovaya.Administrator
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(12, 241);
+            this.label1.Location = new System.Drawing.Point(204, 241);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 24);
             this.label1.TabIndex = 1;
@@ -79,7 +80,7 @@ namespace Kursovaya.Administrator
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(204, 241);
+            this.label2.Location = new System.Drawing.Point(12, 241);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(91, 24);
             this.label2.TabIndex = 1;
@@ -99,7 +100,7 @@ namespace Kursovaya.Administrator
             // 
             this.userNameTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.userNameTextBox.ForeColor = System.Drawing.Color.White;
-            this.userNameTextBox.Location = new System.Drawing.Point(16, 268);
+            this.userNameTextBox.Location = new System.Drawing.Point(208, 268);
             this.userNameTextBox.MaxLength = 100;
             this.userNameTextBox.Name = "userNameTextBox";
             this.userNameTextBox.Size = new System.Drawing.Size(186, 29);
@@ -110,7 +111,7 @@ namespace Kursovaya.Administrator
             // 
             this.userSurnameTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.userSurnameTextBox.ForeColor = System.Drawing.Color.White;
-            this.userSurnameTextBox.Location = new System.Drawing.Point(208, 268);
+            this.userSurnameTextBox.Location = new System.Drawing.Point(16, 268);
             this.userSurnameTextBox.MaxLength = 100;
             this.userSurnameTextBox.Name = "userSurnameTextBox";
             this.userSurnameTextBox.Size = new System.Drawing.Size(186, 29);
@@ -196,9 +197,9 @@ namespace Kursovaya.Administrator
             this.userSaveChanges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.userSaveChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.userSaveChanges.ForeColor = System.Drawing.Color.White;
-            this.userSaveChanges.Location = new System.Drawing.Point(813, 295);
+            this.userSaveChanges.Location = new System.Drawing.Point(809, 247);
             this.userSaveChanges.Name = "userSaveChanges";
-            this.userSaveChanges.Size = new System.Drawing.Size(149, 69);
+            this.userSaveChanges.Size = new System.Drawing.Size(153, 121);
             this.userSaveChanges.TabIndex = 3;
             this.userSaveChanges.Text = "Создать";
             this.userSaveChanges.UseVisualStyleBackColor = false;
@@ -222,20 +223,34 @@ namespace Kursovaya.Administrator
             this.userRoleComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.userRoleComboBox.ForeColor = System.Drawing.Color.White;
             this.userRoleComboBox.FormattingEnabled = true;
-            this.userRoleComboBox.Location = new System.Drawing.Point(617, 268);
+            this.userRoleComboBox.Location = new System.Drawing.Point(617, 332);
             this.userRoleComboBox.Name = "userRoleComboBox";
-            this.userRoleComboBox.Size = new System.Drawing.Size(190, 32);
+            this.userRoleComboBox.Size = new System.Drawing.Size(186, 32);
             this.userRoleComboBox.TabIndex = 5;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(617, 241);
+            this.label8.Location = new System.Drawing.Point(613, 305);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(54, 24);
             this.label8.TabIndex = 1;
             this.label8.Text = "Роль";
+            // 
+            // deleteUserButton
+            // 
+            this.deleteUserButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.deleteUserButton.Enabled = false;
+            this.deleteUserButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deleteUserButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.deleteUserButton.Location = new System.Drawing.Point(617, 247);
+            this.deleteUserButton.Name = "deleteUserButton";
+            this.deleteUserButton.Size = new System.Drawing.Size(186, 50);
+            this.deleteUserButton.TabIndex = 3;
+            this.deleteUserButton.Text = "Удалить";
+            this.deleteUserButton.UseVisualStyleBackColor = false;
+            this.deleteUserButton.Click += new System.EventHandler(this.deleteUserButton_Click);
             // 
             // Users
             // 
@@ -245,6 +260,7 @@ namespace Kursovaya.Administrator
             this.ClientSize = new System.Drawing.Size(974, 376);
             this.Controls.Add(this.userRoleComboBox);
             this.Controls.Add(this.label7);
+            this.Controls.Add(this.deleteUserButton);
             this.Controls.Add(this.userSaveChanges);
             this.Controls.Add(this.userPasswordConfirmTextBox);
             this.Controls.Add(this.userPasswordTextBox);
@@ -293,5 +309,6 @@ namespace Kursovaya.Administrator
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox userRoleComboBox;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button deleteUserButton;
     }
 }
