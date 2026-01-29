@@ -40,13 +40,5 @@ namespace Kursovaya.Administrator
             prod.ShowDialog();
             Show();
         }
-
-        private void AddProdPicture_Click(object sender, EventArgs e)
-        {
-            ProdPic prod = new ProdPic();
-            Hide();
-            prod.ShowDialog();
-            Show();
-        }
     }
 }

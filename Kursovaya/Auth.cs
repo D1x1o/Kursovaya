@@ -25,7 +25,8 @@ namespace Kursovaya
         string ConnStr = ConnectionString.GetConnectionString();
         bool inCaptcha = false;
         private void LogInButton_Click(object sender, EventArgs e)
-        {            
+        {
+            getUserID();
             if (AuthAtt >= 1 && !inCaptcha)
             {
                 this.Height = 530;
@@ -59,13 +60,6 @@ namespace Kursovaya
                     pwdTextBox.Text = "";
                 }
             }
-
-
-
-
-            
-
-            
         }
         private void getUserID()
         {
@@ -280,6 +274,11 @@ namespace Kursovaya
         {
             loginTextBox.Text = "anton";
             pwdTextBox.Text = "anton";
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

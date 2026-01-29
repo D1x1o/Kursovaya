@@ -12,6 +12,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // ФОРМА отображения подробных характеристик товара
 
@@ -129,6 +131,18 @@ namespace Kursovaya.User
                             else if (columnName == "shel_life") { columnName = "Срок годности"; value += " Г"; }
                             else if (columnName == "composition") { columnName = "Состав";}
 
+                            else if (columnName == "inStock") { columnName = "На складе"; }
+
+                            var json = File.ReadAllText("tables.json");
+                            var root = JObject.Parse(json);
+
+                            foreach (var table in root["tables"])
+                            {
+                                foreach (var column in table["columns"])
+                                {
+                                    if (columnName == column["systemName"]?.ToString()) { columnName = column["displayName"]?.ToString(); }
+                                }
+                            }
 
                             // ОДНА строка — ДВЕ колонки
                             dataGridView1.Rows.Add(columnName, value);
@@ -224,6 +238,7 @@ namespace Kursovaya.User
                 else if (theme == "thermo_interface") { query += "concat(thermo_interface.produser, space(1), thermo_interface.model) as thermo_interface "; }
                 else if (theme == "ram") { query += "concat(ram.produser, space(1), ram.model, space(1), ram.capacity_gb, space(1), 'ГБ') as ram "; }
                 else if (theme == "storage") { query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as storage "; }
+                else { query += "concat(produser,space(1),model) "; }
                 if (theme == "case") { query += "FROM cases "; }
                 else { query += $"FROM {theme} "; }
                 query += $"WHERE id = {idProduct}";

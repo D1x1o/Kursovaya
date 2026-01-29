@@ -289,6 +289,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="pepega.ico" />
+    <Content Include="Resources\pepega.png" />
+    <None Include="Resources\pepegaCrop.png" />
     <None Include="Resources\83733882.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

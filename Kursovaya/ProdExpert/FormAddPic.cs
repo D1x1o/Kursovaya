@@ -41,6 +41,7 @@ namespace Kursovaya.ProdExpert
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
+            dataGridView1.RowHeadersVisible = false;
         }
 
         // отображаем в выпадающем списке все категори

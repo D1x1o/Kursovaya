@@ -133,6 +133,14 @@ namespace Kursovaya.ProdExpert
         // ================= СОЗДАНИЕ ТАБЛИЦЫ =================
         private void btnCreateTable_Click(object sender, EventArgs e)
         {
+            foreach (DataGridViewRow row in dgvColumns.Rows)
+            {
+                if(row.Cells["ColumnName"].Value?.ToString() == "id" || row.Cells["ColumnName"].Value?.ToString() == "model" || row.Cells["ColumnName"].Value?.ToString() == "produser" || row.Cells["ColumnName"].Value?.ToString() == "cost" || row.Cells["ColumnName"].Value?.ToString() == "inStock" || row.Cells["ColumnName"].Value?.ToString() == "image")
+                {
+                    MessageBox.Show($"Столбец {row.Cells["ColumnName"].Value?.ToString()} является стандарным и создаётся автоматически, удалите его для создания категории!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             if (!IsValidNameRu(txtTableNameRu.Text))
             {
@@ -190,10 +198,15 @@ namespace Kursovaya.ProdExpert
             }
 
             string sql = $@"
-CREATE TABLE `{tableName}` (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    {string.Join(",\n    ", columnsSql)},
-    cost int NOT NULL
+            CREATE TABLE `{tableName}` (
+             id INT PRIMARY KEY AUTO_INCREMENT,
+             model varchar(255) NOT NULL,
+             produser varchar(255) NOT NULL,
+                 {string.Join(",\n    ", columnsSql)},
+               inStock int NOT NULL DEFAULT 0,
+                image varchar(255) NULL,
+              cost int NOT NULL
+        
 );";
             SaveToJSON();
             ExecuteSql(sql);

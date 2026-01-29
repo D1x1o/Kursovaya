@@ -76,31 +76,40 @@ namespace Kursovaya.User
         }
         public void FillAnotherTables()
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
-
-            if (!File.Exists(path))
+            try
             {
-                MessageBox.Show("Файл JSON не найден!");
-                return;
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+
+                if (!File.Exists(path))
+                {
+                    MessageBox.Show("Файл JSON не найден!");
+                    return;
+                }
+
+                string json = File.ReadAllText(path);
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    anotherTablesСВ.Enabled = false;
+                    return;
+                }
+                rootJson = JObject.Parse(json); // сохраняем для использования при выборе
+
+                anotherTablesСВ.Items.Clear();
+
+                JArray tables = (JArray)rootJson["tables"];
+                foreach (JObject table in tables)
+                {
+                    string tableDisplayName = table["displayName"].ToString();
+                    anotherTablesСВ.Items.Add(tableDisplayName);
+                }
+
+                if (anotherTablesСВ.Items.Count > 0)
+                    anotherTablesСВ.SelectedIndex = 0;
+
+                // Подписываемся на событие выбора
+                anotherTablesСВ.SelectedIndexChanged += anotherTablesСВ_SelectedIndexChanged;
             }
-
-            string json = File.ReadAllText(path);
-            rootJson = JObject.Parse(json); // сохраняем для использования при выборе
-
-            anotherTablesСВ.Items.Clear();
-
-            JArray tables = (JArray)rootJson["tables"];
-            foreach (JObject table in tables)
-            {
-                string tableDisplayName = table["displayName"].ToString();
-                anotherTablesСВ.Items.Add(tableDisplayName);
-            }
-
-            if (anotherTablesСВ.Items.Count > 0)
-                anotherTablesСВ.SelectedIndex = 0;
-
-            // Подписываемся на событие выбора
-            anotherTablesСВ.SelectedIndexChanged += anotherTablesСВ_SelectedIndexChanged;
+            catch (Exception e) { MessageBox.Show(e.Message); }
 
         }
         private void FillAnotherTable()
@@ -145,6 +154,7 @@ namespace Kursovaya.User
                 FillAnotherTable();
                 renameHeadersAnotherTable();
             }
+            Columns();
         }
         public void renameHeadersAnotherTable()
         {
@@ -553,8 +563,30 @@ namespace Kursovaya.User
                 dataGridView1.Columns["shel_life"].HeaderText = "Срок годности  ";
                 dataGridView1.Columns["composition"].HeaderText = "Состав";
                 dataGridView1.Columns["composition"].DisplayIndex = dataGridView1.ColumnCount - 3;
-            }
+            }            
+            else
+            {
+                var json = File.ReadAllText("tables.json");
+                var root = JObject.Parse(json);
 
+                foreach (var table in root["tables"])
+                {
+                    foreach (var column in table["columns"])
+                    {
+                        var systemName = column["systemName"]?.ToString();
+                        var displayName = column["displayName"]?.ToString();
+
+                        if (dataGridView1.Columns.Contains(systemName))
+                        {
+                            dataGridView1.Columns[systemName].HeaderText = displayName;
+                        }
+                    }
+                }
+            }
+            if (dataGridView1.Columns.Contains("inStock"))
+            {
+                dataGridView1.Columns["inStock"].HeaderText = "На складе";
+            }
             dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
             dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.ColumnCount - 1;
         }

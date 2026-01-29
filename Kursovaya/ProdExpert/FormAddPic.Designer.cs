@@ -85,6 +85,7 @@
             // 
             this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.searchTextBox.Enabled = false;
+            this.searchTextBox.ForeColor = System.Drawing.Color.White;
             this.searchTextBox.Location = new System.Drawing.Point(69, 12);
             this.searchTextBox.MaxLength = 50;
             this.searchTextBox.Name = "searchTextBox";

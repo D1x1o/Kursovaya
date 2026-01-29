@@ -39,10 +39,13 @@ namespace Kursovaya
             this.CaptchaTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.ReCaptcha = new System.Windows.Forms.Button();
-            this.CaptcaImg = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ReCaptcha = new System.Windows.Forms.Button();
+            this.CaptcaImg = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CaptcaImg)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,7 +53,7 @@ namespace Kursovaya
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(33, 9);
+            this.label1.Location = new System.Drawing.Point(31, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(187, 24);
@@ -61,7 +64,8 @@ namespace Kursovaya
             // 
             this.loginTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.loginTextBox.ForeColor = System.Drawing.Color.White;
-            this.loginTextBox.Location = new System.Drawing.Point(41, 99);
+            this.loginTextBox.Location = new System.Drawing.Point(41, 123);
+            this.loginTextBox.MaxLength = 50;
             this.loginTextBox.Name = "loginTextBox";
             this.loginTextBox.Size = new System.Drawing.Size(167, 29);
             this.loginTextBox.TabIndex = 1;
@@ -71,6 +75,7 @@ namespace Kursovaya
             this.pwdTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.pwdTextBox.ForeColor = System.Drawing.Color.White;
             this.pwdTextBox.Location = new System.Drawing.Point(41, 189);
+            this.pwdTextBox.MaxLength = 50;
             this.pwdTextBox.Name = "pwdTextBox";
             this.pwdTextBox.Size = new System.Drawing.Size(167, 29);
             this.pwdTextBox.TabIndex = 2;
@@ -80,7 +85,7 @@ namespace Kursovaya
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(38, 78);
+            this.label2.Location = new System.Drawing.Point(38, 102);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(110, 18);
             this.label2.TabIndex = 3;
@@ -102,9 +107,9 @@ namespace Kursovaya
             this.LogInButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.LogInButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LogInButton.ForeColor = System.Drawing.Color.White;
-            this.LogInButton.Location = new System.Drawing.Point(62, 244);
+            this.LogInButton.Location = new System.Drawing.Point(62, 257);
             this.LogInButton.Name = "LogInButton";
-            this.LogInButton.Size = new System.Drawing.Size(129, 32);
+            this.LogInButton.Size = new System.Drawing.Size(129, 42);
             this.LogInButton.TabIndex = 4;
             this.LogInButton.Text = "Войти";
             this.LogInButton.UseVisualStyleBackColor = false;
@@ -129,13 +134,54 @@ namespace Kursovaya
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(46, 244);
+            this.button1.Location = new System.Drawing.Point(46, 262);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(10, 32);
             this.button1.TabIndex = 8;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(30, 262);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(10, 32);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "button1";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(14, 262);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(10, 32);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "button1";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(112, 41);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 24);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "PepeShop";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox1.Image = global::Kursovaya.Properties.Resources.pepegaCrop;
+            this.pictureBox1.Location = new System.Drawing.Point(45, 36);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(62, 32);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
             // 
             // ReCaptcha
             // 
@@ -155,32 +201,14 @@ namespace Kursovaya
             this.CaptcaImg.TabIndex = 5;
             this.CaptcaImg.TabStop = false;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(30, 244);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(10, 32);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "button1";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(14, 244);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(10, 32);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "button1";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // Auth
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(254, 311);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -202,6 +230,7 @@ namespace Kursovaya
             this.Name = "Auth";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Авторизация";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CaptcaImg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -223,6 +252,8 @@ namespace Kursovaya
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
