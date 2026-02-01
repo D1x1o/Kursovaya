@@ -80,6 +80,7 @@
     <Compile Include="Administrator\Users.Designer.cs">
       <DependentUpon>Users.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColumnsNameMap.cs" />
     <Compile Include="ConnectionString.cs" />
     <Compile Include="Auth.cs">
       <SubType>Form</SubType>
@@ -98,6 +99,12 @@
     </Compile>
     <Compile Include="ProdExpert\ExpertMenu.Designer.cs">
       <DependentUpon>ExpertMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProdExpert\FormAddProd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProdExpert\FormAddProd.Designer.cs">
+      <DependentUpon>FormAddProd.cs</DependentUpon>
     </Compile>
     <Compile Include="ProdExpert\FormAddCategory.cs">
       <SubType>Form</SubType>
@@ -205,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProdExpert\FormAddCategory.resx">
       <DependentUpon>FormAddCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProdExpert\FormAddProd.resx">
+      <DependentUpon>FormAddProd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProdExpert\FormEditingProd.resx">
       <DependentUpon>FormEditingProd.cs</DependentUpon>

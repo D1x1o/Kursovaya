@@ -34,6 +34,7 @@ namespace Kursovaya.ProdExpert
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
+            dataGridView1.ReadOnly = true;
         }
 
         public void SetComboBox()
@@ -41,7 +42,7 @@ namespace Kursovaya.ProdExpert
             categoryComboBox.Items.Clear();
             categoryComboBox.Items.Add("Процессоры");
             categoryComboBox.Items.Add("Видеокарты");
-            categoryComboBox.Items.Add("Материские платы");
+            categoryComboBox.Items.Add("Материнские платы");
             categoryComboBox.Items.Add("Оперативная память");
             categoryComboBox.Items.Add("Кулеры");
             categoryComboBox.Items.Add("Корпусы");

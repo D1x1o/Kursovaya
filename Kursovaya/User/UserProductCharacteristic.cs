@@ -131,18 +131,24 @@ namespace Kursovaya.User
                             else if (columnName == "shel_life") { columnName = "Срок годности"; value += " Г"; }
                             else if (columnName == "composition") { columnName = "Состав";}
 
-                            else if (columnName == "inStock") { columnName = "На складе"; }
+                            else if (columnName == "inStock") { columnName = "В наличии"; }
 
-                            var json = File.ReadAllText("tables.json");
-                            var root = JObject.Parse(json);
-
-                            foreach (var table in root["tables"])
+                            if (theme != "processors" && theme != "motherboards" && theme != "videocards" && theme != "cpu_cooler" && theme != "case" && theme != "case_coolers" && theme != "power_supplier"
+                                && theme != "thermo_interface" && theme != "ram" && theme != "storage")
                             {
-                                foreach (var column in table["columns"])
+                                var json = File.ReadAllText("tables.json");
+                                var root = JObject.Parse(json);
+
+                                foreach (var table in root["tables"])
                                 {
-                                    if (columnName == column["systemName"]?.ToString()) { columnName = column["displayName"]?.ToString(); }
+                                    foreach (var column in table["columns"])
+                                    {
+                                        if (columnName == column["systemName"]?.ToString()) { columnName = column["displayName"]?.ToString(); }
+                                    }
                                 }
                             }
+
+                            
 
                             // ОДНА строка — ДВЕ колонки
                             dataGridView1.Rows.Add(columnName, value);
@@ -202,7 +208,7 @@ namespace Kursovaya.User
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     if (cmd.ExecuteScalar().ToString() == "")
                     {
-                        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop");
+                        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop/img");
 
                         string imagePath = Path.Combine(imgFolder, "no-image.png");
 
@@ -240,6 +246,11 @@ namespace Kursovaya.User
                 else if (theme == "storage") { query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as storage "; }
                 else { query += "concat(produser,space(1),model) "; }
                 if (theme == "case") { query += "FROM cases "; }
+                if(theme != "processors" && theme != "motherboards" && theme != "videocards" && theme != "cpu_cooler" && theme != "case" && theme != "case_coolers" && theme != "power_supplier"
+                    && theme != "thermo_interface" && theme != "ram" && theme != "storage")
+                {
+                    query = "SELECT concat(produser,space(1),model ";
+                }
                 else { query += $"FROM {theme} "; }
                 query += $"WHERE id = {idProduct}";
                 using (MySqlConnection conn = new MySqlConnection(connStr))

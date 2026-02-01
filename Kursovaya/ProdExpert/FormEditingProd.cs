@@ -74,7 +74,7 @@ namespace Kursovaya.ProdExpert
                             {
                                 idProduct = Convert.ToInt32(value);
                             }
-                            if (columnName == "iduser" || columnName == "id" || columnName == "image")
+                            if (columnName == "iduser" || columnName == "id" || columnName == "image" || columnName == "inStock")
                                 continue;
 
                             if (reader.IsDBNull(i))
@@ -261,7 +261,7 @@ namespace Kursovaya.ProdExpert
                 || field == "Потребляемая мощность" || field == "Длина видеокарты" || field == "Количетсво слотов опер. памяти" || field == "Количестов слотов для M.2 SSD"
                 || field == "Количество слотов расширения" || field == "Объём" || field == "Частота" || field == "Рассеиваемая мощность" || field == "Высота кулера" || field == "Максимальная длина видеокарты"
                 || field == "Максимальная высота процессорного кулера" || field == "Количетво отсеков накопителей" || field == "Мощность"  || field == "Размер вентилятора"
-                || field == "Скорость записи" || field == "Скорость чтения" || field == "Срок годности";
+                || field == "Скорость записи" || field == "Скорость чтения" || field == "Срок годности" || field == "В наличии";
         }
         
 

@@ -51,8 +51,8 @@ namespace Kursovaya.User
             this.btnResetFilter = new System.Windows.Forms.Button();
             this.resetSelectedItems = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.anotherTablesСВ = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.anotherTablesСВ = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -351,18 +351,6 @@ namespace Kursovaya.User
             this.panel1.Size = new System.Drawing.Size(1527, 762);
             this.panel1.TabIndex = 17;
             // 
-            // anotherTablesСВ
-            // 
-            this.anotherTablesСВ.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.anotherTablesСВ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.anotherTablesСВ.ForeColor = System.Drawing.Color.White;
-            this.anotherTablesСВ.FormattingEnabled = true;
-            this.anotherTablesСВ.Location = new System.Drawing.Point(1100, 65);
-            this.anotherTablesСВ.Name = "anotherTablesСВ";
-            this.anotherTablesСВ.Size = new System.Drawing.Size(159, 32);
-            this.anotherTablesСВ.TabIndex = 17;
-            this.anotherTablesСВ.SelectedIndexChanged += new System.EventHandler(this.anotherTablesСВ_SelectedIndexChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -372,6 +360,19 @@ namespace Kursovaya.User
             this.label2.Size = new System.Drawing.Size(146, 24);
             this.label2.TabIndex = 18;
             this.label2.Text = "Другие товары";
+            // 
+            // anotherTablesСВ
+            // 
+            this.anotherTablesСВ.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.anotherTablesСВ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.anotherTablesСВ.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.anotherTablesСВ.ForeColor = System.Drawing.Color.White;
+            this.anotherTablesСВ.FormattingEnabled = true;
+            this.anotherTablesСВ.Location = new System.Drawing.Point(1100, 65);
+            this.anotherTablesСВ.Name = "anotherTablesСВ";
+            this.anotherTablesСВ.Size = new System.Drawing.Size(159, 32);
+            this.anotherTablesСВ.TabIndex = 17;
+            this.anotherTablesСВ.SelectedIndexChanged += new System.EventHandler(this.anotherTablesСВ_SelectedIndexChanged);
             // 
             // UserProduct
             // 

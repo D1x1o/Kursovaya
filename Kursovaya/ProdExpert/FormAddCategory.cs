@@ -340,29 +340,48 @@ namespace Kursovaya.ProdExpert
 
         private void SaveToJSON()
         {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+
+            // Новая таблица
             JObject table = new JObject
             {
                 ["systemName"] = txtTableName.Text,
                 ["displayName"] = txtTableNameRu.Text,
                 ["columns"] = new JArray(
-        dgvColumns.Rows
-            .Cast<DataGridViewRow>()
-            .Where(r => !r.IsNewRow)
-            .Select(r => new JObject
-            {
-                ["systemName"] = r.Cells["ColumnName"].Value?.ToString(),
-                ["displayName"] = r.Cells["ColumnNameRu"].Value?.ToString()
-            })
-    )
+                    dgvColumns.Rows
+                        .Cast<DataGridViewRow>()
+                        .Where(r => !r.IsNewRow)
+                        .Select(r => new JObject
+                        {
+                            ["systemName"] = r.Cells["ColumnName"].Value?.ToString(),
+                            ["displayName"] = r.Cells["ColumnNameRu"].Value?.ToString()
+                        })
+                )
             };
 
-            JObject root = new JObject
+            JObject root;
+            JArray tables;
+
+            // Если файл существует и не пустой
+            if (File.Exists(path) && !string.IsNullOrWhiteSpace(File.ReadAllText(path)))
             {
-                ["tables"] = new JArray(table)
-            };
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
-            File.WriteAllText(path, root.ToString());
+                root = JObject.Parse(File.ReadAllText(path));
+                tables = root["tables"] as JArray ?? new JArray();
+            }
+            else
+            {
+                root = new JObject();
+                tables = new JArray();
+            }
+
+            // Добавляем новую таблицу
+            tables.Add(table);
+            root["tables"] = tables;
+
+            // Сохраняем обратно
+            File.WriteAllText(path, root.ToString(Formatting.Indented));
         }
+
 
         private void txtTableNameRu_KeyPress(object sender, KeyPressEventArgs e)
         {

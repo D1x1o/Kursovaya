@@ -508,7 +508,7 @@ namespace Kursovaya.User
                 dataGridView1.Columns["capacity_gb"].HeaderText = "Объём";
                 dataGridView1.Columns["interface"].HeaderText = "Интерфейс";
                 dataGridView1.Columns["write_speed"].Visible = false;
-                dataGridView1.Columns["read_speed"].Visible = false;
+                dataGridView1.Columns["read_speed"].Visible = false;                
                 dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
                 dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.ColumnCount - 1;
             }
@@ -518,6 +518,7 @@ namespace Kursovaya.User
                 dataGridView1.Columns["produser"].HeaderText = "Производитель";
                 dataGridView1.Columns["power"].HeaderText = "Мощность";
                 dataGridView1.Columns["certificate"].HeaderText = "Сертификат";
+                dataGridView1.Columns["inStock"].DisplayIndex = dataGridView1.ColumnCount - 2;
                 dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
                 dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.ColumnCount - 1;
 
@@ -528,6 +529,8 @@ namespace Kursovaya.User
                 dataGridView1.Columns["produser"].HeaderText = "Производитель";
                 dataGridView1.Columns["scale"].HeaderText = "Размер";
                 dataGridView1.Columns["light"].HeaderText = "Подсветка";
+                dataGridView1.Columns["light"].DisplayIndex = dataGridView1.ColumnCount - 3;
+                dataGridView1.Columns["inStock"].DisplayIndex = dataGridView1.ColumnCount - 2;
                 dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
                 dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.ColumnCount - 1;
             }
@@ -540,6 +543,7 @@ namespace Kursovaya.User
                 dataGridView1.Columns["max_lenght_videocard"].HeaderText = "Макс. длинна видеокарты";
                 dataGridView1.Columns["max_height_cpu_cooler"].HeaderText = "Макс. высота кулера";
                 dataGridView1.Columns["storage_slots"].Visible = false;
+                dataGridView1.Columns["inStock"].DisplayIndex = dataGridView1.ColumnCount - 2;
                 dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
                 dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.ColumnCount - 1;
             }
@@ -551,6 +555,9 @@ namespace Kursovaya.User
                 dataGridView1.Columns["light_type"].HeaderText = "Подсветка";
                 dataGridView1.Columns["cooler_height"].HeaderText = "Высота";
                 dataGridView1.Columns["max_heat_sink"].HeaderText = "Макс. рассеивание тепла";
+                dataGridView1.Columns["cooler_height"].DisplayIndex = dataGridView1.ColumnCount - 5;
+                dataGridView1.Columns["light_type"].DisplayIndex = dataGridView1.ColumnCount - 4;
+                dataGridView1.Columns["inStock"].DisplayIndex = dataGridView1.ColumnCount - 2;
                 dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
                 dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.ColumnCount - 1;
             }
@@ -562,7 +569,10 @@ namespace Kursovaya.User
                 dataGridView1.Columns["packege_volume"].HeaderText = "Объём упаковки";
                 dataGridView1.Columns["shel_life"].HeaderText = "Срок годности  ";
                 dataGridView1.Columns["composition"].HeaderText = "Состав";
-                dataGridView1.Columns["composition"].DisplayIndex = dataGridView1.ColumnCount - 3;
+                dataGridView1.Columns["composition"].DisplayIndex = dataGridView1.ColumnCount - 4;
+                dataGridView1.Columns["inStock"].DisplayIndex = dataGridView1.ColumnCount - 2;
+                dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
+                dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.ColumnCount - 1;
             }            
             else
             {
@@ -585,7 +595,8 @@ namespace Kursovaya.User
             }
             if (dataGridView1.Columns.Contains("inStock"))
             {
-                dataGridView1.Columns["inStock"].HeaderText = "На складе";
+                dataGridView1.Columns["inStock"].HeaderText = "В наличии";
+                dataGridView1.Columns["inStock"].DisplayIndex = dataGridView1.ColumnCount - 3;
             }
             dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
             dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.ColumnCount - 1;

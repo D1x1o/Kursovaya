@@ -56,5 +56,13 @@ namespace Kursovaya.ProdExpert
             category.ShowDialog();
             Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FormAddProd addprod = new FormAddProd();
+            Hide();
+            addprod.ShowDialog();
+            Show();
+        }
     }
 }

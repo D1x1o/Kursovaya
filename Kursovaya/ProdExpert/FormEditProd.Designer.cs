@@ -176,6 +176,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(824, 492);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.allPageLabel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.actualPageLabel);
@@ -183,7 +184,6 @@
             this.Controls.Add(this.ForwardPageButton);
             this.Controls.Add(this.BackPageButton);
             this.Controls.Add(this.searchTextBox);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.categoryComboBox);
