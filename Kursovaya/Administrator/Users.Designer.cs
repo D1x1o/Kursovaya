@@ -106,6 +106,7 @@ namespace Kursovaya.Administrator
             this.userNameTextBox.Size = new System.Drawing.Size(186, 29);
             this.userNameTextBox.TabIndex = 2;
             this.userNameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userNameTextBox_KeyPress);
+            this.userNameTextBox.Leave += new System.EventHandler(this.userNameTextBox_Leave);
             // 
             // userSurnameTextBox
             // 
@@ -117,6 +118,7 @@ namespace Kursovaya.Administrator
             this.userSurnameTextBox.Size = new System.Drawing.Size(186, 29);
             this.userSurnameTextBox.TabIndex = 2;
             this.userSurnameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userSurnameTextBox_KeyPress);
+            this.userSurnameTextBox.Leave += new System.EventHandler(this.userSurnameTextBox_Leave);
             // 
             // userPatronymicTextBox
             // 
@@ -128,6 +130,7 @@ namespace Kursovaya.Administrator
             this.userPatronymicTextBox.Size = new System.Drawing.Size(211, 29);
             this.userPatronymicTextBox.TabIndex = 2;
             this.userPatronymicTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.userPatronymicTextBox_KeyPress);
+            this.userPatronymicTextBox.Leave += new System.EventHandler(this.userPatronymicTextBox_Leave);
             // 
             // label4
             // 

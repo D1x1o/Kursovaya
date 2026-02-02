@@ -33,9 +33,7 @@ namespace Kursovaya.ProdExpert
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
-            dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
-            dataGridView1.Columns["value"].ReadOnly = true;
-            dataGridView1.Columns["data"].ReadOnly = false;
+            dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;            
         }
         class Category
         {
@@ -64,23 +62,32 @@ namespace Kursovaya.ProdExpert
                 string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
                 if (File.Exists(path))
                 {
-                    string json = File.ReadAllText(path);
-                    JObject root = JObject.Parse(json);
 
-                    JArray tables = (JArray)root["tables"];
-                    foreach (JObject table in tables)
+                    string json = File.ReadAllText(path);
+                    if (string.IsNullOrWhiteSpace(json))
                     {
-                        categories.Add(new Category
-                        {
-                            SystemName = table["systemName"].ToString(),
-                            DisplayName = table["displayName"].ToString()
-                        });
+
                     }
+                    else
+                    {
+                        JObject root = JObject.Parse(json);
+
+                        JArray tables = (JArray)root["tables"];
+                        foreach (JObject table in tables)
+                        {
+                            categories.Add(new Category
+                            {
+                                SystemName = table["systemName"].ToString(),
+                                DisplayName = table["displayName"].ToString()
+                            });
+                        }
+                    }
+                        
                 }
 
                 categoryComboBox.DisplayMember = "DisplayName";
                 categoryComboBox.ValueMember = "SystemName";
-                categoryComboBox.DataSource = categories;
+                categoryComboBox.DataSource = categories;                
             }
             catch (Exception e)
             {
@@ -144,6 +151,8 @@ namespace Kursovaya.ProdExpert
             dataColumn.Name = "data";
             dataColumn.HeaderText = "Характеристики";
             dataGridView1.Columns.Add(dataColumn);
+            dataGridView1.Columns["value"].ReadOnly = true;
+            dataGridView1.Columns["data"].ReadOnly = false;
         }
 
         private void SetDefaultPicture()

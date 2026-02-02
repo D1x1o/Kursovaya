@@ -405,5 +405,39 @@ namespace Kursovaya.Administrator
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+
+        private string FormatingText(string textBoxInput)
+        {
+            if(textBoxInput.Length == 0 || textBoxInput == "")
+            {
+                return string.Empty;
+            }
+            else
+            {
+                string res;
+                char [] chars = textBoxInput.ToCharArray();
+                res = char.ToUpper(chars[0]).ToString();
+                for(int i = 1; i < chars.Length; i++)
+                {
+                    res += char.ToLower(chars[i]);
+                }
+                return res;
+            }
+        }
+
+        private void userSurnameTextBox_Leave(object sender, EventArgs e)
+        {
+            userSurnameTextBox.Text = FormatingText(userSurnameTextBox.Text);
+        }
+
+        private void userNameTextBox_Leave(object sender, EventArgs e)
+        {
+            userNameTextBox.Text = FormatingText(userNameTextBox.Text);
+        }
+
+        private void userPatronymicTextBox_Leave(object sender, EventArgs e)
+        {
+            userPatronymicTextBox.Text = FormatingText(userPatronymicTextBox.Text);
+        }
     }
 }
