@@ -2,7 +2,7 @@
 ## Студента группы ИС-22Б
 ### Мосягина Антона
 
-![Изображение] ( Kursovaya/pepega.ico "Логотип приложения")
+ ![Логотип приложения](https://raw.githubusercontent.com/D1x1o/Kursovaya/refs/heads/master/Kursovaya/pepega.ico "Логотип приложения")
 ---
 Представляет из себя АИС на тему ***Конфигуратор ПК***
 

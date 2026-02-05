@@ -2,6 +2,7 @@
 using Kursovaya.Administrator;
 using MySql.Data.MySqlClient;
 using MySql.Data.MySqlClient.X.XDevAPI.Common;
+using MySqlX.XDevAPI.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,8 +43,24 @@ namespace Kursovaya.User
                 buildCheckBox.Checked = false;
                 buildPrice.Visible = false;
             }
+            dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
+            dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
+            dataGridView1.DefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
+            dataGridView1.RowHeadersVisible = false;
+            makeCalendar();
+            mathEndPriceNew();
         }
-        
+        private void makeCalendar()
+        {
+
+            calendar.MinDate = DateTime.Today.AddDays(7);
+            calendar.MaxDate = DateTime.Today.AddMonths(6);
+        }
         public void fillDGV(int iduser)
         {
             try
@@ -560,7 +577,7 @@ namespace Kursovaya.User
                 buildCheckBox.Enabled = false;
                 buildCheckBox.Checked = false;
             }
-
+            mathEndPriceNew();
         }
         private bool checkAmount()
         {
@@ -685,13 +702,16 @@ namespace Kursovaya.User
                 deliveryPrice.Visible = true;
                 addresTextBox.Visible = true;
                 label2.Visible = true;
+                calendar.Visible = true;
             }
             else
             {
                 deliveryPrice.Visible = false;
                 addresTextBox.Visible = false;
                 label2.Visible = false;
+                calendar.Visible = false;
             }
+            
         }
 
         private void ShowPrice()
@@ -702,11 +722,12 @@ namespace Kursovaya.User
 
         private void mathEndPriceNew()
         {
+            int totalWithDiscount = 0;
             int total = 0;
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                if (row.IsNewRow) continue;
+                //if (row.IsNewRow) continue;
 
                 if (row.Cells["Amount"].Value == null ||
                     row.Cells["Cost"].Value == null)
@@ -716,27 +737,31 @@ namespace Kursovaya.User
                 if (amount <= 0) continue;
 
                 int cost = Convert.ToInt32(row.Cells["Cost"].Value.ToString().Replace(" ₽", "").Replace(" ", "").Trim());
+                
 
                 total += cost * amount;
-                
-                
+
+
             }
             if (deliveryCB.Checked && buildCheckBox.Checked)
             {
-                total += 4000;
+                total += 6000;
                 discountLabel.Text = "2 000 ₽";
+                totalWithDiscount = total - 2000;
             }
             else if (deliveryCB.Checked && buildCheckBox.Checked == false || deliveryCB.Checked == false && buildCheckBox.Checked)
             {
                 total += 3000;
                 discountLabel.Text = "0 ₽";
+                totalWithDiscount = total;
             }
             else if (deliveryCB.Checked == false && buildCheckBox.Checked == false)
             {
                 discountLabel.Text = "0 ₽";
+                totalWithDiscount = total;
             }
             cartSumLabel.Text = getMakedString(total.ToString()) + " ₽";
-            cartEndPrice.Text = getMakedString(total.ToString()) + " ₽";
+            cartEndPrice.Text = getMakedString(totalWithDiscount.ToString()) + " ₽";
         }
 
         private void buildCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -755,6 +780,7 @@ namespace Kursovaya.User
         public string Safe(string s) => string.IsNullOrEmpty(s) ? "0" : s;
         private void makeBuyButton_Click(object sender, EventArgs e)
         {
+            string formatted;           
             string processorValue = "", videoValue = "", motherValue = "", ramValue = "", powerValue = "", driverValue = "", thermoValue = "", caseValue = "", casefanValue = "", procfanValue = "";
             int countProc = 0, countVideo = 0, countMother = 0, countRam = 0, countPower = 0, countDriver = 0, countThermo = 0, countCases = 0, countCasefan = 0, countProcfan = 0;
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -782,9 +808,7 @@ namespace Kursovaya.User
             string query9 = $"SELECT id FROM case_coolers WHERE   concat(case_coolers.produser, space(1), case_coolers.model) = '{casefanValue}'";
             string query0 = $"SELECT id FROM cpu_cooler WHERE   concat(cpu_cooler.produser, space(1), cpu_cooler.model) = '{procfanValue}'";
             DateTime Date = DateTime.Now;
-            string formattedDate = Date.ToString("yyyy-MM-dd HH:mm:ss");
-            DateTime timePlus3Days = DateTime.Now.AddDays(3);
-            string formattedDatePlus3Days = timePlus3Days.ToString("yyyy-MM-dd HH:mm:ss");
+            string formattedDate = Date.ToString("yyyy-MM-dd HH:mm:ss");            
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
@@ -800,7 +824,18 @@ namespace Kursovaya.User
                     MySqlCommand cmd8 = new MySqlCommand(query8, conn);
                     MySqlCommand cmd9 = new MySqlCommand(query9, conn);
                     MySqlCommand cmd0 = new MySqlCommand(query0, conn);
-                    string resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', '{deliveryCB.Enabled.ToString()}', '{addresTextBox.Text} ', '{formattedDate}', '{formattedDatePlus3Days}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1))";
+                    string resultQuery;
+                    if (deliveryCB.Checked)
+                    {
+                        DateTime date = calendar.SelectionStart;
+                        DateTime result = date.Date + DateTime.Now.TimeOfDay;
+                        formatted = result.ToString("yyyy-MM-dd HH:mm:ss");
+                        resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'True', '{addresTextBox.Text} ', '{formattedDate}', '{formatted}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1))";
+                    }
+                    else
+                    {
+                        resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, status) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'False', '{addresTextBox.Text} ', '{formattedDate}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1))";
+                    }
                     MySqlCommand cmdEnd = new MySqlCommand(resultQuery, conn);
                     cmdEnd.ExecuteNonQuery();
                     MessageBox.Show("Заказ успешно оформлен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -810,6 +845,70 @@ namespace Kursovaya.User
             catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
 
-        
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == dataGridView1.Columns["AmountInc"].Index && e.RowIndex >= 0)
+            {
+                e.PaintBackground(e.CellBounds, true);
+
+                // Цвет кнопки
+                using (SolidBrush buttonColor = new SolidBrush(Color.FromArgb(77, 150, 125)))
+                {
+                    e.Graphics.FillRectangle(buttonColor, e.CellBounds);
+                }
+
+                // Текст кнопки
+                TextRenderer.DrawText(e.Graphics,
+                                      (e.FormattedValue ?? "").ToString(),
+                                      e.CellStyle.Font,
+                                      e.CellBounds,
+                                      Color.White,
+                                      TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+
+                e.Handled = true; // Система больше не рисует кнопку
+            }
+            if (e.ColumnIndex == dataGridView1.Columns["AmountDec"].Index && e.RowIndex >= 0)
+            {
+                e.PaintBackground(e.CellBounds, true);
+
+                // Цвет кнопки
+                using (SolidBrush buttonColor = new SolidBrush(Color.FromArgb(77, 150, 125)))
+                {
+                    e.Graphics.FillRectangle(buttonColor, e.CellBounds);
+                }
+
+                // Текст кнопки
+                TextRenderer.DrawText(e.Graphics,
+                                      (e.FormattedValue ?? "").ToString(),
+                                      e.CellStyle.Font,
+                                      e.CellBounds,
+                                      Color.White,
+                                      TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+
+                e.Handled = true; // Система больше не рисует кнопку
+            }
+        }
+
+        private void calendar_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            DayOfWeek day = e.Start.DayOfWeek;
+
+            if (day == DayOfWeek.Saturday || day == DayOfWeek.Sunday)
+            {
+                MessageBox.Show(
+                    "Суббота и воскресенье недоступны",
+                    "Ошибка выбора даты",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                // откат на ближайший понедельник
+                DateTime d = e.Start;
+                while (d.DayOfWeek == DayOfWeek.Saturday || d.DayOfWeek == DayOfWeek.Sunday)
+                    d = d.AddDays(1);
+
+                calendar.SetDate(d);
+            }
+        }
     }    
 }

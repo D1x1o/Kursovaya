@@ -82,7 +82,6 @@ namespace Kursovaya.User
 
                 if (!File.Exists(path))
                 {
-                    MessageBox.Show("Файл JSON не найден!");
                     return;
                 }
 
@@ -461,6 +460,8 @@ namespace Kursovaya.User
                 dataGridView1.Columns["core_int"].HeaderText = "Кол-во ядер";
                 dataGridView1.Columns["L3_caсhe"].Visible = false;
                 dataGridView1.Columns["thermal_power"].Visible = false;
+                dataGridView1.Columns["cost"].DisplayIndex = dataGridView1.ColumnCount - 2;
+                dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.ColumnCount - 1;
             }
             else if (theme == "videocards")
             {
