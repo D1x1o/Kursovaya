@@ -19,8 +19,9 @@ namespace Kursovaya.User
 {
     public partial class UserCart : Form
     {
-        public Dictionary<string, int> ArrPosInDGV = new Dictionary<string, int> {
-           
+        public Dictionary<string, int> ArrPosInDGV = new Dictionary<string, int>
+        {
+
         };
         public Dictionary<int, string> ArrPosInDGVInvert = new Dictionary<int, string>
         {
@@ -29,7 +30,7 @@ namespace Kursovaya.User
         string ConnStr = ConnectionString.GetConnectionString();
         public UserCart()
         {
-            InitializeComponent();            
+            InitializeComponent();
             fillDGV(user.Default.userID);
             checkBuildOption();
             buildCheckBox.Checked = false;
@@ -436,7 +437,7 @@ namespace Kursovaya.User
                     deliveryCB.Enabled = false;
                     this.Hide();
                 }
-                
+
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -446,7 +447,7 @@ namespace Kursovaya.User
             int cartSumm = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if(dataGridView1.Rows[i].Cells["Cost"].Value == null)
+                if (dataGridView1.Rows[i].Cells["Cost"].Value == null)
                 {
 
                 }
@@ -456,7 +457,7 @@ namespace Kursovaya.User
                 }
             }
             return cartSumm;
-        }        
+        }
         private string getMakedString(string cartSumStr)
         {
             string cost = "";
@@ -472,7 +473,7 @@ namespace Kursovaya.User
             return new String(cost.Reverse().ToArray());
         }
 
-        
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -482,10 +483,10 @@ namespace Kursovaya.User
                 amount++;
                 dataGridView1.Rows[e.RowIndex].Cells["Amount"].Value = amount;
             }
-            else if(e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "AmountDec")
+            else if (e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "AmountDec")
             {
                 int amount = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Amount"].Value.ToString());
-                if(amount <= 1)
+                if (amount <= 1)
                 {
                     DialogResult delFromCart = MessageBox.Show($"Вы действительно хотите удалить {dataGridView1.Rows[e.RowIndex].Cells["Value"].Value.ToString()} из корзины?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (delFromCart == DialogResult.Yes)
@@ -640,7 +641,7 @@ namespace Kursovaya.User
             if (checkedItems.Default.processors == true
                 &&
                 checkedItems.Default.motherboards == true &&
-                
+
                 checkedItems.Default.videocards == true &&
                 checkedItems.Default.ram == true &&
                 checkedItems.Default.cases == true &&
@@ -711,7 +712,7 @@ namespace Kursovaya.User
                 label2.Visible = false;
                 calendar.Visible = false;
             }
-            
+
         }
 
         private void ShowPrice()
@@ -737,7 +738,7 @@ namespace Kursovaya.User
                 if (amount <= 0) continue;
 
                 int cost = Convert.ToInt32(row.Cells["Cost"].Value.ToString().Replace(" ₽", "").Replace(" ", "").Trim());
-                
+
 
                 total += cost * amount;
 
@@ -773,14 +774,15 @@ namespace Kursovaya.User
             }
             else
             {
-                
+
                 buildPrice.Visible = false;
             }
         }
+        string checkDate = "-";
         public string Safe(string s) => string.IsNullOrEmpty(s) ? "0" : s;
         private void makeBuyButton_Click(object sender, EventArgs e)
         {
-            string formatted;           
+            string formatted;
             string processorValue = "", videoValue = "", motherValue = "", ramValue = "", powerValue = "", driverValue = "", thermoValue = "", caseValue = "", casefanValue = "", procfanValue = "";
             int countProc = 0, countVideo = 0, countMother = 0, countRam = 0, countPower = 0, countDriver = 0, countThermo = 0, countCases = 0, countCasefan = 0, countProcfan = 0;
             foreach (DataGridViewRow row in dataGridView1.Rows)
@@ -796,7 +798,7 @@ namespace Kursovaya.User
                 else if (row.Cells["type"].Value?.ToString() == "Термопаста") { thermoValue = row.Cells["value"].Value?.ToString(); countThermo = Convert.ToInt32(row.Cells["Amount"].Value); }
                 else if (row.Cells["type"].Value?.ToString() == "Корпусные кулеры") { casefanValue = row.Cells["value"].Value?.ToString(); countCasefan = Convert.ToInt32(row.Cells["Amount"].Value); }
             }
-            
+
             string query1 = $"SELECT id FROM processors WHERE concat(processors.produser, space(1), processors.model) = '{processorValue}'";
             string query2 = $"SELECT id FROM videocards WHERE     concat(videocards.produser, space(1), videocards.vender, space(1), videocards.model) = '{videoValue}'";
             string query3 = $"SELECT id FROM motherboards WHERE    concat(motherboards.produser, space(1), motherboards.model) = '{motherValue}'";
@@ -808,7 +810,9 @@ namespace Kursovaya.User
             string query9 = $"SELECT id FROM case_coolers WHERE   concat(case_coolers.produser, space(1), case_coolers.model) = '{casefanValue}'";
             string query0 = $"SELECT id FROM cpu_cooler WHERE   concat(cpu_cooler.produser, space(1), cpu_cooler.model) = '{procfanValue}'";
             DateTime Date = DateTime.Now;
-            string formattedDate = Date.ToString("yyyy-MM-dd HH:mm:ss");            
+            string formattedDate = Date.ToString("yyyy-MM-dd HH:mm:ss");
+            string deliveryDate = "";
+            checkDate = formattedDate;
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
@@ -830,6 +834,7 @@ namespace Kursovaya.User
                         DateTime date = calendar.SelectionStart;
                         DateTime result = date.Date + DateTime.Now.TimeOfDay;
                         formatted = result.ToString("yyyy-MM-dd HH:mm:ss");
+                        deliveryDate = formatted;
                         resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'True', '{addresTextBox.Text} ', '{formattedDate}', '{formatted}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1))";
                     }
                     else
@@ -838,12 +843,36 @@ namespace Kursovaya.User
                     }
                     MySqlCommand cmdEnd = new MySqlCommand(resultQuery, conn);
                     cmdEnd.ExecuteNonQuery();
-                    MessageBox.Show("Заказ успешно оформлен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    DialogResult chech = MessageBox.Show("Заказ успешно оформлен! \n\nХотите получить чек?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (chech == DialogResult.Yes)
+                    {
+                        List<string> names = new List<string>();
+                        List<int> costs = new List<int>();
+                        List<int> counts = new List<int>();
+                        foreach (DataGridViewRow row in dataGridView1.Rows)
+                        {
+                            if (row.IsNewRow) continue; // пропускаем пустую строку
+                            string costt = row.Cells["cost"].Value.ToString().Replace(" ", "").Replace("₽", "");
+                            names.Add(row.Cells["type"].Value.ToString() + ": " + row.Cells["value"].Value.ToString());
+                            costs.Add(Convert.ToInt32(costt));
+                            counts.Add(Convert.ToInt32(row.Cells["Amount"].Value));
+                        }
+                        SaveCheck saveCheck = new SaveCheck();
+                        if(deliveryCB.Checked == false)
+                        {
+                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{DateTime.Now.Date.AddDays(3).ToString("dd.MM.yyyy")}");
+                        }
+                        else
+                        {
+                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{deliveryDate}");
+                        }
+                    }
                 }
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { string err = ex.Message; }
         }
+
+
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -888,27 +917,49 @@ namespace Kursovaya.User
                 e.Handled = true; // Система больше не рисует кнопку
             }
         }
-
+        bool detector = false;
         private void calendar_DateChanged(object sender, DateRangeEventArgs e)
         {
-            DayOfWeek day = e.Start.DayOfWeek;
+            DateTime selectedDate = e.Start;
 
-            if (day == DayOfWeek.Saturday || day == DayOfWeek.Sunday)
+            // Если дата больше MaxDate — ставим MaxDate
+            if (selectedDate > calendar.MaxDate)
             {
                 MessageBox.Show(
-                    "Суббота и воскресенье недоступны",
+                    "Дата не может быть больше, чем через полгода от сегодня",
                     "Ошибка выбора даты",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
+                calendar.SetDate(calendar.MaxDate);
+                return;
+            }
 
-                // откат на ближайший понедельник
-                DateTime d = e.Start;
-                while (d.DayOfWeek == DayOfWeek.Saturday || d.DayOfWeek == DayOfWeek.Sunday)
-                    d = d.AddDays(1);
+            // Проверка на выходные
+            if (selectedDate.DayOfWeek == DayOfWeek.Saturday || selectedDate.DayOfWeek == DayOfWeek.Sunday)
+            {
+                if (!detector)
+                {
+                    MessageBox.Show(
+                        "Суббота и воскресенье недоступны",
+                        "Ошибка выбора даты",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    detector = true;
+                }
+
+                DateTime d = selectedDate;
+                do
+                {
+                    d = d.AddDays(-1);
+                } while ((d.DayOfWeek != DayOfWeek.Monday) && d >= calendar.MinDate);
+
+                if (d < calendar.MinDate)
+                    d = calendar.MinDate;
 
                 calendar.SetDate(d);
             }
         }
-    }    
+    }
 }
