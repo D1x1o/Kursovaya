@@ -69,7 +69,15 @@ namespace Kursovaya.Administrator
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
                     conn.Open();
-                    string query = "SELECT staff.id, name, surname, patronymic, role_name, role, login, password, activity FROM staff JOIN role ON staff.role = role.id Where activity = 0;";
+                    string query = "";
+                    if (userSearch.Text == "")
+                    {
+                        query = "SELECT staff.id, name, surname, patronymic, role_name, role, login, password, activity FROM staff JOIN role ON staff.role = role.id Where activity = 0;";
+                    }
+                    else
+                    {
+                        query = $"SELECT staff.id, name, surname, patronymic, role_name, role, login, password, activity FROM staff JOIN role ON staff.role = role.id Where surname like '%{userSearch.Text.Trim()}%' and activity = 0;";
+                    }
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     DataTable dt = new DataTable();
                     dt.Load(cmd.ExecuteReader());
@@ -301,20 +309,7 @@ namespace Kursovaya.Administrator
         // Обработчик ввода данных в поле ввода
         private void userPasswordTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (char.IsControl(e.KeyChar))
-                return;
 
-            if ((e.KeyChar >= 'A' && e.KeyChar <= 'Z') ||
-                (e.KeyChar >= 'a' && e.KeyChar <= 'z'))
-                return;
-
-            if (char.IsDigit(e.KeyChar))
-                return;
-
-            if (char.IsPunctuation(e.KeyChar) || char.IsSymbol(e.KeyChar))
-                return;
-
-            e.Handled = true;
         }
         // Обработчик ввода данных в поле ввода
         private void userPasswordConfirmTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -438,6 +433,21 @@ namespace Kursovaya.Administrator
         private void userPatronymicTextBox_Leave(object sender, EventArgs e)
         {
             userPatronymicTextBox.Text = FormatingText(userPatronymicTextBox.Text);
+        }
+
+        private void userSearch_TextChanged(object sender, EventArgs e)
+        {
+            filldgv();
+        }
+
+        private void userSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char c = e.KeyChar;
+            if (c == (char)Keys.Back)
+                return;
+            if ((c >= 'А' && c <= 'я') || c == 'Ё' || c == 'ё' || c == '-')
+                return;
+            e.Handled = true;
         }
     }
 }
