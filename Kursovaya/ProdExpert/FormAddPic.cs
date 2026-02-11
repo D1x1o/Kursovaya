@@ -146,7 +146,7 @@ namespace Kursovaya.ProdExpert
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     MySqlDataReader reader = cmd.ExecuteReader();
-                    DataTable dt = new DataTable();
+                    System.Data.DataTable dt = new System.Data.DataTable();
                     dt.Load(reader);
                     dataGridView1.DataSource = dt;
                     conn.Close();

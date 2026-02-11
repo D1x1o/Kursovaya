@@ -234,6 +234,7 @@ namespace Kursovaya.User
             this.SearchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.SearchTextBox.ForeColor = System.Drawing.Color.White;
             this.SearchTextBox.Location = new System.Drawing.Point(26, 138);
+            this.SearchTextBox.MaxLength = 100;
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(464, 29);
             this.SearchTextBox.TabIndex = 14;

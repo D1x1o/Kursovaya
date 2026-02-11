@@ -96,6 +96,7 @@ namespace Kursovaya.User
             this.addresTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.addresTextBox.ForeColor = System.Drawing.Color.White;
             this.addresTextBox.Location = new System.Drawing.Point(12, 583);
+            this.addresTextBox.MaxLength = 252;
             this.addresTextBox.Name = "addresTextBox";
             this.addresTextBox.Size = new System.Drawing.Size(344, 29);
             this.addresTextBox.TabIndex = 4;

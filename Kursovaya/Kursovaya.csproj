@@ -80,6 +80,12 @@
     <Compile Include="Administrator\Users.Designer.cs">
       <DependentUpon>Users.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProdExpert\FormWriteOff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProdExpert\FormWriteOff.Designer.cs">
+      <DependentUpon>FormWriteOff.cs</DependentUpon>
+    </Compile>
     <Compile Include="SaveCheck.cs" />
     <Compile Include="ColumnsNameMap.cs" />
     <Compile Include="ConnectionString.cs" />
@@ -225,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProdExpert\FormAddPic.resx">
       <DependentUpon>FormAddPic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProdExpert\FormWriteOff.resx">
+      <DependentUpon>FormWriteOff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProdExpert\ProdInStock.resx">
       <DependentUpon>ProdInStock.cs</DependentUpon>

@@ -64,7 +64,7 @@
             this.serverAddres.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.serverAddres.ForeColor = System.Drawing.Color.White;
             this.serverAddres.Location = new System.Drawing.Point(29, 102);
-            this.serverAddres.MaxLength = 20;
+            this.serverAddres.MaxLength = 21;
             this.serverAddres.Name = "serverAddres";
             this.serverAddres.Size = new System.Drawing.Size(196, 29);
             this.serverAddres.TabIndex = 2;
