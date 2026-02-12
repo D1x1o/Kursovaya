@@ -98,6 +98,7 @@ namespace Kursovaya.ProdExpert
             this.AmountTextBox.Size = new System.Drawing.Size(113, 29);
             this.AmountTextBox.TabIndex = 1;
             this.AmountTextBox.TextChanged += new System.EventHandler(this.AmountTextBox_TextChanged);
+            this.AmountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AmountTextBox_KeyPress);
             // 
             // label2
             // 

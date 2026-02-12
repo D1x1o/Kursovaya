@@ -1381,10 +1381,7 @@ namespace Kursovaya.User
                     newShowCharacteristic.ShowDialog();
                 }                
             }catch(Exception ex) { MessageBox.Show(ex.Message); }            
-        }
-
-
-        
+        }        
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.ColumnIndex == dataGridView1.Columns["ActionColumn"].Index && e.RowIndex >= 0)
@@ -1407,8 +1404,6 @@ namespace Kursovaya.User
 
                 e.Handled = true; // Система больше не рисует кнопку
             }
-        }
-
-        
+        }        
     }
 }

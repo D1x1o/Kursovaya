@@ -149,5 +149,13 @@ UNION ALL SELECT id, model, inStock, 'storage'            FROM storage";
         {
             fillDgv();
         }
+
+        private void AmountTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
     }    
 }
