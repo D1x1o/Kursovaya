@@ -11,7 +11,7 @@ namespace Kursovaya
 {
     internal class SaveCheck
     {
-        public void SaveMakeCheck(string[] itemsNames, int[] itemsCosts, int[] itemsCounts, string orderDateTime, string orderCompDateTime) 
+        public void SaveMakeCheck(string[] itemsNames, int[] itemsCosts, int[] itemsCounts, string orderDateTime, string orderCompDateTime, bool delivery, bool build) 
         {
             Word.Application wordApp = new Word.Application();
             wordApp.Visible = true;
@@ -51,13 +51,29 @@ namespace Kursovaya
             p3.Range.InsertParagraphAfter();
 
             // ===== ТАБЛИЦА =====
-            int rows = itemsNames.Length + 2; // заголовок + итог
-            int cols = 4; // Товар | Цена | Количество | Подытог
+            int counter = 0;
+            for (int i = 0; i < itemsNames.Length; i++)
+            {
+                if (String.IsNullOrWhiteSpace(itemsNames[i])) { continue; }
+                else counter++;
+            }
+            int rows = counter + 2; // заголовок + итог
 
-            Word.Table table = doc.Tables.Add(p3.Range, rows, cols);
+            // ===== Подсчёт строк =====
+            int itemsRows = counter;         // количество товаров
+            int extraRows = 4;                         // Доставка, Сборка, Скидка, ИТОГО
+            int totalRows = itemsRows + 1 + extraRows; // +1 для заголовка
+
+            Word.Table table = doc.Tables.Add(p3.Range, totalRows, 4);
             table.Borders.Enable = 1;
 
-            // Заголовки
+            // ===== Задание ширины столбцов =====
+            table.Columns[1].Width = 200f; // Товар — широкий
+            table.Columns[2].Width = 80f;  // Цена — узкий
+            table.Columns[3].Width = 60f;  // Количество
+            table.Columns[4].Width = 100f; // Подытог
+
+            // ===== Заголовки =====
             table.Cell(1, 1).Range.Text = "Товар";
             table.Cell(1, 2).Range.Text = "Цена";
             table.Cell(1, 3).Range.Text = "Количество";
@@ -65,9 +81,13 @@ namespace Kursovaya
 
             int total = 0;
 
-            // Заполнение таблицы
+            // ===== Товары =====
             for (int i = 0; i < itemsNames.Length; i++)
             {
+                if (String.IsNullOrWhiteSpace(itemsNames[i]))
+                {
+                    continue;
+                }
                 int subtotal = itemsCosts[i] * itemsCounts[i];
                 total += subtotal;
 
@@ -77,18 +97,34 @@ namespace Kursovaya
                 table.Cell(i + 2, 4).Range.Text = getMakedString(subtotal.ToString());
             }
 
+            // ===== ДОСТАВКА =====
+            int rowIndex = itemsRows + 2; // следующая строка после товаров
+            table.Cell(rowIndex, 1).Range.Text = "Доставка";
+            table.Cell(rowIndex, 2).Range.Text = delivery ? "3 000 ₽" : "0 ₽";
+            table.Cell(rowIndex, 3).Range.Text = delivery ? "1" : "0";
+            table.Cell(rowIndex, 4).Range.Text = delivery ? "3 000 ₽" : "0 ₽";
+
+            // ===== СБОРКА =====
+            rowIndex++;
+            table.Cell(rowIndex, 1).Range.Text = "Сборка";
+            table.Cell(rowIndex, 2).Range.Text = build ? "3 000 ₽" : "0 ₽";
+            table.Cell(rowIndex, 3).Range.Text = build ? "1" : "0";
+            table.Cell(rowIndex, 4).Range.Text = build ? "3 000 ₽" : "0 ₽";
+
+            // ===== СКИДКА =====
+            rowIndex++;
+            table.Cell(rowIndex, 1).Range.Text = "Скидка";
+            table.Cell(rowIndex, 4).Range.Text = (build && delivery) ? "2 000 ₽" : "0 ₽";
+            table.Cell(rowIndex, 1).Merge(table.Cell(rowIndex, 3)); // объединяем колонки 1-3 для скидки
+
             // ===== ИТОГО =====
-            table.Cell(rows, 1).Range.Text = "ИТОГО:";
-            table.Cell(rows, 4).Range.Text = getMakedString(total.ToString());
-
-            // Объединяем ячейки ИТОГО
-            table.Cell(rows, 1).Merge(table.Cell(rows, 3));
-
-            // Делаем жирным
-            table.Cell(rows, 1).Range.Font.Bold = 1;
-            table.Cell(rows, 4).Range.Font.Bold = -1;
-
-            
+            rowIndex++;
+            int grandTotal = total + (delivery ? 3000 : 0) + (build ? 3000 : 0) - ((build && delivery) ? 2000 : 0);
+            table.Cell(rowIndex, 1).Range.Text = "ИТОГО:";
+            table.Cell(rowIndex, 4).Range.Text = getMakedString(grandTotal.ToString());
+            table.Cell(rowIndex, 1).Merge(table.Cell(rowIndex, 3));
+            table.Cell(rowIndex, 1).Range.Font.Bold = 1;
+            table.Cell(rowIndex, 2).Range.Font.Bold = 1;
         }
 
         private string getMakedString(string cartSumStr)

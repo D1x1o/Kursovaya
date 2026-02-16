@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Kursovaya.Administrator;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -609,15 +610,24 @@ namespace Kursovaya.User
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
+
                     string query = "";
-                    if (itemTheme == "case")
+                    if (theme != "processors" && theme != "videocards" && theme != "motherboards" && theme != "ram" && theme != "storage"
+                        && theme != "power_supplier" && theme != "case_coolers" && theme != "case" && theme != "cpu_cooler" && theme != "thermo_interface") 
                     {
-                        query = $"INSERT INTO user_cart (iduser, id_cases) VALUES ({userID}, {itemID}) ON DUPLICATE KEY UPDATE id_cases = {itemID};";
+                        query = $"INSERT INTO user_cart (iduser, extra_items) VALUES ({userID}, '[{theme}; {itemID}]') ON DUPLICATE KEY UPDATE extra_items = '{theme} {itemID}';";
                     }
                     else
                     {
-                        query = $"INSERT INTO user_cart (iduser, id_{itemTheme}) VALUES ({userID}, {itemID}) ON DUPLICATE KEY UPDATE id_{itemTheme} = {itemID};";
-                    }
+                        if (itemTheme == "case")
+                        {
+                            query = $"INSERT INTO user_cart (iduser, id_cases) VALUES ({userID}, {itemID}) ON DUPLICATE KEY UPDATE id_cases = {itemID};";
+                        }
+                        else
+                        {
+                            query = $"INSERT INTO user_cart (iduser, id_{itemTheme}) VALUES ({userID}, {itemID}) ON DUPLICATE KEY UPDATE id_{itemTheme} = {itemID};";
+                        }
+                    }                    
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.ExecuteNonQuery();
@@ -648,8 +658,17 @@ namespace Kursovaya.User
         {
             if (e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "ActionColumn")
             {
-                buttonsColor(theme);
-                addIntoCart(theme, dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), user.Default.userID);
+                if(theme != "processors" && theme != "videocards" && theme != "motherboards" && theme != "ram" &&
+                    theme != "storage" && theme != "power_supplier" && theme != "case_coolers" && theme != "case" && 
+                    theme != "cpu_cooler" && theme != "thermo_interface")
+                {
+                    addIntoCart(theme, dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), user.Default.userID);
+                }
+                else
+                {
+                    buttonsColor(theme);
+                    addIntoCart(theme, dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), user.Default.userID);
+                }
                 if (theme == "case")
                 {
                     ArrChecked["cases"] = true;
@@ -1127,7 +1146,7 @@ namespace Kursovaya.User
                     using (MySqlConnection conn = new MySqlConnection(ConnStr))
                     {
                         conn.Open();
-                        string query = $"UPDATE user_cart SET id_processors = 0,id_motherboards = 0,id_videocards = 0,id_ram = 0,count_ram = 0,id_cpu_cooler = 0,id_cases = 0,id_case_coolers = 0,count_case_fan = 0,id_thermo_interface = 0,id_storage = 0,id_power_supplier = 0 where iduser = {user.Default.userID}";
+                        string query = $"UPDATE user_cart SET id_processors = 0,id_motherboards = 0,id_videocards = 0,id_ram = 0,count_ram = 0,id_cpu_cooler = 0,id_cases = 0,id_case_coolers = 0,count_case_fan = 0,id_thermo_interface = 0,id_storage = 0,id_power_supplier = 0, extra_items = '' where iduser = {user.Default.userID}";
                         MySqlCommand cmd = new MySqlCommand(query, conn);
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Выбранные товары очищены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);

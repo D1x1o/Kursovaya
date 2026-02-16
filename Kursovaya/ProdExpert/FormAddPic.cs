@@ -14,14 +14,14 @@ using System.Windows.Forms;
 
 
 // ФОРМА добавления изображений к товарам 
-
+// в комментариях в коду исползуется сокращение 'DGV' что означает DataGridView
 
 namespace Kursovaya.ProdExpert
 {    
     public partial class FormAddPic : Form
     {
         string theme = ""; // переменная темы для понимания с какой категорией товаров работаем
-        string connStr = ConnectionString.GetConnectionString();
+        string connStr = ConnectionString.GetConnectionString(); // получаем из класса строку подключения
         int dgvPage = 0; // страница
         int pageOffset = 0; //сколько товаров помещается на странице, 0 - стандартное значение 
         int allPage = 0; // всего страниц, 0 - стандартное значение 
@@ -32,7 +32,7 @@ namespace Kursovaya.ProdExpert
             allPageLabel.Text = "0"; 
             SetComboBox(); // отображаем в выпадающем списке все категории
             CheckButtons(); // проверяем состояние кнопок
-            // настройки дизайна 
+            // настройки дизайна DGV
             dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
             dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
             dataGridView1.DefaultCellStyle.ForeColor = Color.White;
@@ -87,7 +87,8 @@ namespace Kursovaya.ProdExpert
         {
             dataGridView1.Columns.Clear();
             theme = categoryComboBox.SelectedItem as string;
-            switch (theme) {
+            switch (theme)
+            { // формируем запрос к БД
                 case "Процессоры":
                     theme = "processors";
                     break;
@@ -133,25 +134,25 @@ namespace Kursovaya.ProdExpert
             query += ", image ";
             if (theme == "case") { query += "FROM cases "; }
             else { query += $"FROM {theme} "; }
-            if(searchTextBox.Text != "")
+            if(searchTextBox.Text != "") // если есть условие поиска по наименованию применяем его к запросу
             {
                 query += $"WHERE MODEL LIKE '%{searchTextBox.Text}%' ";
             }
-            query += $"LIMIT 10 OFFSET {pageOffset};";
+            query += $"LIMIT 10 OFFSET {pageOffset};"; // ограничиваем количество записей на одной странице 
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connStr))
+                using (MySqlConnection conn = new MySqlConnection(connStr)) // выполняем запрос
                 {
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     MySqlDataReader reader = cmd.ExecuteReader();
                     System.Data.DataTable dt = new System.Data.DataTable();
                     dt.Load(reader);
-                    dataGridView1.DataSource = dt;
+                    dataGridView1.DataSource = dt; // отображаем полученные данные на DGV 
                     conn.Close();
                 }
-                using (MySqlConnection conn = new MySqlConnection(connStr))
+                using (MySqlConnection conn = new MySqlConnection(connStr)) // запрос на получение количеста товаров по условиям
                 {
                     string query2 = "";
                     conn.Open();
@@ -161,12 +162,12 @@ namespace Kursovaya.ProdExpert
                     }
                     else
                     {
-                        query2 = $"SELECT count(*) FROM {theme} WHERE MODEL LIKE '%{searchTextBox.Text}%'";
+                        query2 = $"SELECT count(*) FROM {theme} WHERE MODEL LIKE '%{searchTextBox.Text}%'"; // если есть условие поиска по наименованию применяем его к запросу
                     }
                         MySqlCommand cmd = new MySqlCommand(query2, conn);
-                    allPage = Convert.ToInt32(Math.Ceiling((double)Convert.ToInt32(cmd.ExecuteScalar()) / 10));
+                    allPage = Convert.ToInt32(Math.Ceiling((double)Convert.ToInt32(cmd.ExecuteScalar()) / 10)); // считаем количестов страниц исходя из количества полученных товаров
                 }
-                if (!dataGridView1.Columns.Contains("ActionColumn"))
+                if (!dataGridView1.Columns.Contains("ActionColumn")) // добавляем в DGV кнопку добавления изображения
                 {
                     DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
                     buttonColumn.Name = "ActionColumn";
@@ -176,15 +177,15 @@ namespace Kursovaya.ProdExpert
                     dataGridView1.AutoGenerateColumns = true;
                     dataGridView1.Columns.Add(buttonColumn);                    
                 }
-                dataGridView1.Columns["id"].Visible = false;
-                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns[1].DisplayIndex = 0;
-                dataGridView1.Columns["image"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dataGridView1.Columns["image"].DisplayIndex = dataGridView1.Columns.Count - 2;
-                dataGridView1.Columns["image"].HeaderText = "Изображение";
-                dataGridView1.Columns["ActionColumn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.Columns.Count - 1;
-                
+                dataGridView1.Columns["id"].Visible = false; // скрываем столбец айди
+                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; // устанавиваем для столбца ширину
+                dataGridView1.Columns[1].DisplayIndex = 0; // указываем каким по счету будет столбец
+                dataGridView1.Columns["image"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //устанавиваем для столбца ширину
+                dataGridView1.Columns["image"].DisplayIndex = dataGridView1.Columns.Count - 2;// указываем каким по счету будет столбец
+                dataGridView1.Columns["image"].HeaderText = "Изображение"; // имя столбца
+                dataGridView1.Columns["ActionColumn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;//устанавиваем для столбца ширину
+                dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.Columns.Count - 1;// указываем каким по счету будет столбец
+
             }
             catch (Exception e) { MessageBox.Show(e.Message); }
             if(dgvPage == 0)
@@ -218,29 +219,29 @@ namespace Kursovaya.ProdExpert
             fillDGV();
         }
         // функция проверки состояния кнопок перелистывания страниц
-        private void CheckButtons()
+        private void CheckButtons() 
         {
-            if (dgvPage == 0)
+            if (dgvPage == 0) // если одна страница запрещаем листать в принципе
             {
                 BackPageButton.Enabled = false;
                 ForwardPageButton.Enabled = false;
             }
-            else if (dgvPage == 1 && allPage == 1)
+            else if (dgvPage == 1 && allPage == 1) // если одна страница запрещаем листать в принципе
             {
                 BackPageButton.Enabled = false;
                 ForwardPageButton.Enabled = false;
             }
-            else if (dgvPage == 1 && allPage != 1)
+            else if (dgvPage == 1 && allPage != 1) // если на первой странице запрещаем листать назад
             {
                 BackPageButton.Enabled = false;
                 ForwardPageButton.Enabled = true;
             }
-            else if (dgvPage > 1 && dgvPage < allPage)
+            else if (dgvPage > 1 && dgvPage < allPage) // если на n-ой странице и страниц больше чем та на которой мы находимся разрешаем листать и вперёд и назад
             {
                 BackPageButton.Enabled = true;
                 ForwardPageButton.Enabled = true;
             }
-            else if (dgvPage == allPage) {
+            else if (dgvPage == allPage) { // если на последней странице запрещаем листать вперёд, но разрешаем назад
                 ForwardPageButton.Enabled = false;
                 BackPageButton.Enabled = true;
             }
@@ -252,44 +253,68 @@ namespace Kursovaya.ProdExpert
         {
             try
             {
+                // если нажата кнопка в datagridview 
                 if (e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "ActionColumn")
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
-                    openFileDialog.Title = "Выберите изображение";
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    OpenFileDialog openFileDialog = new OpenFileDialog(); // открываем диалог выбора файла
+                    openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;"; // задаем фильтр для выбора только изображений
+                    openFileDialog.Title = "Выберите изображение"; // имя окна
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK) // если изображение было выбрано
                     {
+                        // путь+имя выбранноко файл
                         string filePath = openFileDialog.FileName;
-                        string picName = System.IO.Path.GetFileNameWithoutExtension(filePath) + System.IO.Path.GetExtension(filePath);                        
-                        long fileSize = new System.IO.FileInfo(filePath).Length;
+
+                        // Получаем расширение файла
+                        string extension = Path.GetExtension(filePath);
+
+                        // Генерируем уникальное имя
+                        string uniqueName = Guid.NewGuid().ToString() + extension;
+
+                        // здесь проверяем что изображение имеет вес менее 5Мб
+                        long fileSize = new FileInfo(filePath).Length;
                         if (fileSize > 5 * 1024 * 1024)
                         {
-                            MessageBox.Show("Файл слишком большой! Выберите изображение меньше 5 МБ.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
+                            MessageBox.Show("Файл слишком большой! Выберите изображение меньше 5 МБ.",
+                                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return; // если файл больше 5МБ отображаем ошибку и выходим из функции
                         }
-                        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"pepeShop","img");
-                        if (!System.IO.Directory.Exists(imgFolder))
-                        {
-                            System.IO.Directory.CreateDirectory(imgFolder);
-                        }
-                        string destPath = System.IO.Path.Combine(imgFolder, System.IO.Path.GetFileName(filePath));
-                        System.IO.File.Copy(filePath, destPath, true);
 
+                        string imgFolder = Path.Combine( //получаем путь до нашей папки в AppData
+                            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                            "pepeShop",
+                            "img"
+                        );
+
+                        if (!Directory.Exists(imgFolder))
+                            Directory.CreateDirectory(imgFolder); // если папки нет в AppData создаём
+
+                        string destPath = Path.Combine(imgFolder, uniqueName); // получаем путь куда нужно поместить новое изображение (в нашу папку в AppData)
+
+                        File.Copy(filePath, destPath, true); // копируем выбранное пользователем изображение в нашу папку в AppData
 
                         using (MySqlConnection conn = new MySqlConnection(connStr))
                         {
                             conn.Open();
-                            string query = $"UPDATE {theme} SET image = 'img/{picName}' WHERE id = {dataGridView1.Rows[e.RowIndex].Cells["id"].Value.ToString()};";
+
+                            string query = $"UPDATE {theme} SET image = 'img/{uniqueName}' WHERE id = @id;";
                             MySqlCommand cmd = new MySqlCommand(query, conn);
-                            cmd.ExecuteNonQuery();
+                            cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[e.RowIndex].Cells["id"].Value);
+
+                            cmd.ExecuteNonQuery(); // запрос на добавление к товару относительного пути к его изобажению
                         }
 
-                        MessageBox.Show($"Изображение успешно сохранено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        fillDGV();
+                        MessageBox.Show("Изображение успешно сохранено",
+                                        "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information); 
+
+                        fillDGV(); //перезагружаем DGV
                     }
                 }
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message); // обработчик ошибок
+            }
         }
 
         // обработчик изменения кнопок если картинка для товара уже установлена
@@ -301,8 +326,8 @@ namespace Kursovaya.ProdExpert
                     .Cells["image"].Value?.ToString();
 
                 e.Value = string.IsNullOrWhiteSpace(imagePath)
-                    ? "Добавить изображение"
-                    : "Заменить изображение";
+                    ? "Добавить изображение" // если нет у товара изображения кнопка будет с текстом "Добавить изображение"
+                    : "Заменить изображение"; // если есть изображение текст кнопки "Заменить изображение"
             }
         }
     }

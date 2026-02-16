@@ -2,12 +2,15 @@
 using Kursovaya.Administrator;
 using MySql.Data.MySqlClient;
 using MySql.Data.MySqlClient.X.XDevAPI.Common;
+using Mysqlx.Expr;
 using MySqlX.XDevAPI.Common;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -19,6 +22,7 @@ namespace Kursovaya.User
 {
     public partial class UserCart : Form
     {
+        string filePath = "tables.json";
         public Dictionary<string, int> ArrPosInDGV = new Dictionary<string, int>
         {
 
@@ -27,7 +31,7 @@ namespace Kursovaya.User
         {
 
         };
-        string ConnStr = ConnectionString.GetConnectionString();
+        public string ConnStr = ConnectionString.GetConnectionString();
         public UserCart()
         {
             InitializeComponent();
@@ -54,7 +58,7 @@ namespace Kursovaya.User
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.RowHeadersVisible = false;
             makeCalendar();
-            mathEndPriceNew();
+            mathEndPriceNew();                       
         }
         private void makeCalendar()
         {
@@ -62,10 +66,176 @@ namespace Kursovaya.User
             calendar.MinDate = DateTime.Today.AddDays(7);
             calendar.MaxDate = DateTime.Today.AddMonths(6);
         }
+        private int CheckExtraItems()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    string query = $"SELECT extra_items FROM user_cart WHERE iduser = {user.Default.userID}";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    object result = cmd.ExecuteScalar();
+
+                    if (result == null || result == DBNull.Value)
+                        return 0;
+
+                    string extra = result.ToString();
+                    int items = 0;
+                    if (!string.IsNullOrEmpty(extra))
+                    {
+                        items = extra
+                            .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                            .Count(word => !int.TryParse(word, out _));
+                    }
+                    return items;
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return -1; }
+        }
+        private string[] GetExtraItems()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    string query = $"SELECT extra_items FROM user_cart WHERE iduser = {user.Default.userID}";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    string extra = cmd.ExecuteScalar().ToString();
+                    if (string.IsNullOrWhiteSpace(extra))
+                        return System.Array.Empty<string>();
+
+                    return extra
+                        .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Where(word => !int.TryParse(word, out _))
+                        .ToArray();
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return System.Array.Empty<string>(); }
+        }
+        private string[] GetAllExtraItems()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    conn.Open();
+                    string query = $"SELECT extra_items FROM user_cart WHERE iduser = {user.Default.userID}";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                    object result = cmd.ExecuteScalar();
+
+                    if (result == null || result == DBNull.Value)
+                        return System.Array.Empty<string>();
+
+                    string extra = result.ToString();
+
+                    return new[] { extra };
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return System.Array.Empty<string>(); }
+        }
+        public static void AddItemsToDGV(string[] extras, DataGridView dgv)
+        {
+            if (extras == null || extras.Length == 0)
+                return;
+
+            // Читаем JSON из файла tables.json
+            JObject config;
+            try
+            {
+                string jsonText = File.ReadAllText("tables.json");
+                config = JObject.Parse(jsonText);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка чтения tables.json: " + ex.Message);
+                return;
+            }
+
+            var tables = config["tables"];
+
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString.GetConnectionString()))
+            {
+                conn.Open();
+
+                foreach (string extra in extras)
+                {
+                    if (string.IsNullOrWhiteSpace(extra))
+                        continue;
+
+                    var parts = extra.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    for (int i = 0; i < parts.Length - 1; i += 2)
+                    {
+                        string tableName = parts[i];
+                        string id = parts[i + 1];
+
+                        // Проверяем JSON для displayName
+                        var tableConfig = tables.FirstOrDefault(t => t["systemName"]?.ToString() == tableName);
+                        string displayName = tableConfig != null ? tableConfig["displayName"]?.ToString() : null;
+
+                        // Создаем новую строку в DGV
+                        int rowIndex = dgv.Rows.Add();
+
+                        if (!string.IsNullOrEmpty(displayName))
+                        {
+                            dgv.Rows[rowIndex].Cells["type"].Value = displayName;
+                        }
+
+                        // Делаем запрос к БД, чтобы получить produser + model и cost
+                        string query = $"SELECT produser, model, cost FROM {tableName} WHERE id = @id";
+
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@id", id);
+
+                            using (var reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    string typeValue =
+                                        reader["produser"].ToString() + " " +
+                                        reader["model"].ToString();
+
+                                    dgv.Rows[rowIndex].Cells["value"].Value = typeValue;
+
+                                    // Добавляем стоимость
+                                    string valueCostOrig = reader["cost"].ToString();
+                                    string valueCost = new String(valueCostOrig.Reverse().ToArray());
+                                    string cost = "";
+                                    for (int j = 0; j < valueCost.Length; j++)
+                                    {
+                                        cost += valueCost[j];
+                                        if ((j + 1) % 3 == 0 && j != valueCost.Length - 1)
+                                        {
+                                            cost += " ";
+                                        }
+                                    }
+                                    valueCostOrig = new String(cost.Reverse().ToArray());
+                                    dgv.Rows[rowIndex].Cells["Cost"].Value = valueCostOrig + " ₽";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
         public void fillDGV(int iduser)
         {
             try
             {
+                dataGridView1.Columns.Add("value", "Комплектующие");
+                dataGridView1.Columns.Add("type", "Наименование");
+                dataGridView1.Columns.Add("Cost", "Стоимость");
+                dataGridView1.Columns.Add("Amount", "Количество");
+                int count_extra = CheckExtraItems();
+                bool exist_extra = false;
+                if (count_extra == 0)
+                { exist_extra = false; }
+                else { exist_extra = true; }
                 if (!(
                 checkedItems.Default.processors == false &&
                 checkedItems.Default.motherboards == false &&
@@ -141,7 +311,7 @@ namespace Kursovaya.User
                         {
                             if (second) query += ", "; second = true;
                             query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as storage ";
-                        }
+                        }                        
                         query += "FROM user_cart ";
                         if (checkedItems.Default.processors) query += "join processors ON id_processors = processors.id ";
                         if (checkedItems.Default.motherboards) query += "join motherboards ON id_motherboards = motherboards.id ";
@@ -164,7 +334,6 @@ namespace Kursovaya.User
                         //}
                         MySqlCommand cmd = new MySqlCommand(query, conn);
                         MySqlDataReader reader = cmd.ExecuteReader();
-                        dataGridView1.Columns.Add("value", "Комплектующие");
                         if (reader.Read())
                         {
                             for (int i = 0; i < reader.FieldCount; i++)
@@ -261,7 +430,6 @@ namespace Kursovaya.User
                         if (checkedItems.Default.ram) query += "join ram ON id_ram = ram.id ";
                         if (checkedItems.Default.storage) query += "join storage ON id_storage = storage.id ";
                         query += $"WHERE iduser = {iduser};";
-                        dataGridView1.Columns.Add("type", "Наименование");
                         MySqlCommand cmd = new MySqlCommand(query, conn);
                         MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -358,8 +526,6 @@ namespace Kursovaya.User
 
                         MySqlCommand cmdCost = new MySqlCommand(query, conn);
                         MySqlDataReader readerCost = cmdCost.ExecuteReader();
-                        dataGridView1.Columns.Add("Cost", "Стоимость");
-                        dataGridView1.Columns.Add("Amount", "Количество");
                         if (readerCost.Read())
                         {
                             for (int i = 0; i < readerCost.FieldCount; i++)
@@ -416,26 +582,34 @@ namespace Kursovaya.User
                     dataGridView1.Columns["AmountInc"].Width = 100;
                     dataGridView1.Columns["AmountDec"].Width = 100;
                     dataGridView1.Columns["type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    if (exist_extra == true)
+                    {
+                        AddItemsToDGV(GetAllExtraItems(), dataGridView1);
+                    }
+                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
                         dataGridView1.Rows[i].Cells["Amount"].Value = 1;
                     }
 
+
                     dataGridView1.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                     if (dataGridView1.Rows.Count == 0)
                     {
-                        MessageBox.Show("Корзина", "В корзине нет товаров!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("В корзине нет товаров!","Корзина", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
                 {
-                    dataGridView1.Rows.Clear();
-                    dataGridView1.Columns.Clear();
-                    MessageBox.Show("Корзина пуста!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    makeBuyButton.Enabled = false;
-                    addresTextBox.Enabled = false;
-                    deliveryCB.Enabled = false;
-                    this.Hide();
+                    if(dataGridView1.Rows.Count < 1)
+                    {
+                        dataGridView1.Rows.Clear();
+                        dataGridView1.Columns.Clear();
+                        MessageBox.Show("Корзина пуста!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        makeBuyButton.Enabled = false;
+                        addresTextBox.Enabled = false;
+                        deliveryCB.Enabled = false;
+                        this.Hide();
+                    }                    
                 }
 
             }
@@ -782,6 +956,9 @@ namespace Kursovaya.User
         public string Safe(string s) => string.IsNullOrEmpty(s) ? "0" : s;
         private void makeBuyButton_Click(object sender, EventArgs e)
         {
+            int[] extra_items = new int[15];
+            string[] extra_items_name = new string[15];
+            int[] extra_items_id = new int[15];
             string formatted;
             string processorValue = "", videoValue = "", motherValue = "", ramValue = "", powerValue = "", driverValue = "", thermoValue = "", caseValue = "", casefanValue = "", procfanValue = "";
             int countProc = 0, countVideo = 0, countMother = 0, countRam = 0, countPower = 0, countDriver = 0, countThermo = 0, countCases = 0, countCasefan = 0, countProcfan = 0;
@@ -798,7 +975,32 @@ namespace Kursovaya.User
                 else if (row.Cells["type"].Value?.ToString() == "Термопаста") { thermoValue = row.Cells["value"].Value?.ToString(); countThermo = Convert.ToInt32(row.Cells["Amount"].Value); }
                 else if (row.Cells["type"].Value?.ToString() == "Корпусные кулеры") { casefanValue = row.Cells["value"].Value?.ToString(); countCasefan = Convert.ToInt32(row.Cells["Amount"].Value); }
             }
-
+            string extra_items_str = "";
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            { 
+                int i = 0;
+                if (row.Cells["type"].Value?.ToString() != "Процессор" && row.Cells["type"].Value?.ToString() != "Видеокарта" && row.Cells["type"].Value?.ToString() != "Материнская плата" && row.Cells["type"].Value?.ToString() != "Оперативная память" &&
+                    row.Cells["type"].Value?.ToString() != "Блок питания" && row.Cells["type"].Value?.ToString() != "Кулер" && row.Cells["type"].Value?.ToString() != "Корпус" && row.Cells["type"].Value?.ToString() != "Накопитель" &&
+                    row.Cells["type"].Value?.ToString() != "Термопаста" && row.Cells["type"].Value?.ToString() != "Корпусные кулеры")
+                {
+                    extra_items_name[i] = row.Cells["value"].Value?.ToString();
+                    extra_items[i] = Convert.ToInt32(row.Cells["Amount"].Value);
+                    string systemName = GetSystemNameByDisplayName(filePath, row.Cells["type"].Value?.ToString());
+                    try
+                    {
+                        string query = $"SELECT id FROM {systemName} WHERE concat(produser, space(1), model) = '{extra_items_name[i]}'";
+                        using (MySqlConnection conn2 = new MySqlConnection(ConnStr))
+                        {
+                            conn2.Open();
+                            MySqlCommand cmd2 = new MySqlCommand(query, conn2);
+                            extra_items_id[i] = Convert.ToInt32(cmd2.ExecuteScalar());
+                        }
+                        extra_items_str += $"{extra_items_name[i]} {extra_items_id[i]} {extra_items[i]} ";
+                    }
+                    catch(Exception ex) { MessageBox.Show(ex.Message); }
+                }
+                i++;
+            }
             string query1 = $"SELECT id FROM processors WHERE concat(processors.produser, space(1), processors.model) = '{processorValue}'";
             string query2 = $"SELECT id FROM videocards WHERE     concat(videocards.produser, space(1), videocards.vender, space(1), videocards.model) = '{videoValue}'";
             string query3 = $"SELECT id FROM motherboards WHERE    concat(motherboards.produser, space(1), motherboards.model) = '{motherValue}'";
@@ -835,11 +1037,11 @@ namespace Kursovaya.User
                         DateTime result = date.Date + DateTime.Now.TimeOfDay;
                         formatted = result.ToString("yyyy-MM-dd HH:mm:ss");
                         deliveryDate = formatted;
-                        resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'True', '{addresTextBox.Text} ', '{formattedDate}', '{formatted}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1))";
+                        resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status, extra_items) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'True', '{addresTextBox.Text} ', '{formattedDate}', '{formatted}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1), '{extra_items_str}')";
                     }
                     else
                     {
-                        resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, status) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'False', '{addresTextBox.Text} ', '{formattedDate}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1))";
+                        resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, status, extra_items) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'False', '{addresTextBox.Text} ', '{formattedDate}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1), '{extra_items_str}')";
                     }
                     MySqlCommand cmdEnd = new MySqlCommand(resultQuery, conn);
                     cmdEnd.ExecuteNonQuery();
@@ -860,11 +1062,11 @@ namespace Kursovaya.User
                         SaveCheck saveCheck = new SaveCheck();
                         if(deliveryCB.Checked == false)
                         {
-                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{DateTime.Now.Date.AddDays(3).ToString("dd.MM.yyyy")}");
+                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{DateTime.Now.Date.AddDays(3).ToString("dd.MM.yyyy")}", deliveryCB.Checked, buildCheckBox.Checked);
                         }
                         else
                         {
-                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{deliveryDate}");
+                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{deliveryDate}", deliveryCB.Checked, buildCheckBox.Checked);
                         }
                     }
                 }
@@ -876,45 +1078,51 @@ namespace Kursovaya.User
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.ColumnIndex == dataGridView1.Columns["AmountInc"].Index && e.RowIndex >= 0)
+            if (dataGridView1.Columns.Contains("AmountInc"))
             {
-                e.PaintBackground(e.CellBounds, true);
-
-                // Цвет кнопки
-                using (SolidBrush buttonColor = new SolidBrush(Color.FromArgb(77, 150, 125)))
+                if (e.ColumnIndex == dataGridView1.Columns["AmountInc"].Index && e.RowIndex >= 0)
                 {
-                    e.Graphics.FillRectangle(buttonColor, e.CellBounds);
+                    e.PaintBackground(e.CellBounds, true);
+
+                    // Цвет кнопки
+                    using (SolidBrush buttonColor = new SolidBrush(Color.FromArgb(77, 150, 125)))
+                    {
+                        e.Graphics.FillRectangle(buttonColor, e.CellBounds);
+                    }
+
+                    // Текст кнопки
+                    TextRenderer.DrawText(e.Graphics,
+                                          (e.FormattedValue ?? "").ToString(),
+                                          e.CellStyle.Font,
+                                          e.CellBounds,
+                                          Color.White,
+                                          TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+
+                    e.Handled = true; // Система больше не рисует кнопку
                 }
-
-                // Текст кнопки
-                TextRenderer.DrawText(e.Graphics,
-                                      (e.FormattedValue ?? "").ToString(),
-                                      e.CellStyle.Font,
-                                      e.CellBounds,
-                                      Color.White,
-                                      TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
-
-                e.Handled = true; // Система больше не рисует кнопку
             }
-            if (e.ColumnIndex == dataGridView1.Columns["AmountDec"].Index && e.RowIndex >= 0)
+            if (dataGridView1.Columns.Contains("AmountDec"))
             {
-                e.PaintBackground(e.CellBounds, true);
-
-                // Цвет кнопки
-                using (SolidBrush buttonColor = new SolidBrush(Color.FromArgb(77, 150, 125)))
+                if (e.ColumnIndex == dataGridView1.Columns["AmountDec"].Index && e.RowIndex >= 0)
                 {
-                    e.Graphics.FillRectangle(buttonColor, e.CellBounds);
+                    e.PaintBackground(e.CellBounds, true);
+
+                    // Цвет кнопки
+                    using (SolidBrush buttonColor = new SolidBrush(Color.FromArgb(77, 150, 125)))
+                    {
+                        e.Graphics.FillRectangle(buttonColor, e.CellBounds);
+                    }
+
+                    // Текст кнопки
+                    TextRenderer.DrawText(e.Graphics,
+                                          (e.FormattedValue ?? "").ToString(),
+                                          e.CellStyle.Font,
+                                          e.CellBounds,
+                                          Color.White,
+                                          TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+
+                    e.Handled = true; // Система больше не рисует кнопку
                 }
-
-                // Текст кнопки
-                TextRenderer.DrawText(e.Graphics,
-                                      (e.FormattedValue ?? "").ToString(),
-                                      e.CellStyle.Font,
-                                      e.CellBounds,
-                                      Color.White,
-                                      TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
-
-                e.Handled = true; // Система больше не рисует кнопку
             }
         }
         bool detector = false;
@@ -960,6 +1168,25 @@ namespace Kursovaya.User
 
                 calendar.SetDate(d);
             }
+        }
+        static string GetSystemNameByDisplayName(string jsonFilePath, string displayName)
+        {
+            if (!File.Exists(jsonFilePath))
+                throw new FileNotFoundException("Файл JSON не найден", jsonFilePath);
+
+            string json = File.ReadAllText(jsonFilePath);
+            var jObject = JObject.Parse(json);
+            var tables = jObject["tables"];
+
+            foreach (var table in tables)
+            {
+                if (table["displayName"]?.ToString() == displayName)
+                {
+                    return table["systemName"]?.ToString();
+                }
+            }
+
+            return null; // Если таблица не найдена
         }
     }
 }

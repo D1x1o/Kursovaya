@@ -12,18 +12,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+// ФОРМА добавления товаров
+// в комментариях в коду исползуется сокращение 'DGV' что означает DataGridView
+
 namespace Kursovaya.ProdExpert
 {
     public partial class FormAddProd : Form
     {
-        string globalTheme;
-        string picPath = "";
-        string connStr = ConnectionString.GetConnectionString();
+        string globalTheme; // переменная хранящая в какую категорию пользователь хочет добавить товар
+        string picPath = ""; // переменная хранения пути к изображению
+        string connStr = ConnectionString.GetConnectionString(); // получаем из класса строку подключения
         public FormAddProd()
         {
             InitializeComponent();
-            fillComboBox();
-            SetDefaultPicture();
+            fillComboBox(); //заполняем DGV
+            SetDefaultPicture(); // устанавливаем заглушку на место изображения товара
+            // дизайн DGV
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
             dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
@@ -35,13 +39,13 @@ namespace Kursovaya.ProdExpert
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;            
         }
-        class Category
+        class Category // объект категории
         {
             public string SystemName { get; set; }
             public string DisplayName { get; set; }
         }
 
-        private void fillComboBox()
+        private void fillComboBox() // функция заполнения ComboBox-а
         {
             try
             {
@@ -58,7 +62,7 @@ namespace Kursovaya.ProdExpert
                     new Category { SystemName = "storage", DisplayName = "Накопители" },
                     new Category { SystemName = "thermo_interface", DisplayName = "Термопаста" },
                 };
-
+                // если есть категории добавленные пользователем, берем данные из Json
                 string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
                 if (File.Exists(path))
                 {
@@ -85,31 +89,31 @@ namespace Kursovaya.ProdExpert
                         
                 }
 
-                categoryComboBox.DisplayMember = "DisplayName";
-                categoryComboBox.ValueMember = "SystemName";
+                categoryComboBox.DisplayMember = "DisplayName"; // наименование категории которая видна пользователю
+                categoryComboBox.ValueMember = "SystemName"; // системное наименование категории
                 categoryComboBox.DataSource = categories;                
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message); // обработчик ошибок
             }
         }
 
-        private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e) // обработчик изменения выбранного элеменоа в ComboBox-е
         {
             try
             {
-                if (categoryComboBox.SelectedValue == null)
+                if (categoryComboBox.SelectedValue == null) // если ничего не выбранно выходим из функции
                     return;
 
-                string theme = categoryComboBox.SelectedValue.ToString();
-                globalTheme = theme;
-                fillDgv(theme);
+                string theme = categoryComboBox.SelectedValue.ToString(); // получаем выбранную категорию
+                globalTheme = theme; // сохраняем ваыбранную категорию
+                fillDgv(theme); // заполняем DGV в зависимости от выбранной категории
 
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message); } // обработчик ошибок
         }
-        public List<string> GetColumnNames(string connectionString, string theme)
+        public List<string> GetColumnNames(string connectionString, string theme) // получаем из БД какие характеристики есть у товаров
         {
             var columns = new List<string>();
 
@@ -154,6 +158,7 @@ namespace Kursovaya.ProdExpert
             dataGridView1.Columns["value"].ReadOnly = true;
             dataGridView1.Columns["data"].ReadOnly = false;
         }
+
 
         private void SetDefaultPicture()
         {
@@ -251,26 +256,50 @@ namespace Kursovaya.ProdExpert
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
             openFileDialog.Title = "Выберите изображение";
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog.FileName;
-                string picName = System.IO.Path.GetFileNameWithoutExtension(filePath) + System.IO.Path.GetExtension(filePath);
-                long fileSize = new System.IO.FileInfo(filePath).Length;
+
+                // Получаем расширение файла
+                string extension = Path.GetExtension(filePath);
+
+                // Генерируем уникальное имя файла
+                string uniqueName = Guid.NewGuid().ToString("N") + extension;
+
+                long fileSize = new FileInfo(filePath).Length;
                 if (fileSize > 5 * 1024 * 1024)
                 {
-                    MessageBox.Show("Файл слишком большой! Выберите изображение меньше 5 МБ.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Файл слишком большой! Выберите изображение меньше 5 МБ.",
+                                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop", "img");
-                if (!System.IO.Directory.Exists(imgFolder))
+
+                string imgFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "pepeShop",
+                    "img"
+                );
+
+                if (!Directory.Exists(imgFolder))
                 {
-                    System.IO.Directory.CreateDirectory(imgFolder);
+                    Directory.CreateDirectory(imgFolder);
                 }
-                string destPath = System.IO.Path.Combine(imgFolder, System.IO.Path.GetFileName(filePath));
-                System.IO.File.Copy(filePath, destPath, true);
-                picPath = $"img/{picName}";
-                productPictureBox.Image = Image.FromFile(destPath);
-                MessageBox.Show($"Изображение добавлено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                string destPath = Path.Combine(imgFolder, uniqueName);
+
+                File.Copy(filePath, destPath, true);
+
+                picPath = $"img/{uniqueName}";
+
+                // Чтобы файл не блокировался системой
+                using (var stream = new FileStream(destPath, FileMode.Open, FileAccess.Read))
+                {
+                    productPictureBox.Image = Image.FromStream(stream);
+                }
+
+                MessageBox.Show("Изображение добавлено",
+                                "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

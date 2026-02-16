@@ -243,14 +243,9 @@ namespace Kursovaya.User
                 else if (theme == "power_supplier") { query += "concat(power_supplier.produser, space(1), power_supplier.model, space(1), power_supplier.power, space(1), 'ВАТТ') as power_supplier "; }
                 else if (theme == "thermo_interface") { query += "concat(thermo_interface.produser, space(1), thermo_interface.model) as thermo_interface "; }
                 else if (theme == "ram") { query += "concat(ram.produser, space(1), ram.model, space(1), ram.capacity_gb, space(1), 'ГБ') as ram "; }
-                else if (theme == "storage") { query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as storage "; }
+                else if (theme == "storage") { query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as storage "; }  
                 else { query += "concat(produser,space(1),model) "; }
                 if (theme == "case") { query += "FROM cases "; }
-                if(theme != "processors" && theme != "motherboards" && theme != "videocards" && theme != "cpu_cooler" && theme != "case" && theme != "case_coolers" && theme != "power_supplier"
-                    && theme != "thermo_interface" && theme != "ram" && theme != "storage")
-                {
-                    query = "SELECT concat(produser,space(1),model ";
-                }
                 else { query += $"FROM {theme} "; }
                 query += $"WHERE id = {idProduct}";
                 using (MySqlConnection conn = new MySqlConnection(connStr))

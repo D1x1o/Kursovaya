@@ -34,6 +34,28 @@ namespace Kursovaya.ProdExpert
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.RowHeadersVisible = false;
+            LoadSuppliers();
+        }
+        public void LoadSuppliers()
+        {
+            try
+            {
+                string query = "SELECT * FROM suppliers";
+                using(MySqlConnection conn  = new MySqlConnection(connStr))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            supplierComboBox.Items.Add(reader.GetString(1));                            
+                        }
+                    }
+                    supplierComboBox.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         public class ProductAmount
         {
@@ -51,7 +73,7 @@ UNION ALL SELECT id, model, inStock, 'motherboards'     FROM motherboards
 UNION ALL SELECT id, model, inStock, 'cpu_cooler'        FROM cpu_cooler
 UNION ALL SELECT id, model, inStock, 'cases'             FROM cases
 UNION ALL SELECT id, model, inStock, 'case_coolers'       FROM case_coolers
-UNION ALL SELECT id, model, inStock, 'storage'            FROM storage";
+UNION ALL SELECT id, model, inStock, 'storage'            FROM storage ";
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
             if (File.Exists(path))
@@ -70,7 +92,8 @@ UNION ALL SELECT id, model, inStock, 'storage'            FROM storage";
                     foreach (JObject table in tables)
                     {
                         string SystemName = table["systemName"].ToString();
-                        query += $"UNION ALL SELECT model, inStock FROM {SystemName} ";
+                        string DisplayName = table["displayName"].ToString();
+                        query += $"UNION ALL SELECT id, model, inStock, '{DisplayName}' FROM {SystemName} ";
                     }
                 }
 
@@ -363,7 +386,7 @@ UNION ALL SELECT id, model, inStock, 'storage'            FROM storage";
 
             // Вступительный текст
             Word.Paragraph intro = doc.Paragraphs.Add();
-            intro.Range.Text = "Прошу обеспечить поставку следующих комплектующих для магазина pepeShop. Ниже приведена таблица с наименованиями и необходимым количеством:";
+            intro.Range.Text = $"Прошу поставщика {supplierComboBox.SelectedItem.ToString()} обеспечить поставку следующих комплектующих для магазина pepeShop. Ниже приведена таблица с наименованиями и необходимым количеством:";
             intro.Range.Font.Size = 12;
             intro.Range.Font.Bold = 0;
             intro.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;

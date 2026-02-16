@@ -35,6 +35,8 @@ namespace Kursovaya.ProdExpert
             this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.resetButton = new System.Windows.Forms.Button();
+            this.supplierComboBox = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,7 +86,7 @@ namespace Kursovaya.ProdExpert
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(12, 6);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(231, 24);
             this.label1.TabIndex = 3;
@@ -102,12 +104,35 @@ namespace Kursovaya.ProdExpert
             this.resetButton.UseVisualStyleBackColor = false;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
+            // supplierComboBox
+            // 
+            this.supplierComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.supplierComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.supplierComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.supplierComboBox.ForeColor = System.Drawing.Color.White;
+            this.supplierComboBox.FormattingEnabled = true;
+            this.supplierComboBox.Location = new System.Drawing.Point(336, 33);
+            this.supplierComboBox.Name = "supplierComboBox";
+            this.supplierComboBox.Size = new System.Drawing.Size(237, 32);
+            this.supplierComboBox.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(332, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(108, 24);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Поcтавщик";
+            // 
             // FormProdSupply
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(945, 625);
+            this.Controls.Add(this.supplierComboBox);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.resetButton);
@@ -136,5 +161,7 @@ namespace Kursovaya.ProdExpert
         private System.Windows.Forms.TextBox SearchTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button resetButton;
+        private System.Windows.Forms.ComboBox supplierComboBox;
+        private System.Windows.Forms.Label label2;
     }
 }
