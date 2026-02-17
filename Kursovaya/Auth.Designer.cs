@@ -42,6 +42,7 @@ namespace Kursovaya
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.ShowPwdButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.ReCaptcha = new System.Windows.Forms.Button();
             this.CaptcaImg = new System.Windows.Forms.PictureBox();
@@ -77,7 +78,7 @@ namespace Kursovaya
             this.pwdTextBox.Location = new System.Drawing.Point(41, 189);
             this.pwdTextBox.MaxLength = 50;
             this.pwdTextBox.Name = "pwdTextBox";
-            this.pwdTextBox.Size = new System.Drawing.Size(167, 29);
+            this.pwdTextBox.Size = new System.Drawing.Size(144, 29);
             this.pwdTextBox.TabIndex = 2;
             // 
             // label2
@@ -172,6 +173,20 @@ namespace Kursovaya
             this.label5.TabIndex = 9;
             this.label5.Text = "PepeShop";
             // 
+            // ShowPwdButton
+            // 
+            this.ShowPwdButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.ShowPwdButton.BackgroundImage = global::Kursovaya.Properties.Resources.eye_icon_invert;
+            this.ShowPwdButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ShowPwdButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ShowPwdButton.ForeColor = System.Drawing.Color.White;
+            this.ShowPwdButton.Location = new System.Drawing.Point(184, 190);
+            this.ShowPwdButton.Name = "ShowPwdButton";
+            this.ShowPwdButton.Size = new System.Drawing.Size(24, 28);
+            this.ShowPwdButton.TabIndex = 11;
+            this.ShowPwdButton.UseVisualStyleBackColor = false;
+            this.ShowPwdButton.Click += new System.EventHandler(this.ShowPwdButton_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
@@ -207,6 +222,7 @@ namespace Kursovaya
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(254, 311);
+            this.Controls.Add(this.ShowPwdButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button3);
@@ -255,6 +271,7 @@ namespace Kursovaya
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button ShowPwdButton;
     }
 }
 

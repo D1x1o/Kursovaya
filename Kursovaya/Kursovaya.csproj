@@ -309,6 +309,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="pepega.ico" />
+    <None Include="Resources\eye_icon.png" />
+    <None Include="Resources\eye_icon_invert.png" />
     <Content Include="Resources\pepega.png" />
     <None Include="Resources\pepegaCrop.png" />
     <None Include="Resources\83733882.png" />
