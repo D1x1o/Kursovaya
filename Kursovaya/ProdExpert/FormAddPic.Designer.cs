@@ -40,6 +40,7 @@
             this.actualPageLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.allPageLabel = new System.Windows.Forms.Label();
+            this.deletePicButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,10 +75,12 @@
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 50);
+            this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridView1.Location = new System.Drawing.Point(12, 48);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(768, 327);
+            this.dataGridView1.Size = new System.Drawing.Size(768, 329);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
@@ -89,7 +92,7 @@
             this.searchTextBox.Location = new System.Drawing.Point(69, 12);
             this.searchTextBox.MaxLength = 50;
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(379, 26);
+            this.searchTextBox.Size = new System.Drawing.Size(266, 26);
             this.searchTextBox.TabIndex = 3;
             this.searchTextBox.TextChanged += new System.EventHandler(this.searchTextBox_TextChanged);
             // 
@@ -162,12 +165,26 @@
             this.allPageLabel.TabIndex = 5;
             this.allPageLabel.Text = "nmax";
             // 
+            // deletePicButton
+            // 
+            this.deletePicButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.deletePicButton.Enabled = false;
+            this.deletePicButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deletePicButton.Location = new System.Drawing.Point(12, 381);
+            this.deletePicButton.Name = "deletePicButton";
+            this.deletePicButton.Size = new System.Drawing.Size(158, 52);
+            this.deletePicButton.TabIndex = 6;
+            this.deletePicButton.Text = "Удалить изображение";
+            this.deletePicButton.UseVisualStyleBackColor = false;
+            this.deletePicButton.Click += new System.EventHandler(this.deletePicButton_Click);
+            // 
             // FormAddPic
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(792, 439);
+            this.Controls.Add(this.deletePicButton);
             this.Controls.Add(this.allPageLabel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.actualPageLabel);
@@ -207,5 +224,6 @@
         private System.Windows.Forms.Label actualPageLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label allPageLabel;
+        private System.Windows.Forms.Button deletePicButton;
     }
 }

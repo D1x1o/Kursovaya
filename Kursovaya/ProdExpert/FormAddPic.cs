@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Office.Interop.Word;
+using MySql.Data.MySqlClient;
 using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 
 // ФОРМА добавления изображений к товарам 
@@ -42,6 +44,7 @@ namespace Kursovaya.ProdExpert
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.RowHeadersVisible = false;
+            dataGridView1.ReadOnly = true;
         }
 
         // отображаем в выпадающем списке все категори
@@ -183,7 +186,7 @@ namespace Kursovaya.ProdExpert
                 dataGridView1.Columns["image"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //устанавиваем для столбца ширину
                 dataGridView1.Columns["image"].DisplayIndex = dataGridView1.Columns.Count - 2;// указываем каким по счету будет столбец
                 dataGridView1.Columns["image"].HeaderText = "Изображение"; // имя столбца
-                dataGridView1.Columns["ActionColumn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;//устанавиваем для столбца ширину
+                dataGridView1.Columns["ActionColumn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; //устанавиваем для столбца ширину
                 dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.Columns.Count - 1;// указываем каким по счету будет столбец
 
             }
@@ -329,6 +332,46 @@ namespace Kursovaya.ProdExpert
                     ? "Добавить изображение" // если нет у товара изображения кнопка будет с текстом "Добавить изображение"
                     : "Заменить изображение"; // если есть изображение текст кнопки "Заменить изображение"
             }
+        }
+        int rowIndexforDeleting = -1;
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.RowIndex < 0)
+            {
+                return;
+            }
+            if (dataGridView1.Rows[e.RowIndex].Cells["image"].Value.ToString() == "" && String.IsNullOrWhiteSpace(dataGridView1.Rows[e.RowIndex].Cells["image"].Value.ToString()))
+            {
+                deletePicButton.Enabled = false;
+            }
+            else { deletePicButton.Enabled = true; rowIndexforDeleting = e.RowIndex; }
+        }
+
+        private void deletePicButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (rowIndexforDeleting < 0) { return; }
+                DialogResult DR = MessageBox.Show($"Вы действительно хотите удалить изображение у {dataGridView1.Rows[rowIndexforDeleting].Cells[1].Value.ToString()}", "Подтверждение",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (DR == DialogResult.Yes)
+                {
+                    using (MySqlConnection conn = new MySqlConnection(connStr))
+                    {
+                        conn.Open();
+                        string query = $"UPDATE {theme} SET image = '' WHERE id = {Convert.ToInt32(dataGridView1.Rows[rowIndexforDeleting].Cells["id"].Value)};";
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        int editRows = cmd.ExecuteNonQuery();
+                        if (editRows > 0)
+                        {
+                            MessageBox.Show("Изображение удалено!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            fillDGV();
+                        }
+                        else { MessageBox.Show("Что-то пошло не так", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); fillDGV(); }
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }
