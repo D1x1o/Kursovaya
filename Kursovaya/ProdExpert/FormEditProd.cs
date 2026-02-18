@@ -112,7 +112,7 @@ namespace Kursovaya.ProdExpert
                 case "Видеокарты":
                     theme = "videocards";
                     break;
-                case "Материские платы":
+                case "Материнские платы":
                     theme = "motherboards";
                     break;
                 case "Оперативная память":

@@ -79,6 +79,7 @@ namespace Kursovaya.ProdExpert
             // SignComboBox
             // 
             this.SignComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.SignComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SignComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SignComboBox.ForeColor = System.Drawing.Color.White;
             this.SignComboBox.FormattingEnabled = true;

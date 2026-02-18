@@ -33,8 +33,14 @@ namespace Kursovaya.Administrator
             this.label1 = new System.Windows.Forms.Label();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.categoryComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.allPageLabel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.actualPageLabel = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.ForwardPageButton = new System.Windows.Forms.Button();
+            this.BackPageButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,36 +56,42 @@ namespace Kursovaya.Administrator
             // SearchTextBox
             // 
             this.SearchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.SearchTextBox.Enabled = false;
             this.SearchTextBox.ForeColor = System.Drawing.Color.White;
             this.SearchTextBox.Location = new System.Drawing.Point(12, 36);
+            this.SearchTextBox.MaxLength = 50;
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(272, 29);
             this.SearchTextBox.TabIndex = 4;
+            this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.dataGridView1.Location = new System.Drawing.Point(12, 74);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(889, 433);
+            this.dataGridView1.Size = new System.Drawing.Size(692, 390);
             this.dataGridView1.TabIndex = 3;
             // 
-            // comboBox2
+            // categoryComboBox
             // 
-            this.comboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox2.ForeColor = System.Drawing.Color.White;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(290, 36);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(228, 32);
-            this.comboBox2.TabIndex = 6;
+            this.categoryComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.categoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.categoryComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.categoryComboBox.ForeColor = System.Drawing.Color.White;
+            this.categoryComboBox.FormattingEnabled = true;
+            this.categoryComboBox.Location = new System.Drawing.Point(290, 36);
+            this.categoryComboBox.Name = "categoryComboBox";
+            this.categoryComboBox.Size = new System.Drawing.Size(228, 32);
+            this.categoryComboBox.TabIndex = 6;
+            this.categoryComboBox.SelectedIndexChanged += new System.EventHandler(this.categoryComboBox_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -90,13 +102,85 @@ namespace Kursovaya.Administrator
             this.label2.TabIndex = 5;
             this.label2.Text = "Категория";
             // 
+            // allPageLabel
+            // 
+            this.allPageLabel.AutoSize = true;
+            this.allPageLabel.ForeColor = System.Drawing.Color.White;
+            this.allPageLabel.Location = new System.Drawing.Point(508, 478);
+            this.allPageLabel.Name = "allPageLabel";
+            this.allPageLabel.Size = new System.Drawing.Size(57, 24);
+            this.allPageLabel.TabIndex = 19;
+            this.allPageLabel.Text = "nmax";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(474, 478);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(31, 24);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "из";
+            // 
+            // actualPageLabel
+            // 
+            this.actualPageLabel.AutoSize = true;
+            this.actualPageLabel.ForeColor = System.Drawing.Color.White;
+            this.actualPageLabel.Location = new System.Drawing.Point(450, 478);
+            this.actualPageLabel.Name = "actualPageLabel";
+            this.actualPageLabel.Size = new System.Drawing.Size(21, 24);
+            this.actualPageLabel.TabIndex = 21;
+            this.actualPageLabel.Text = "n";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(347, 478);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(97, 24);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Страница";
+            // 
+            // ForwardPageButton
+            // 
+            this.ForwardPageButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.ForwardPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ForwardPageButton.ForeColor = System.Drawing.Color.White;
+            this.ForwardPageButton.Location = new System.Drawing.Point(643, 470);
+            this.ForwardPageButton.Name = "ForwardPageButton";
+            this.ForwardPageButton.Size = new System.Drawing.Size(63, 40);
+            this.ForwardPageButton.TabIndex = 17;
+            this.ForwardPageButton.Text = ">";
+            this.ForwardPageButton.UseVisualStyleBackColor = false;
+            this.ForwardPageButton.Click += new System.EventHandler(this.ForwardPageButton_Click);
+            // 
+            // BackPageButton
+            // 
+            this.BackPageButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.BackPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BackPageButton.ForeColor = System.Drawing.Color.White;
+            this.BackPageButton.Location = new System.Drawing.Point(574, 470);
+            this.BackPageButton.Name = "BackPageButton";
+            this.BackPageButton.Size = new System.Drawing.Size(63, 40);
+            this.BackPageButton.TabIndex = 18;
+            this.BackPageButton.Text = "<";
+            this.BackPageButton.UseVisualStyleBackColor = false;
+            this.BackPageButton.Click += new System.EventHandler(this.BackPageButton_Click);
+            // 
             // Prod
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
-            this.ClientSize = new System.Drawing.Size(913, 519);
-            this.Controls.Add(this.comboBox2);
+            this.ClientSize = new System.Drawing.Size(716, 520);
+            this.Controls.Add(this.allPageLabel);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.actualPageLabel);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.ForwardPageButton);
+            this.Controls.Add(this.BackPageButton);
+            this.Controls.Add(this.categoryComboBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SearchTextBox);
@@ -121,7 +205,13 @@ namespace Kursovaya.Administrator
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox SearchTextBox;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox categoryComboBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label allPageLabel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label actualPageLabel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button ForwardPageButton;
+        private System.Windows.Forms.Button BackPageButton;
     }
 }
