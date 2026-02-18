@@ -1,10 +1,12 @@
 ﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +33,32 @@ namespace Kursovaya.ProdExpert
             else if (theme == "Термопаста") { theme = "thermo_interface"; }
             else if (theme == "Оперативная память") { theme = "ram"; }
             else if (theme == "Накопители") { theme = "storage"; }
+            else
+            {
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                if (File.Exists(path))
+                {
+
+                    string json = File.ReadAllText(path);
+                    if (string.IsNullOrWhiteSpace(json))
+                    {
+
+                    }
+                    else
+                    {
+                        JObject root = JObject.Parse(json);
+
+                        JArray tables = (JArray)root["tables"];
+                        foreach (JObject table in tables)
+                        {
+                            if (table["displayName"].ToString() == theme)
+                            {
+                                theme = table["systemName"].ToString();
+                            }
+                        }
+                    }
+                }
+            }
             globalTheme = theme;
             InitializeComponent();
             FillDGV(theme, idProduct);
@@ -77,8 +105,8 @@ namespace Kursovaya.ProdExpert
                             if (columnName == "iduser" || columnName == "id" || columnName == "image" || columnName == "inStock")
                                 continue;
 
-                            if (reader.IsDBNull(i))
-                                continue;
+                            //if (reader.IsDBNull(i))
+                            //    continue;
 
                             if (columnName == "model") { columnName = "Модель"; }
                             else if (columnName == "produser") { columnName = "Производитель"; }
@@ -136,6 +164,38 @@ namespace Kursovaya.ProdExpert
                             else if (columnName == "packege_volume") { columnName = "Вес"; }
                             else if (columnName == "shel_life") { columnName = "Срок годности"; }
                             else if (columnName == "composition") { columnName = "Состав"; }
+                            else
+                            {
+                                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                                if (File.Exists(path))
+                                {
+
+                                    string json = File.ReadAllText(path);
+                                    if (string.IsNullOrWhiteSpace(json))
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        JObject root = JObject.Parse(json);
+                                        JArray tables = (JArray)root["tables"];
+
+                                        foreach (JObject table in tables)
+                                        {
+                                            JArray columns = (JArray)table["columns"];
+
+                                            foreach (JObject column in columns)
+                                            {
+                                                if (column["systemName"]?.ToString() == columnName)
+                                                {
+                                                    columnName = column["displayName"]?.ToString();
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             dataGridView1.Rows.Add(columnName, value);
                         }
                         dataGridView1.RowHeadersVisible = false;
@@ -175,7 +235,7 @@ namespace Kursovaya.ProdExpert
                 else if (theme == "thermo_interface") { query += "concat(thermo_interface.produser, space(1), thermo_interface.model) as thermo_interface "; }
                 else if (theme == "ram") { query += "concat(ram.produser, space(1), ram.model, space(1), ram.capacity_gb, space(1), 'ГБ') as ram "; }
                 else if (theme == "storage") { query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as storage "; }
-                
+                else { query += "concat(produser, space(1), model) as 'Другие категории' "; }
                 query += $"FROM {theme} "; 
                 query += $"WHERE id = {idProduct}";
                 using (MySqlConnection conn = new MySqlConnection(connStr))

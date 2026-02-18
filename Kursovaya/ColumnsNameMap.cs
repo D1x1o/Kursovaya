@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Kursovaya
@@ -68,17 +70,56 @@ namespace Kursovaya
 
         // Русское → Английское (создаём на основе Map)
         public static readonly Dictionary<string, string> ReverseMap = Map.ToDictionary(kv => kv.Value, kv => kv.Key);
+        // ===== СТАТИЧЕСКИЙ КОНСТРУКТОР =====
+        static ColumnsNameMap()
+        {
+            LoadFromJson();
 
+            ReverseMap = Map.ToDictionary(kv => kv.Value, kv => kv.Key);
+        }
+
+        private static void LoadFromJson()
+        {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+
+            if (!File.Exists(path))
+                return;
+
+            string json = File.ReadAllText(path);
+
+            if (string.IsNullOrWhiteSpace(json))
+                return;
+
+            JObject root = JObject.Parse(json);
+            JArray tables = (JArray)root["tables"];
+
+            foreach (JObject table in tables)
+            {
+                JArray columns = (JArray)table["columns"];
+
+                foreach (JObject column in columns)
+                {
+                    string systemName = column["systemName"]?.ToString();
+                    string displayName = column["displayName"]?.ToString();
+
+                    if (!string.IsNullOrEmpty(systemName) &&
+                        !string.IsNullOrEmpty(displayName) &&
+                        !Map.ContainsKey(systemName))
+                    {
+                        Map.Add(systemName, displayName);
+                    }
+                }
+            }
+        }
         // Метод: Английское → Русское
         public static string GetRussianName(string columnName)
         {
             return Map.ContainsKey(columnName) ? Map[columnName] : columnName;
         }
-
         // Метод: Русское → Английское
         public static string GetEnglishName(string russianName)
         {
             return ReverseMap.ContainsKey(russianName) ? ReverseMap[russianName] : russianName;
-        }
+        }        
     }
 }

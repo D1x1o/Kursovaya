@@ -1,9 +1,11 @@
 ﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +52,27 @@ namespace Kursovaya.ProdExpert
             categoryComboBox.Items.Add("Корпусные кулеры");
             categoryComboBox.Items.Add("Накопители");
             categoryComboBox.Items.Add("Термопаста");
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+            if (File.Exists(path))
+            {
+
+                string json = File.ReadAllText(path);
+                if (string.IsNullOrWhiteSpace(json))
+                {
+
+                }
+                else
+                {
+                    JObject root = JObject.Parse(json);
+
+                    JArray tables = (JArray)root["tables"];
+                    foreach (JObject table in tables)
+                    {
+                        categoryComboBox.Items.Add(table["displayName"].ToString());
+                    }
+                }
+
+            }
         }
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
@@ -113,6 +136,31 @@ namespace Kursovaya.ProdExpert
                 case "Термопаста":
                     theme = "thermo_interface";
                     break;
+                default:
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                    if (File.Exists(path))
+                    {
+
+                        string json = File.ReadAllText(path);
+                        if (string.IsNullOrWhiteSpace(json))
+                        {
+
+                        }
+                        else
+                        {
+                            JObject root = JObject.Parse(json);
+
+                            JArray tables = (JArray)root["tables"];
+                            foreach (JObject table in tables)
+                            {
+                                if (table["displayName"].ToString() == theme)
+                                {
+                                    theme = table["systemName"].ToString();
+                                }
+                            }
+                        }
+                    }
+                    break;
             }
             string query = "SELECT id, ";
             if (theme == "processors") { query += "concat(processors.produser, space(1), processors.model) as Процессоры "; }
@@ -125,12 +173,12 @@ namespace Kursovaya.ProdExpert
             else if (theme == "thermo_interface") { query += "concat(thermo_interface.produser, space(1), thermo_interface.model) as Термопаста "; }
             else if (theme == "ram") { query += "concat(ram.produser, space(1), ram.model, space(1), ram.capacity_gb, space(1), 'ГБ') as 'Оперативная память' "; }
             else if (theme == "storage") { query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as Накопители "; }
-            
+            else { query += "concat(produser, space(1), model) as 'Другие категории'"; }
             if (theme == "case") { query += "FROM cases "; }
             else { query += $"FROM {theme} "; }
             if (searchTextBox.Text != "")
             {
-                query += $"WHERE MODEL LIKE '%{searchTextBox.Text}%' ";
+                query += $"WHERE concat(produser, space(1), model) LIKE '%{searchTextBox.Text}%' ";
             }
             query += $"LIMIT 10 OFFSET {pageOffset};";
 
@@ -156,7 +204,7 @@ namespace Kursovaya.ProdExpert
                     }
                     else
                     {
-                        query2 = $"SELECT count(*) FROM {theme} WHERE MODEL LIKE '%{searchTextBox.Text}%'";
+                        query2 = $"SELECT count(*) FROM {theme} WHERE concat(produser, space(1), model) LIKE '%{searchTextBox.Text}%'";
                     }
                     MySqlCommand cmd = new MySqlCommand(query2, conn);
                     allPage = Convert.ToInt32(Math.Ceiling((double)Convert.ToInt32(cmd.ExecuteScalar()) / 10));

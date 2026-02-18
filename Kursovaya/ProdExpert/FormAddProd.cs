@@ -25,7 +25,7 @@ namespace Kursovaya.ProdExpert
         public FormAddProd()
         {
             InitializeComponent();
-            fillComboBox(); //заполняем DGV
+            fillComboBox(); //заполняем ComboBox
             SetDefaultPicture(); // устанавливаем заглушку на место изображения товара
             // дизайн DGV
             dataGridView1.RowHeadersVisible = false;

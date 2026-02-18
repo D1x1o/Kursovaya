@@ -64,16 +64,16 @@ namespace Kursovaya.ProdExpert
         }
         public void fillDgv()
         {
-            string query = $@"SELECT * FROM (SELECT id, model, inStock, 'processors'   AS SourceTable FROM processors
-UNION ALL SELECT id, model, inStock, 'videocards'       FROM videocards
-UNION ALL SELECT id, model, inStock, 'thermo_interface' FROM thermo_interface
-UNION ALL SELECT id, model, inStock, 'ram'              FROM ram
-UNION ALL SELECT id, model, inStock, 'power_supplier'   FROM power_supplier
-UNION ALL SELECT id, model, inStock, 'motherboards'     FROM motherboards
-UNION ALL SELECT id, model, inStock, 'cpu_cooler'        FROM cpu_cooler
-UNION ALL SELECT id, model, inStock, 'cases'             FROM cases
-UNION ALL SELECT id, model, inStock, 'case_coolers'       FROM case_coolers
-UNION ALL SELECT id, model, inStock, 'storage'            FROM storage ";
+            string query = $@"SELECT * FROM (SELECT id, concat(produser, space(1), model) as model, inStock, 'processors'   AS SourceTable FROM processors
+UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'videocards'       FROM videocards
+UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'thermo_interface' FROM thermo_interface
+UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'ram'              FROM ram
+UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'power_supplier'   FROM power_supplier
+UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'motherboards'     FROM motherboards
+UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'cpu_cooler'        FROM cpu_cooler
+UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'cases'             FROM cases
+UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'case_coolers'       FROM case_coolers
+UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'storage'            FROM storage ";
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
             if (File.Exists(path))
@@ -93,7 +93,7 @@ UNION ALL SELECT id, model, inStock, 'storage'            FROM storage ";
                     {
                         string SystemName = table["systemName"].ToString();
                         string DisplayName = table["displayName"].ToString();
-                        query += $"UNION ALL SELECT id, model, inStock, '{DisplayName}' FROM {SystemName} ";
+                        query += $"UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, '{DisplayName}' FROM {SystemName} ";
                     }
                 }
 
@@ -386,7 +386,7 @@ UNION ALL SELECT id, model, inStock, 'storage'            FROM storage ";
 
             // Вступительный текст
             Word.Paragraph intro = doc.Paragraphs.Add();
-            intro.Range.Text = $"Прошу поставщика {supplierComboBox.SelectedItem.ToString()} обеспечить поставку следующих комплектующих для магазина pepeShop. Ниже приведена таблица с наименованиями и необходимым количеством:";
+            intro.Range.Text = $"Прошу поставщика \"{supplierComboBox.SelectedItem.ToString()}\" обеспечить поставку следующих комплектующих для магазина pepeShop. Ниже приведена таблица с наименованиями и необходимым количеством:";
             intro.Range.Font.Size = 12;
             intro.Range.Font.Bold = 0;
             intro.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;

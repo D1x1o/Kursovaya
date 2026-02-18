@@ -36,6 +36,10 @@ namespace Kursovaya.ProdExpert
         {
             public string SystemName { get; set; }
             public string DisplayName { get; set; }
+            public override string ToString()
+            {
+                return DisplayName;
+            }
         }
         public void fillCombobox()
         {
@@ -69,7 +73,7 @@ UNION ALL SELECT id, model, inStock, 'motherboards'     FROM motherboards
 UNION ALL SELECT id, model, inStock, 'cpu_cooler'        FROM cpu_cooler
 UNION ALL SELECT id, model, inStock, 'cases'             FROM cases
 UNION ALL SELECT id, model, inStock, 'case_coolers'       FROM case_coolers
-UNION ALL SELECT id, model, inStock, 'storage'            FROM storage";
+UNION ALL SELECT id, model, inStock, 'storage'            FROM storage ";
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
             if (File.Exists(path))
@@ -88,7 +92,7 @@ UNION ALL SELECT id, model, inStock, 'storage'            FROM storage";
                     foreach (JObject table in tables)
                     {
                         string SystemName = table["systemName"].ToString();
-                        query += $"UNION ALL SELECT model, inStock FROM {SystemName} ";
+                        query += $"UNION ALL SELECT id, model, inStock, '{SystemName}' inStock FROM {SystemName} ";
                     }
                 }
 
@@ -96,7 +100,7 @@ UNION ALL SELECT id, model, inStock, 'storage'            FROM storage";
             query += ") as products ";
             if (SearchTextBox.Text == "" && AmountTextBox.Text != "")
             {
-                query += $"Where inStock {SignComboBox.SelectedValue.ToString()} {Convert.ToInt32(AmountTextBox.Text.Trim())} ";
+                query += $"Where inStock {SignComboBox.SelectedValue} {Convert.ToInt32(AmountTextBox.Text.Trim())} ";
             }
             else if (SearchTextBox.Text != "" && AmountTextBox.Text == "")
             {
