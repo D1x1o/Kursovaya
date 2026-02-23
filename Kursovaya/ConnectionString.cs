@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+// КЛАСС Формироавния строки подключения к БД 
 
 namespace Kursovaya
 {
@@ -10,8 +13,18 @@ namespace Kursovaya
     {
         public static string GetConnectionString()
         {
-            return "Server=localhost; Database=1; User Id=root; Password=;";
-            //return "Server = localhost; Port = 3306; Database = cursovaya; User Id = root; Password =; AllowPublicKeyRetrieval = true; ";
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData); // Путь до нашей папки в AppData
+            string pepeShopPath = Path.Combine(appDataPath, "pepeShop");
+            string pepeConn = Path.Combine(pepeShopPath, "connection.csv");
+            string[] connItems = new string[3];
+
+            using (StreamReader reader = new StreamReader(pepeConn))
+            {
+                reader.ReadLine();
+                string input2 = reader.ReadLine();
+                connItems = input2.Split(',').ToArray();                
+            }
+            return $"Server={connItems[0]}; Database=1; User Id={connItems[1]}; Password={connItems[2]};";
             //return $"Server={Settings.Default.host}; User Id={Settings.Default.user};Database=1; Password={Settings.Default.pwd};";
         }
     }

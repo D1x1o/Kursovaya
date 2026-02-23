@@ -37,6 +37,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.serverPassword = new System.Windows.Forms.TextBox();
             this.saveConnData = new System.Windows.Forms.Button();
+            this.checkConnectionButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -112,8 +113,9 @@
             // saveConnData
             // 
             this.saveConnData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.saveConnData.Enabled = false;
             this.saveConnData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveConnData.Location = new System.Drawing.Point(29, 306);
+            this.saveConnData.Location = new System.Drawing.Point(29, 337);
             this.saveConnData.Name = "saveConnData";
             this.saveConnData.Size = new System.Drawing.Size(196, 40);
             this.saveConnData.TabIndex = 3;
@@ -121,12 +123,25 @@
             this.saveConnData.UseVisualStyleBackColor = false;
             this.saveConnData.Click += new System.EventHandler(this.saveConnData_Click);
             // 
+            // checkConnectionButton
+            // 
+            this.checkConnectionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.checkConnectionButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkConnectionButton.Location = new System.Drawing.Point(29, 261);
+            this.checkConnectionButton.Name = "checkConnectionButton";
+            this.checkConnectionButton.Size = new System.Drawing.Size(196, 70);
+            this.checkConnectionButton.TabIndex = 3;
+            this.checkConnectionButton.Text = "Проверить подключение";
+            this.checkConnectionButton.UseVisualStyleBackColor = false;
+            this.checkConnectionButton.Click += new System.EventHandler(this.checkConnectionButton_Click);
+            // 
             // EditConn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
-            this.ClientSize = new System.Drawing.Size(258, 359);
+            this.ClientSize = new System.Drawing.Size(258, 389);
+            this.Controls.Add(this.checkConnectionButton);
             this.Controls.Add(this.saveConnData);
             this.Controls.Add(this.serverPassword);
             this.Controls.Add(this.label4);
@@ -157,5 +172,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox serverPassword;
         private System.Windows.Forms.Button saveConnData;
+        private System.Windows.Forms.Button checkConnectionButton;
     }
 }

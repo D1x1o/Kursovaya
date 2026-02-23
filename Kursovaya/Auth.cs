@@ -25,7 +25,6 @@ namespace Kursovaya
             TestDataBaseConn();
             pwdTextBox.UseSystemPasswordChar = true; // скрываем пароль
         }
-        string ConnStr = ConnectionString.GetConnectionString(); // строка подключения к БД
         bool inCaptcha = false; // булева должен ли пользователь ввести капчу для входа
         // обработчик на надатие кнопки "Войти"
         private void LogInButton_Click(object sender, EventArgs e)
@@ -67,7 +66,7 @@ namespace Kursovaya
         }
         private void getUserID() // получение айди пользователя
         {
-            using (MySqlConnection conn = new MySqlConnection(ConnStr)) // инициируем подключение 
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString.GetConnectionString())) // инициируем подключение 
             {
                 conn.Open(); // открываем подключение
                 MySqlCommand cmd = new MySqlCommand($"SELECT id from staff where login = '{loginTextBox.Text.Trim()}';", conn); // выполняем запрос
@@ -80,7 +79,7 @@ namespace Kursovaya
             string query = $"SELECT password FROM staff WHERE login = '{loginTextBox.Text.Trim()}';"; // запрос для получения хэш пароля по логину
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnStr)) // инициируем подключение 
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString.GetConnectionString())) // инициируем подключение 
                 {
                     conn.Open(); // открываем подключение
                     MySqlCommand cmd = new MySqlCommand(query, conn); // выполняем запрос
@@ -213,7 +212,7 @@ namespace Kursovaya
             string query = $"SELECT role FROM staff WHERE login = '{loginTextBox.Text.Trim()}';"; // запрос
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnStr)) // подключение
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString.GetConnectionString())) // подключение
                 {
                     conn.Open(); // открываем подключение
                     MySqlCommand cmd = new MySqlCommand(query, conn); // выполняем запрос
@@ -245,15 +244,15 @@ namespace Kursovaya
         {            
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString.GetConnectionString()))
                 {
-                    conn.Open();
+                    conn.Open(); // инициируем подключение к базе данных
                 }
             }
             catch (Exception) { MessageBox.Show("Ошибка подключения к базе данных!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 {
-                    EditConn ed = new EditConn();
-                    ed.ShowDialog();
+                    EditConn ed = new EditConn(); 
+                    ed.ShowDialog(); // если подлючение не произошло вызываем форму настроцки подключения
                 }
             }
                 
