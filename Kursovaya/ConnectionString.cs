@@ -22,6 +22,10 @@ namespace Kursovaya
             {
                 reader.ReadLine();
                 string input2 = reader.ReadLine();
+                if(input2 == null)
+                {
+                    return "";
+                }
                 connItems = input2.Split(',').ToArray();                
             }
             return $"Server={connItems[0]}; Database=1; User Id={connItems[1]}; Password={connItems[2]};";

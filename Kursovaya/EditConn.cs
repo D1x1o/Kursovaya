@@ -56,6 +56,10 @@ namespace Kursovaya
             {
                 reader.ReadLine(); // читаем перую строку - шапку
                 string input2 = reader.ReadLine(); // читаем вторую строку наши данные
+                if(input2 == null)
+                {
+                    return;
+                }
                 string[] connItems = input2.Split(',').ToArray(); // разбиваем строку из csv файла на массив, каждый элемент заканчивается запятой
                 serverAddres.Text = connItems[0]; // айпи сервера заносим в соответствующий textbox
                 serverUser.Text = connItems[1]; // имя пользователя заносим также в textbox

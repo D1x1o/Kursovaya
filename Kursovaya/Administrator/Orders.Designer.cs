@@ -32,6 +32,9 @@ namespace Kursovaya.Administrator
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Orders));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.CancelOrder = new System.Windows.Forms.Button();
+            this.getReport = new System.Windows.Forms.Button();
+            this.quarterForReport = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +49,7 @@ namespace Kursovaya.Administrator
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(6);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1351, 688);
+            this.dataGridView1.Size = new System.Drawing.Size(1351, 590);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
@@ -55,20 +58,56 @@ namespace Kursovaya.Administrator
             // 
             this.CancelOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.CancelOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CancelOrder.Location = new System.Drawing.Point(1168, 712);
+            this.CancelOrder.Location = new System.Drawing.Point(1182, 614);
             this.CancelOrder.Name = "CancelOrder";
-            this.CancelOrder.Size = new System.Drawing.Size(198, 40);
+            this.CancelOrder.Size = new System.Drawing.Size(184, 71);
             this.CancelOrder.TabIndex = 1;
             this.CancelOrder.Text = "Отменить заказ";
             this.CancelOrder.UseVisualStyleBackColor = false;
             this.CancelOrder.Click += new System.EventHandler(this.CancelOrder_Click);
+            // 
+            // getReport
+            // 
+            this.getReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.getReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.getReport.Location = new System.Drawing.Point(327, 614);
+            this.getReport.Name = "getReport";
+            this.getReport.Size = new System.Drawing.Size(309, 71);
+            this.getReport.TabIndex = 1;
+            this.getReport.Text = "Получить отчёт";
+            this.getReport.UseVisualStyleBackColor = false;
+            this.getReport.Click += new System.EventHandler(this.getReport_Click);
+            // 
+            // quarterForReport
+            // 
+            this.quarterForReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.quarterForReport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.quarterForReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.quarterForReport.ForeColor = System.Drawing.Color.White;
+            this.quarterForReport.FormattingEnabled = true;
+            this.quarterForReport.Location = new System.Drawing.Point(15, 641);
+            this.quarterForReport.Name = "quarterForReport";
+            this.quarterForReport.Size = new System.Drawing.Size(306, 32);
+            this.quarterForReport.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 614);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(280, 24);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Выберите квартал для отчёта";
             // 
             // Orders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
-            this.ClientSize = new System.Drawing.Size(1378, 764);
+            this.ClientSize = new System.Drawing.Size(1378, 696);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.quarterForReport);
+            this.Controls.Add(this.getReport);
             this.Controls.Add(this.CancelOrder);
             this.Controls.Add(this.dataGridView1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -82,6 +121,7 @@ namespace Kursovaya.Administrator
             this.Text = "Заказы";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -89,5 +129,8 @@ namespace Kursovaya.Administrator
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button CancelOrder;
+        private System.Windows.Forms.Button getReport;
+        private System.Windows.Forms.ComboBox quarterForReport;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -11,7 +11,7 @@ namespace Kursovaya
 {
     internal class SaveCheck
     {
-        public void SaveMakeCheck(string[] itemsNames, int[] itemsCosts, int[] itemsCounts, string orderDateTime, string orderCompDateTime, bool delivery, bool build) 
+        public void SaveMakeCheck(string[] itemsNames, int[] itemsCosts, int[] itemsCounts, string orderDateTime, string orderCompDateTime, bool delivery, bool build, string phone_number, string delivery_address) 
         {
             Word.Application wordApp = new Word.Application();
             wordApp.Visible = true;
@@ -20,7 +20,6 @@ namespace Kursovaya
             Word.Document doc = wordApp.Documents.Add();
             string dateStr = DateTime.Now.ToString("dd.MM.yyyy");
             string docTitle = $"ЧЕК - {dateStr}";
-
             // Устанавливаем имя в заголовке окна Word
             doc.ActiveWindow.Caption = docTitle;
             // ===== Название магазина =====
@@ -31,7 +30,6 @@ namespace Kursovaya
             p.Range.Font.Bold = 1;
             p.Range.InsertParagraphAfter();
 
-            doc.Paragraphs.Add();
 
             // ===== ЧЕК =====
             Word.Paragraph p2 = doc.Paragraphs.Add();
@@ -44,11 +42,34 @@ namespace Kursovaya
             // ===== Даты =====
             Word.Paragraph p3 = doc.Paragraphs.Add();
             p3.Range.Text = "Дата заказа: " + orderDateTime +
-                            "\nДата выполнения: " + orderCompDateTime + "\n";
+                            "\nДата выполнения: " + orderCompDateTime;
             p3.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-            p3.Range.Font.Size = 12;
-            p3.Range.Font.Bold = 0;
+            p3.Range.Font.Size = 16;
+            p3.Range.Font.Bold = 1;
             p3.Range.InsertParagraphAfter();
+
+            // ===== Номер телефона  =====
+            if (!string.IsNullOrWhiteSpace(phone_number))
+            {
+                Word.Paragraph p4 = doc.Paragraphs.Add();
+                p4.Range.Text = "Номер телефона: " + phone_number;
+                p4.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                p4.Range.Font.Size = 16;
+                p4.Range.Font.Bold = 1;
+                p4.Range.InsertParagraphAfter();
+            }
+            // ===== адрес доставки  =====
+            if (!string.IsNullOrWhiteSpace(delivery_address))
+            {
+                Word.Paragraph p5 = doc.Paragraphs.Add();
+                p5.Range.Text = "Адрес доставки: " + delivery_address;
+                p5.Range.ParagraphFormat.SpaceBefore = 0;
+                p5.Range.ParagraphFormat.SpaceAfter = 0;
+                p5.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                p5.Range.Font.Size = 16;
+                p5.Range.Font.Bold = 1;
+                p5.Range.InsertParagraphAfter();
+            }
 
             // ===== ТАБЛИЦА =====
             int counter = 0;
@@ -64,9 +85,13 @@ namespace Kursovaya
             int extraRows = 4;                         // Доставка, Сборка, Скидка, ИТОГО
             int totalRows = itemsRows + 1 + extraRows; // +1 для заголовка
 
-            Word.Table table = doc.Tables.Add(p3.Range, totalRows, 4);
-            table.Borders.Enable = 1;
+            Word.Range tableRange = doc.Content;
+            tableRange.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
 
+            Word.Table table = doc.Tables.Add(tableRange, totalRows, 4);
+            table.Borders.Enable = 1;
+            table.Range.Font.Bold = 0;
+            table.Range.Font.Size = 12;
             // ===== Задание ширины столбцов =====
             table.Columns[1].Width = 200f; // Товар — широкий
             table.Columns[2].Width = 80f;  // Цена — узкий

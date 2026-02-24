@@ -956,6 +956,11 @@ namespace Kursovaya.User
         public string Safe(string s) => string.IsNullOrEmpty(s) ? "0" : s;
         private void makeBuyButton_Click(object sender, EventArgs e)
         {
+            if (!phoneTextBox.MaskFull)
+            {
+                MessageBox.Show("Введите номер телефона полностью!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             int[] extra_items = new int[15];
             string[] extra_items_name = new string[15];
             int[] extra_items_id = new int[15];
@@ -1031,18 +1036,12 @@ namespace Kursovaya.User
                     MySqlCommand cmd9 = new MySqlCommand(query9, conn);
                     MySqlCommand cmd0 = new MySqlCommand(query0, conn);
                     string resultQuery;
-                    if (deliveryCB.Checked)
-                    {
-                        DateTime date = calendar.SelectionStart;
-                        DateTime result = date.Date + DateTime.Now.TimeOfDay;
-                        formatted = result.ToString("yyyy-MM-dd HH:mm:ss");
-                        deliveryDate = formatted;
-                        resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status, extra_items) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'True', '{addresTextBox.Text} ', '{formattedDate}', '{formatted}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1), '{extra_items_str}')";
-                    }
-                    else
-                    {
-                        resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, status, extra_items) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'False', '{addresTextBox.Text} ', '{formattedDate}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1), '{extra_items_str}')";
-                    }
+                    DateTime date = calendar.SelectionStart;
+                    DateTime result = date.Date + DateTime.Now.TimeOfDay;
+                    formatted = result.ToString("yyyy-MM-dd HH:mm:ss");
+                    deliveryDate = formatted;
+                    resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status, extra_items, phone_number, result_cost) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'True', '{addresTextBox.Text} ', '{formattedDate}', '{formatted}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1), '{extra_items_str}', '{phoneTextBox.Text}', {Convert.ToInt32(cartEndPrice.Text.Trim().Replace("₽", "").Replace(" ", ""))})";
+                    
                     MySqlCommand cmdEnd = new MySqlCommand(resultQuery, conn);
                     cmdEnd.ExecuteNonQuery();
                     DialogResult chech = MessageBox.Show("Заказ успешно оформлен! \n\nХотите получить чек?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -1062,16 +1061,16 @@ namespace Kursovaya.User
                         SaveCheck saveCheck = new SaveCheck();
                         if(deliveryCB.Checked == false)
                         {
-                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{DateTime.Now.Date.AddDays(3).ToString("dd.MM.yyyy")}", deliveryCB.Checked, buildCheckBox.Checked);
+                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{DateTime.Now.Date.AddDays(3).ToString("dd.MM.yyyy")}", deliveryCB.Checked, buildCheckBox.Checked, phoneTextBox.Text, "");
                         }
                         else
                         {
-                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{deliveryDate}", deliveryCB.Checked, buildCheckBox.Checked);
+                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{deliveryDate}", deliveryCB.Checked, buildCheckBox.Checked, phoneTextBox.Text, addresTextBox.Text);
                         }
                     }
                 }
             }
-            catch (Exception ex) { string err = ex.Message; }
+            catch (Exception ex) { string err = ex.Message; MessageBox.Show(err); }
         }
 
 

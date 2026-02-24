@@ -48,6 +48,8 @@ namespace Kursovaya.User
             this.buildPrice = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.calendar = new System.Windows.Forms.MonthCalendar();
+            this.phoneTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,10 +97,10 @@ namespace Kursovaya.User
             // 
             this.addresTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.addresTextBox.ForeColor = System.Drawing.Color.White;
-            this.addresTextBox.Location = new System.Drawing.Point(14, 625);
+            this.addresTextBox.Location = new System.Drawing.Point(18, 625);
             this.addresTextBox.MaxLength = 252;
             this.addresTextBox.Name = "addresTextBox";
-            this.addresTextBox.Size = new System.Drawing.Size(344, 29);
+            this.addresTextBox.Size = new System.Drawing.Size(343, 29);
             this.addresTextBox.TabIndex = 4;
             this.addresTextBox.Visible = false;
             // 
@@ -267,12 +269,34 @@ namespace Kursovaya.User
             this.calendar.Visible = false;
             this.calendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.calendar_DateChanged);
             // 
+            // phoneTextBox
+            // 
+            this.phoneTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.phoneTextBox.ForeColor = System.Drawing.Color.White;
+            this.phoneTextBox.Location = new System.Drawing.Point(18, 570);
+            this.phoneTextBox.Mask = "+7 (000) 000-00-00";
+            this.phoneTextBox.Name = "phoneTextBox";
+            this.phoneTextBox.Size = new System.Drawing.Size(173, 29);
+            this.phoneTextBox.TabIndex = 10;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(14, 547);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(142, 20);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Номер телефона";
+            // 
             // UserCart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(1083, 662);
+            this.Controls.Add(this.phoneTextBox);
             this.Controls.Add(this.calendar);
             this.Controls.Add(this.cartEndPrice);
             this.Controls.Add(this.discountLabel);
@@ -284,6 +308,7 @@ namespace Kursovaya.User
             this.Controls.Add(this.label3);
             this.Controls.Add(this.addresTextBox);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.buildPrice);
@@ -324,5 +349,7 @@ namespace Kursovaya.User
         private System.Windows.Forms.Label buildPrice;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.MonthCalendar calendar;
+        private System.Windows.Forms.MaskedTextBox phoneTextBox;
+        private System.Windows.Forms.Label label7;
     }
 }

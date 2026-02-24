@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
 
 // ФОРМА работы с заказами
 
@@ -40,6 +42,30 @@ namespace Kursovaya.Administrator
 
             dataGridView1.CellMouseDown += dataGridView1_CellMouseDown; // подписываемся на событие нажатия на нажатие на ячейку
             LoadOrders(); // отображаем заказы
+            FillQuarterComboBox();
+        }
+
+        private void FillQuarterComboBox() // функция запоняет выпадающий список кварталами года для получения отчёта
+        {
+            quarterForReport.Items.Clear(); // очищаем 
+            int startYear = 2025; // год начала
+            DateTime now = DateTime.Now; // текущая дата и время            
+            int currentQuarter = (now.Month - 1) / 3 + 1; // текущий квартал            
+            int endYear = now.Year; // текущий год
+
+            for (int year = startYear; year <= endYear; year++)
+            {
+                int maxQuarter = 4;
+                if (year == endYear)
+                    maxQuarter = currentQuarter; // включаем текущий квартал
+                for (int quarter = 1; quarter <= maxQuarter; quarter++)
+                {
+                    quarterForReport.Items.Add($"Квартал: {quarter}, год: {year}"); // добавляем кварталы
+                }
+            }
+            // Опционально: выбрать последний квартал в списке по умолчанию
+            if (quarterForReport.Items.Count > 0)
+                quarterForReport.SelectedIndex = quarterForReport.Items.Count - 1;
         }
         public void LoadOrders() // функция отображения заказов 
         {
@@ -99,7 +125,10 @@ namespace Kursovaya.Administrator
     o.deliveryaddress AS 'Адрес',
     o.ordertime AS 'Дата заказа',
     o.ordercomplitetime AS 'Дата выполнения',
-    s.status AS 'Статус'
+    s.status AS 'Статус',
+    phone_number AS 'Номер телефона',
+    result_cost AS 'Стоимость заказа' 
+
 
 FROM `order` o
 LEFT JOIN processors pr ON pr.id = o.id_processors
@@ -156,6 +185,7 @@ ORDER BY o.idorder;";
                     // Скрываем лишнее, но нужное  :)
                     dataGridView1.Columns["extra_items"].Visible = false;
                     dataGridView1.Columns["FormattedExtra"].DisplayIndex = dataGridView1.ColumnCount - 7;
+                    dataGridView1.Columns["Номер телефона"].DisplayIndex = dataGridView1.ColumnCount - 6;
                     dataGridView1.Columns["idorder"].Visible = false;
                     dataGridView1.Columns["idorder"].Visible = false;
                     dataGridView1.Columns["idorder"].Visible = false;
@@ -181,7 +211,7 @@ ORDER BY o.idorder;";
                     dataGridView1.Columns["cost8"].Visible = false;
                     dataGridView1.Columns["cost9"].Visible = false;
 
-                    dataGridView1.Columns["FormattedExtra"].HeaderText = "Товары Extra"; // переименновываем заголовок столбца доп. категорий
+                    dataGridView1.Columns["FormattedExtra"].HeaderText = "Товары доп. категорий"; // переименновываем заголовок столбца доп. категорий
 
                     dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; 
                 }
@@ -369,7 +399,7 @@ ORDER BY o.idorder;";
             if(row.Cells["Доставка"].Value.ToString() == "Да") { del = true; } else { del = false; } // заполняем булеву доставки
             if (row.Cells["Сборка"].Value.ToString() == "Нет") {  bui = true; } else { bui = false; } // заполняем булеву сборки
             SaveCheck SC = new SaveCheck(); // создаём экземпляр класса сохранения чека
-            SC.SaveMakeCheck(names.ToArray(), prices.ToArray(), counts.ToArray(), row.Cells["Дата заказа"].Value.ToString(), row.Cells["Дата выполнения"].Value.ToString(), del, bui); // и вызываем отображение чека 
+            SC.SaveMakeCheck(names.ToArray(), prices.ToArray(), counts.ToArray(), row.Cells["Дата заказа"].Value.ToString(), row.Cells["Дата выполнения"].Value.ToString(), del, bui, row.Cells["Номер телефона"].Value.ToString(), row.Cells["Адрес"].Value.ToString()); // и вызываем отображение чека 
         }
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) // форматирование DGV
@@ -426,6 +456,188 @@ ORDER BY o.idorder;";
                 dataGridView1.Rows[e.RowIndex].Selected = true; // выбираем всю строку
 
                 rowMenu.Show(Cursor.Position); // отображаем выпадающее меню
+            }
+        }
+
+        private void getReport_Click(object sender, EventArgs e)
+        {
+            if (quarterForReport.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите квартал!");
+                return;
+            }
+
+            // Парсим выбранный квартал
+            string selected = quarterForReport.SelectedItem.ToString(); 
+                                                                      
+            string[] parts = selected.Split(',');
+            int quarter = int.Parse(parts[0].Split(':')[1].Trim());
+            int year = int.Parse(parts[1].Split(':')[1].Trim());
+
+            // Определяем даты начала и конца квартала
+            int startMonth = (quarter - 1) * 3 + 1;
+            DateTime startDate = new DateTime(year, startMonth, 1);
+            DateTime endDate = startDate.AddMonths(3).AddSeconds(-1);
+
+            // Загружаем данные из БД по дате            
+            DataTable dt = new DataTable();
+
+            using (MySqlConnection conn = new MySqlConnection(connStr))
+            {
+                conn.Open();
+                string query = $@"SELECT o.idorder as 'Номер заказа',
+    
+
+    CONCAT(pr.produser, ' ', pr.model, ' (x', o.count_processors, ')') AS 'Процессор',
+    CONCAT(mb.produser, ' ', mb.model, ' (x', o.count_motherboards, ')') AS 'Материнская плата',
+    CONCAT(vc.vender, ' ', vc.model, ' (x', o.count_videocards, ')') AS 'Видеокарта',
+    CONCAT(r.produser, ' ', r.model, ' ', r.capacity_gb, ' ГБ (x', o.count_ram, ')') AS 'ОЗУ',
+    CONCAT(cc.produser, ' ', cc.model, ' (x', o.count_cpu_coolers, ')') AS 'Кулер CPU',
+    CONCAT(ca.produser, ' ', ca.model, ' (x', o.count_cases, ')') AS 'Корпус',
+    CONCAT(cf.produser, ' ', cf.model, ' (x', o.count_case_fan, ')') AS 'Вентиляторы корпуса',
+    CONCAT(st.produser, ' ', st.model, ' ', st.capacity_gb, ' ГБ (x', o.count_storage, ')') AS 'Накопитель',
+    CONCAT(ps.produser, ' ', ps.model, ' ', ps.power, ' ВАТТ (x', o.count_power_supplier, ')') AS 'Блок питания',
+    CONCAT(ti.produser, ' ', ti.model, ' (x', o.count_thermo_interface, ')') AS 'Термопаста',
+    CASE WHEN o.delivery = 'True' THEN 'Да' ELSE 'Нет' END AS 'Доставка',
+    CASE WHEN o.build = 'True' THEN 'Да' ELSE 'Нет' END AS 'Сборка',
+
+    o.deliveryaddress AS 'Адрес',
+    o.ordertime AS 'Дата заказа',
+    o.ordercomplitetime AS 'Дата выполнения',
+    s.status AS 'Статус',
+    phone_number AS 'Номер телефона',
+    result_cost AS 'Стоимость заказа' 
+
+
+FROM `order` o
+LEFT JOIN processors pr ON pr.id = o.id_processors
+LEFT JOIN motherboards mb ON mb.id = o.id_motherboards
+LEFT JOIN videocards vc ON vc.id = o.id_videocards
+LEFT JOIN ram r ON r.id = o.id_ram
+LEFT JOIN cpu_cooler cc ON cc.id = o.id_cpu_cooler
+LEFT JOIN cases ca ON ca.id = o.id_cases
+LEFT JOIN case_coolers cf ON cf.id = o.id_case_coolers
+LEFT JOIN storage st ON st.id = o.id_storage
+LEFT JOIN power_supplier ps ON ps.id = o.id_power_supplier
+LEFT JOIN statuses s ON s.id = o.status
+LEFT JOIN thermo_interface ti ON ti.id = o.id_thermo_interface
+
+                         WHERE ordertime BETWEEN '{startDate.ToString("yyyy-MM-dd")}' AND '{endDate.ToString("yyyy-MM-dd")}' ORDER BY o.idorder ";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("Заказы за выбранный квартал отсутствуют!");
+                return;
+            }
+
+            // создаем Excel
+            Excel.Application excelApp = new Excel.Application();
+            Excel.Workbook workbook = excelApp.Workbooks.Add();
+            Excel.Worksheet sheet = workbook.Sheets[1];
+
+            try
+            {
+                int totalColumns = dt.Columns.Count;
+
+                // Первый ряд: pepeShop
+                Excel.Range firstRow = sheet.Range[sheet.Cells[1, 1], sheet.Cells[1, totalColumns]];
+                firstRow.Merge();
+                firstRow.Value = "pepeShop - отчёт о заказах";
+                firstRow.Font.Bold = true;
+                firstRow.Font.Size = 18;
+                firstRow.Interior.Color = Color.FromArgb(226, 239, 218);
+                firstRow.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                firstRow.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                firstRow.WrapText = true; // перенос текста
+
+                // Второй ряд: selected
+                Excel.Range secondRow = sheet.Range[sheet.Cells[2, 1], sheet.Cells[2, totalColumns]];
+                secondRow.Merge();
+                secondRow.Value = "Период: "+selected;
+                secondRow.Font.Bold = true;
+                secondRow.Font.Size = 16;
+                secondRow.Interior.Color = Color.FromArgb(226, 239, 218);
+                secondRow.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                secondRow.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                secondRow.WrapText = true;
+
+                // Третий ряд: заголовки
+                for (int i = 0; i < totalColumns; i++)
+                {
+                    Excel.Range headerCell = sheet.Cells[6, i + 1];
+                    headerCell.Value = dt.Columns[i].ColumnName;
+                    headerCell.Font.Bold = true;
+                    headerCell.Interior.Color = Color.FromArgb(237, 237, 250);
+                    headerCell.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                    headerCell.WrapText = true;
+                }
+
+                // Данные начиная с четвертой строки
+                for (int r = 0; r < dt.Rows.Count; r++)
+                {
+                    for (int c = 0; c < totalColumns; c++)
+                    {
+                        Excel.Range dataCell = sheet.Cells[r + 7, c + 1];
+                        dataCell.Value = dt.Rows[r][c];
+                        dataCell.Interior.Color = Color.FromArgb(237, 237, 250);
+                        dataCell.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                        dataCell.WrapText = true;
+                    }
+                }
+                // Определяем последнюю строку с данными
+                int firstDataRow = 7; // твоя первая строка с данными
+                int lastDataRow = firstDataRow + dt.Rows.Count - 1;
+                int lastColumn = totalColumns;
+
+                // Считаем сумму по последнему столбцу
+                double sum = 0;
+                for (int r = 0; r < dt.Rows.Count; r++)
+                {
+                    object val = dt.Rows[r][lastColumn - 1]; // последний столбец
+                    if (val != DBNull.Value && double.TryParse(val.ToString(), out double number))
+                    {
+                        sum += number;
+                    }
+                }
+
+                // Добавляем новую строку "Итого"
+                Excel.Range totalRowLabel = sheet.Cells[lastDataRow + 1, lastColumn - 1];
+                totalRowLabel.Value = "Прибыль за квартал:";
+                totalRowLabel.Font.Bold = true;
+                totalRowLabel.Interior.Color = Color.FromArgb(226, 239, 218);
+                totalRowLabel.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                totalRowLabel.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+                totalRowLabel.WrapText = true;
+
+                // Сумма в последнем столбце
+                Excel.Range totalRowValue = sheet.Cells[lastDataRow + 1, lastColumn];
+                totalRowValue.Value = sum;
+                totalRowValue.Font.Bold = true;
+                totalRowValue.Interior.Color = Color.FromArgb(226, 239, 218);
+                totalRowValue.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                totalRowValue.WrapText = true;
+
+                // Автоширина 
+                sheet.Columns.AutoFit();
+                for (int i = 1; i <= totalColumns; i++)
+                {
+                    Excel.Range col = sheet.Columns[i];                    
+                    col.ColumnWidth = 18;
+                }
+                // Делаем видимым
+                excelApp.Visible = true;
+            }
+            finally
+            {
+                // Не закрываем и не сохраняем, оставляем для пользователя
+                Marshal.ReleaseComObject(sheet);
+                Marshal.ReleaseComObject(workbook);
+                Marshal.ReleaseComObject(excelApp);
             }
         }
     }
