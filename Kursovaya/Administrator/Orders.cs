@@ -298,7 +298,8 @@ ORDER BY o.idorder;";
         private void Edit_Click(object sender, EventArgs e) // обраболтчик нажатия на кнопки "Редактировать в выпадающем списке"
         {
             int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["idorder"].Value); // получаем айди товара с которым работаем
-            MessageBox.Show($"Редактировать строку с id = {id}"); // временно !!!
+            EditOrder EO = new EditOrder(id); // эзмепляр класса редактирования заказа
+            EO.ShowDialog(); // отображаем форму
         }
         string CleanValue(string value) // очищаем значение имени товара от лишнего
         {
