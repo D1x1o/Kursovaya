@@ -277,12 +277,6 @@ namespace Kursovaya
             return 0; // если ранее ничего не вернули возвращаем 0
         }
 
-        private void button1_Click(object sender, EventArgs e) // перед защитой будет удалено
-        {
-            loginTextBox.Text = "petr";
-            pwdTextBox.Text = "password";
-        }
-
         private void TestDataBaseConn() // проверка подключения к БД
         {            
             try
@@ -305,19 +299,7 @@ namespace Kursovaya
         {
             EditConn ec = new EditConn();
             ec.ShowDialog();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            loginTextBox.Text = "ivan";
-            pwdTextBox.Text = "ivan";
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            loginTextBox.Text = "anton";
-            pwdTextBox.Text = "anton";
-        }
+        }        
 
         private void ShowPwdButton_Click(object sender, EventArgs e) // отображаем или скрываем пароль
         {

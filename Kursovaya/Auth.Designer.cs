@@ -38,9 +38,6 @@ namespace Kursovaya
             this.LogInButton = new System.Windows.Forms.Button();
             this.CaptchaTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.ShowPwdButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -133,36 +130,6 @@ namespace Kursovaya
             this.label4.TabIndex = 3;
             this.label4.Text = "Введите капчу";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(46, 262);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(10, 32);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(30, 262);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(10, 32);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "button1";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(14, 262);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(10, 32);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "button1";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -225,9 +192,6 @@ namespace Kursovaya
             this.Controls.Add(this.ShowPwdButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.ReCaptcha);
             this.Controls.Add(this.CaptchaTextBox);
             this.Controls.Add(this.CaptcaImg);
@@ -266,9 +230,6 @@ namespace Kursovaya
         private System.Windows.Forms.TextBox CaptchaTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button ReCaptcha;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button ShowPwdButton;
