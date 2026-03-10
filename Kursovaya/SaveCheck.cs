@@ -107,6 +107,7 @@ namespace Kursovaya
             int total = 0;
 
             // ===== Товары =====
+            int j = 0;
             for (int i = 0; i < itemsNames.Length; i++)
             {
                 if (String.IsNullOrWhiteSpace(itemsNames[i]))
@@ -116,10 +117,11 @@ namespace Kursovaya
                 int subtotal = itemsCosts[i] * itemsCounts[i];
                 total += subtotal;
 
-                table.Cell(i + 2, 1).Range.Text = itemsNames[i];
-                table.Cell(i + 2, 2).Range.Text = getMakedString(itemsCosts[i].ToString());
-                table.Cell(i + 2, 3).Range.Text = itemsCounts[i].ToString();
-                table.Cell(i + 2, 4).Range.Text = getMakedString(subtotal.ToString());
+                table.Cell(j + 2, 1).Range.Text = itemsNames[i];
+                table.Cell(j + 2, 2).Range.Text = getMakedString(itemsCosts[i].ToString());
+                table.Cell(j + 2, 3).Range.Text = itemsCounts[i].ToString();
+                table.Cell(j + 2, 4).Range.Text = getMakedString(subtotal.ToString());
+                j++;
             }
 
             // ===== ДОСТАВКА =====

@@ -92,27 +92,7 @@ namespace Kursovaya.User
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); return -1; }
-        }
-        private string[] GetExtraItems()
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(ConnStr))
-                {
-                    string query = $"SELECT extra_items FROM user_cart WHERE iduser = {user.Default.userID}";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    string extra = cmd.ExecuteScalar().ToString();
-                    if (string.IsNullOrWhiteSpace(extra))
-                        return System.Array.Empty<string>();
-
-                    return extra
-                        .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                        .Where(word => !int.TryParse(word, out _))
-                        .ToArray();
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); return System.Array.Empty<string>(); }
-        }
+        }        
         private string[] GetAllExtraItems()
         {
             try
@@ -888,13 +868,6 @@ namespace Kursovaya.User
             }
 
         }
-
-        private void ShowPrice()
-        {
-            //cartEndPrice.Text = getMakedString((mathCartPrice(true) - ((Convert.ToInt32(mathCartPrice(true)) / 100 * 5))).ToString()) + " ₽"; ;
-        }
-
-
         private void mathEndPriceNew()
         {
             int totalWithDiscount = 0;
@@ -1005,7 +978,7 @@ namespace Kursovaya.User
                     catch(Exception ex) { MessageBox.Show(ex.Message); }
                 }
                 i++;
-            }
+            }            
             string query1 = $"SELECT id FROM processors WHERE concat(processors.produser, space(1), processors.model) = '{processorValue}'";
             string query2 = $"SELECT id FROM videocards WHERE     concat(videocards.produser, space(1), videocards.vender, space(1), videocards.model) = '{videoValue}'";
             string query3 = $"SELECT id FROM motherboards WHERE    concat(motherboards.produser, space(1), motherboards.model) = '{motherValue}'";
@@ -1035,12 +1008,84 @@ namespace Kursovaya.User
                     MySqlCommand cmd8 = new MySqlCommand(query8, conn);
                     MySqlCommand cmd9 = new MySqlCommand(query9, conn);
                     MySqlCommand cmd0 = new MySqlCommand(query0, conn);
+
+                    using (var connection = new MySqlConnection(ConnStr))
+                    {
+                        connection.Open();
+
+                        using (var transaction = connection.BeginTransaction())
+                        {
+                            try
+                            {
+                                using (var cmd = connection.CreateCommand())
+                                {
+                                    cmd.Transaction = transaction;
+
+                                    void UpdateItem(string table, int id, int count, string name)
+                                    {
+                                        cmd.CommandText = $"UPDATE {table} SET inStock = inStock - @count WHERE id = @id AND inStock >= @count;";
+                                        cmd.Parameters.Clear();
+                                        cmd.Parameters.AddWithValue("@count", count);
+                                        cmd.Parameters.AddWithValue("@id", id);
+                                        if (cmd.ExecuteNonQuery() == 0)
+                                            throw new Exception($"Недостаточно товара {name}");
+                                        
+                                    }
+
+                                    if (!string.IsNullOrEmpty(processorValue))
+                                        UpdateItem("processors", Convert.ToInt32(cmd1.ExecuteScalar()), countProc, processorValue);
+
+                                    if (!string.IsNullOrEmpty(videoValue))
+                                        UpdateItem("videocards", Convert.ToInt32(cmd2.ExecuteScalar()), countVideo, videoValue);
+
+                                    if (!string.IsNullOrEmpty(motherValue))
+                                        UpdateItem("motherboards", Convert.ToInt32(cmd3.ExecuteScalar()), countMother, motherValue);
+
+                                    if (!string.IsNullOrEmpty(ramValue))
+                                        UpdateItem("ram", Convert.ToInt32(cmd4.ExecuteScalar()), countRam, ramValue);
+
+                                    if (!string.IsNullOrEmpty(powerValue))
+                                        UpdateItem("power_supplier", Convert.ToInt32(cmd5.ExecuteScalar()), countPower, powerValue);
+
+                                    if (!string.IsNullOrEmpty(driverValue))
+                                        UpdateItem("storage", Convert.ToInt32(cmd6.ExecuteScalar()), countDriver, driverValue);
+
+                                    if (!string.IsNullOrEmpty(thermoValue))
+                                        UpdateItem("thermo_interface", Convert.ToInt32(cmd7.ExecuteScalar()), countThermo, thermoValue);
+
+                                    if (!string.IsNullOrEmpty(caseValue))
+                                        UpdateItem("cases", Convert.ToInt32(cmd8.ExecuteScalar()), countCases, caseValue);
+
+                                    if (!string.IsNullOrEmpty(casefanValue))
+                                        UpdateItem("case_coolers", Convert.ToInt32(cmd9.ExecuteScalar()), countCasefan, casefanValue);
+
+                                    if (!string.IsNullOrEmpty(procfanValue))
+                                        UpdateItem("cpu_cooler", Convert.ToInt32(cmd0.ExecuteScalar()), countProcfan, procfanValue);
+
+                                    for (int i = 0; i < extra_items_name.Length; i++)
+                                    {
+                                        string name = extra_items_name[i];
+                                        if (!string.IsNullOrEmpty(name))
+                                            UpdateItem(getTableName(name), extra_items_id[i], extra_items[i], name);
+                                    }
+                                }
+
+                                transaction.Commit();
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                                MessageBox.Show("Ошибка: " + ex.Message);
+                                return;
+                            }
+                        }
+                    }
                     string resultQuery;
                     DateTime date = calendar.SelectionStart;
                     DateTime result = date.Date + DateTime.Now.TimeOfDay;
                     formatted = result.ToString("yyyy-MM-dd HH:mm:ss");
                     deliveryDate = formatted;
-                    resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status, extra_items, phone_number, result_cost) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Enabled.ToString()}', 'True', '{addresTextBox.Text} ', '{formattedDate}', '{formatted}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1), '{extra_items_str}', '{phoneTextBox.Text}', {Convert.ToInt32(cartEndPrice.Text.Trim().Replace("₽", "").Replace(" ", ""))})";
+                    resultQuery = $@"INSERT INTO `order` (iduser, id_processors, count_processors, id_motherboards, count_motherboards, id_videocards, count_videocards, id_ram, count_ram, id_cpu_cooler, count_cpu_coolers, id_cases, count_cases, id_case_coolers, count_case_fan, id_storage, count_storage, id_power_supplier, count_power_supplier, id_thermo_interface, count_thermo_interface, build, delivery, deliveryaddress, ordertime, ordercomplitetime, status, extra_items, phone_number, result_cost) VALUES ({user.Default.userID}, {Convert.ToInt32(cmd1.ExecuteScalar())}, {countProc}, {Convert.ToInt32(cmd3.ExecuteScalar())}, {countMother}, {Convert.ToInt32(cmd2.ExecuteScalar())}, {countVideo}, {Convert.ToInt32(cmd4.ExecuteScalar())}, {countRam}, {Convert.ToInt32(cmd0.ExecuteScalar())}, {countProcfan}, {Convert.ToInt32(cmd8.ExecuteScalar())}, {countCases}, {Convert.ToInt32(cmd9.ExecuteScalar())}, {countCasefan}, {Convert.ToInt32(cmd6.ExecuteScalar())}, {countDriver}, {Convert.ToInt32(cmd5.ExecuteScalar())}, {countPower}, {Convert.ToInt32(cmd7.ExecuteScalar())}, {countThermo}, '{buildCheckBox.Checked.ToString()}', '{deliveryCB.Checked.ToString()}', '{addresTextBox.Text} ', '{formattedDate}', '{formatted}', (SELECT id FROM statuses WHERE status = 'Новый' LIMIT 1), '{extra_items_str}', '{phoneTextBox.Text}', {Convert.ToInt32(cartEndPrice.Text.Trim().Replace("₽", "").Replace(" ", ""))})";
                     
                     MySqlCommand cmdEnd = new MySqlCommand(resultQuery, conn);
                     cmdEnd.ExecuteNonQuery();
@@ -1073,7 +1118,50 @@ namespace Kursovaya.User
             catch (Exception ex) { string err = ex.Message; MessageBox.Show(err); }
         }
 
+        private string getTableName(string model)
+        {
+            List<string> tablesList = new List<string>();
+            int i = 0;
+            try
+            {
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                if (File.Exists(path))
+                {
 
+                    string json = File.ReadAllText(path);
+                    if (string.IsNullOrWhiteSpace(json))
+                    {
+
+                    }
+                    else
+                    {
+                        JObject root = JObject.Parse(json);
+
+                        JArray tables = (JArray)root["tables"];
+                        foreach (JObject table in tables)
+                        {
+                            tablesList[i] = table["systemName"].ToString();
+                        }
+                    }
+                    bool next = false;
+                    string query = "";
+                    using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                    {
+                        foreach(string tableName in tablesList)
+                        {
+                            if (next) query += "UNION ALL ";
+                            query = $"SELECT '{tableName}' AS table_name FROM {tableName} WHERE model = '{model}' ";
+                            next = true;
+                        }
+                        conn.Open();
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        return cmd.ExecuteScalar().ToString();
+                    }
+                }
+                return "";
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return ""; }
+        }
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {

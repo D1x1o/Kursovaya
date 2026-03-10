@@ -24,6 +24,49 @@ namespace Kursovaya
             InitializeComponent();
             TestDataBaseConn();
             pwdTextBox.UseSystemPasswordChar = true; // скрываем пароль
+            CopyDefaultImagesToAppData(); // метод копирования изображений
+        }
+        void CopyDefaultImagesToAppData() // метод копирования изображений по умолчанию из папки приложения в папку appdata
+        {
+            try // блок обработки исключений
+            {
+                // формирование пути к папке с изображениями в директории запуска приложения
+                string exeImgFolder = Path.Combine(Application.StartupPath, "img");
+
+                // формирование пути к папке для сохранения изображений в папке appdata пользователя
+                string appDataImgFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), // получение пути к appdata
+                    "pepeShop", // папка приложения в appdata
+                    "img" // подпапка для изображений
+                );
+
+                // создание директории в appdata, если она не существует (включая все вложенные папки)
+                Directory.CreateDirectory(appDataImgFolder);
+
+                // массив имен файлов, которые нужно скопировать
+                string[] filesToCopy = { "no-image.png", "gigabyte3060.png" };
+
+                // перебор всех файлов из массива
+                foreach (string fileName in filesToCopy)
+                {
+                    // полный путь к исходному файлу в папке приложения
+                    string sourcePath = Path.Combine(exeImgFolder, fileName);
+
+                    // полный путь к целевому файлу в папке appdata
+                    string destPath = Path.Combine(appDataImgFolder, fileName);
+
+                    // проверка: существует ли исходный файл и нет ли уже такого файла в appdata
+                    if (File.Exists(sourcePath) && !File.Exists(destPath))
+                    {
+                        // копирование файла из папки приложения в папку appdata
+                        File.Copy(sourcePath, destPath);
+                    }
+                }
+            }
+            catch (Exception e) // перехват любого исключения
+            {
+                MessageBox.Show(e.Message); // вывод сообщения об ошибке пользователю
+            }
         }
         bool inCaptcha = false; // булева должен ли пользователь ввести капчу для входа
         // обработчик на надатие кнопки "Войти"

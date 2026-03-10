@@ -24,6 +24,13 @@ namespace Kursovaya.Administrator
             InitializeComponent();
             FillComboBox();
             Fill(idOrder);
+            DateTime today = DateTime.Today;
+
+            // Устанавливаем минимальную дату (сегодня + 3 дня)
+            monthCalendar1.MinDate = today.AddDays(3);
+
+            // Устанавливаем максимальную дату (сегодня + 6 месяцев)
+            monthCalendar1.MaxDate = today.AddMonths(6);
         }
         private void FillComboBox()
         {

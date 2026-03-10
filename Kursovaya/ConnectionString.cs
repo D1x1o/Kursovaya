@@ -28,7 +28,7 @@ namespace Kursovaya
                 }
                 connItems = input2.Split(',').ToArray();                
             }
-            return $"Server={connItems[0]}; Database=1; User Id={connItems[1]}; Password={connItems[2]};";
+            return $"Server={connItems[0]}; Database=db95; User Id={connItems[1]}; Password={connItems[2]};";
             //return $"Server={Settings.Default.host}; User Id={Settings.Default.user};Database=1; Password={Settings.Default.pwd};";
         }
     }

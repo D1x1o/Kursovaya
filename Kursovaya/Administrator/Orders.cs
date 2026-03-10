@@ -316,44 +316,44 @@ ORDER BY o.idorder;";
 
             // ОСНОВНЫЕ ТОВАРЫ  (добавляем их информацию в списки)
             names.Add(CleanValue(row.Cells["Процессор"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_processors"].Value ?? 0));
+            prices.Add(row.Cells["cost"].Value != null && int.TryParse(row.Cells["cost"].Value.ToString(), out int p0) ? p0 : 0);
+            counts.Add(row.Cells["count_processors"].Value != null && int.TryParse(row.Cells["count_processors"].Value.ToString(), out int c0) ? c0 : 0);
 
             names.Add(CleanValue(row.Cells["Материнская плата"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost1"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_motherboards"].Value ?? 0));
+            prices.Add(row.Cells["cost1"].Value != null && int.TryParse(row.Cells["cost1"].Value.ToString(), out int p1) ? p1 : 0);
+            counts.Add(row.Cells["count_motherboards"].Value != null && int.TryParse(row.Cells["count_motherboards"].Value.ToString(), out int c1) ? c1 : 0);
 
             names.Add(CleanValue(row.Cells["Видеокарта"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost2"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_videocards"].Value ?? 0));
+            prices.Add(row.Cells["cost2"].Value != null && int.TryParse(row.Cells["cost2"].Value.ToString(), out int p2) ? p2 : 0);
+            counts.Add(row.Cells["count_videocards"].Value != null && int.TryParse(row.Cells["count_videocards"].Value.ToString(), out int c2) ? c2 : 0);
 
             names.Add(CleanValue(row.Cells["ОЗУ"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost3"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_ram"].Value ?? 0));
+            prices.Add(row.Cells["cost3"].Value != null && int.TryParse(row.Cells["cost3"].Value.ToString(), out int p3) ? p3 : 0);
+            counts.Add(row.Cells["count_ram"].Value != null && int.TryParse(row.Cells["count_ram"].Value.ToString(), out int c3) ? c3 : 0);
 
             names.Add(CleanValue(row.Cells["Кулер CPU"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost4"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_cpu_coolers"].Value ?? 0));
+            prices.Add(row.Cells["cost4"].Value != null && int.TryParse(row.Cells["cost4"].Value.ToString(), out int p4) ? p4 : 0);
+            counts.Add(row.Cells["count_cpu_coolers"].Value != null && int.TryParse(row.Cells["count_cpu_coolers"].Value.ToString(), out int c4) ? c4 : 0);
 
             names.Add(CleanValue(row.Cells["Корпус"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost5"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_cases"].Value ?? 0));
+            prices.Add(row.Cells["cost5"].Value != null && int.TryParse(row.Cells["cost5"].Value.ToString(), out int p5) ? p5 : 0);
+            counts.Add(row.Cells["count_cases"].Value != null && int.TryParse(row.Cells["count_cases"].Value.ToString(), out int c5) ? c5 : 0);
 
             names.Add(CleanValue(row.Cells["Вентиляторы корпуса"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost6"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_case_fan"].Value ?? 0));
+            prices.Add(row.Cells["cost6"].Value != null && int.TryParse(row.Cells["cost6"].Value.ToString(), out int p6) ? p6 : 0);
+            counts.Add(row.Cells["count_case_fan"].Value != null && int.TryParse(row.Cells["count_case_fan"].Value.ToString(), out int c6) ? c6 : 0);
 
             names.Add(CleanValue(row.Cells["Накопитель"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost7"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_storage"].Value ?? 0));
+            prices.Add(row.Cells["cost7"].Value != null && int.TryParse(row.Cells["cost7"].Value.ToString(), out int p7) ? p7 : 0);
+            counts.Add(row.Cells["count_storage"].Value != null && int.TryParse(row.Cells["count_storage"].Value.ToString(), out int c7) ? c7 : 0);
 
             names.Add(CleanValue(row.Cells["Блок питания"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost8"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_power_supplier"].Value ?? 0));
+            prices.Add(row.Cells["cost8"].Value != null && int.TryParse(row.Cells["cost8"].Value.ToString(), out int p8) ? p8 : 0);
+            counts.Add(row.Cells["count_power_supplier"].Value != null && int.TryParse(row.Cells["count_power_supplier"].Value.ToString(), out int c8) ? c8 : 0);
 
             names.Add(CleanValue(row.Cells["Термопаста"].Value?.ToString()));
-            prices.Add(Convert.ToInt32(row.Cells["cost9"].Value ?? 0));
-            counts.Add(Convert.ToInt32(row.Cells["count_thermo_interface"].Value ?? 0));
+            prices.Add(row.Cells["cost9"].Value != null && int.TryParse(row.Cells["cost9"].Value.ToString(), out int p9) ? p9 : 0);
+            counts.Add(row.Cells["count_power_supplier"].Value != null && int.TryParse(row.Cells["count_power_supplier"].Value.ToString(), out int c9) ? c9 : 0);
 
             // читаем JSON
             string json = File.ReadAllText("tables.json");
@@ -398,7 +398,7 @@ ORDER BY o.idorder;";
             }
             bool del, bui; // пустые булевы выбрал ли пользователь доставку и сборку соответственно
             if(row.Cells["Доставка"].Value.ToString() == "Да") { del = true; } else { del = false; } // заполняем булеву доставки
-            if (row.Cells["Сборка"].Value.ToString() == "Нет") {  bui = true; } else { bui = false; } // заполняем булеву сборки
+            if (row.Cells["Сборка"].Value.ToString() == "Да") {  bui = true; } else { bui = false; } // заполняем булеву сборки
             SaveCheck SC = new SaveCheck(); // создаём экземпляр класса сохранения чека
             SC.SaveMakeCheck(names.ToArray(), prices.ToArray(), counts.ToArray(), row.Cells["Дата заказа"].Value.ToString(), row.Cells["Дата выполнения"].Value.ToString(), del, bui, row.Cells["Номер телефона"].Value.ToString(), row.Cells["Адрес"].Value.ToString()); // и вызываем отображение чека 
         }
@@ -416,9 +416,9 @@ ORDER BY o.idorder;";
 
         private void CancelOrder_Click(object sender, EventArgs e) // обработчик нажатия кнопки "Отменить заказ" в выпадающем меню
         {
-            if (dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Статус"].Value.ToString() == "Выполен") // если заказ уже имеет статус - выполнен то его нельзя отменить 
+            if (dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Статус"].Value.ToString() != "Новый") // если заказ уже имеет статус - выполнен то его нельзя отменить 
             {
-                MessageBox.Show("Нельзя отменить выполненный заказ!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); // сообщаем пользователю
+                MessageBox.Show($"Нельзя отменить заказ в статусе {dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells["Статус"].Value.ToString()}!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); // сообщаем пользователю
                 return; // выходим из функции
             }
             else
