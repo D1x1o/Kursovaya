@@ -42,5 +42,13 @@ namespace Kursovaya.Administrator
             prod.ShowDialog(); // отображаем форму просмотра товаров
             Show(); // после окончания работы с товарами обратно отображаем меню
         }
+
+        private void exportImport_Click(object sender, EventArgs e)
+        {
+            FormExportImport prod = new FormExportImport(); // создаём экземпляр класса
+            Hide(); // скрываем текущую форму
+            prod.ShowDialog(); // отображаем форму 
+            Show(); // после окончания работы отображаем меню
+        }
     }
 }

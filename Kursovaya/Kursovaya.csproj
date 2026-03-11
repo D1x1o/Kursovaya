@@ -71,11 +71,11 @@
     <Compile Include="Administrator\EditOrder.Designer.cs">
       <DependentUpon>EditOrder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Administrator\Form1.cs">
+    <Compile Include="Administrator\ImportExport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Administrator\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Administrator\ImportExport.Designer.cs">
+      <DependentUpon>ImportExport.cs</DependentUpon>
     </Compile>
     <Compile Include="Administrator\Prod.cs">
       <SubType>Form</SubType>
@@ -212,8 +212,8 @@
     <EmbeddedResource Include="Administrator\EditOrder.resx">
       <DependentUpon>EditOrder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Administrator\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Administrator\ImportExport.resx">
+      <DependentUpon>ImportExport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Administrator\Orders.resx">
       <DependentUpon>Orders.cs</DependentUpon>
