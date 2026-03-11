@@ -72,6 +72,16 @@ namespace Kursovaya
         // обработчик на надатие кнопки "Войти"
         private void LogInButton_Click(object sender, EventArgs e)
         {
+            if (loginTextBox.Text == "admin" && pwdTextBox.Text == "admin") // проверка на "вшитого админа"
+            {
+                MessageBox.Show("Вход выполнен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Asterisk); // уведомляем о успешном входе
+                Administrator.AdminMenu menu = new Administrator.AdminMenu(); // создаём экземпляр класса меню администратора
+                Hide(); // скрываем форму авторизации
+                menu.ShowDialog();  // отображаем меню
+                Show(); // когда пользователь закроет меню отобразится форма авторизации 
+                loginTextBox.Text = ""; // затираем данные для входа
+                pwdTextBox.Text = "";
+            }
             getUserID(); // получаем айди пользователя по введённым данным
             if (AuthAtt >= 1 && !inCaptcha) // если была не успешная попытка входа то при слудующем нужно ввести капчу
             {
@@ -109,13 +119,17 @@ namespace Kursovaya
         }
         private void getUserID() // получение айди пользователя
         {
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString.GetConnectionString())) // инициируем подключение 
+            try
             {
-                conn.Open(); // открываем подключение
-                MySqlCommand cmd = new MySqlCommand($"SELECT id from staff where login = '{loginTextBox.Text.Trim()}';", conn); // выполняем запрос
-                int user_id = Convert.ToInt32(cmd.ExecuteScalar()); // получаем ответ и записываем его в переменную
-                user.Default.userID = user_id; // сохраняем айди для дальнейшей работы 
+                using (MySqlConnection conn = new MySqlConnection(ConnectionString.GetConnectionString())) // инициируем подключение 
+                {
+                    conn.Open(); // открываем подключение
+                    MySqlCommand cmd = new MySqlCommand($"SELECT id from staff where login = '{loginTextBox.Text.Trim()}';", conn); // выполняем запрос
+                    int user_id = Convert.ToInt32(cmd.ExecuteScalar()); // получаем ответ и записываем его в переменную
+                    user.Default.userID = user_id; // сохраняем айди для дальнейшей работы 
+                }
             }
+            catch(Exception ex) { MessageBox.Show($"Ошибка {ex.Message}"); }
         } 
         private void CheckUser() // функция проверки пользователя
         {

@@ -134,74 +134,76 @@ namespace Kursovaya.ProdExpert
         // ================= СОЗДАНИЕ ТАБЛИЦЫ =================
         private void btnCreateTable_Click(object sender, EventArgs e) // обработчик кнопки создания таблицы
         {
-            foreach (DataGridViewRow row in dgvColumns.Rows) // перебор всех строк таблицы
+            try
             {
-                // проверка, не пытается ли пользователь создать стандартные поля, которые создаются автоматически
-                if (row.Cells["ColumnName"].Value?.ToString() == "id" || row.Cells["ColumnName"].Value?.ToString() == "model" || row.Cells["ColumnName"].Value?.ToString() == "produser" || row.Cells["ColumnName"].Value?.ToString() == "cost" || row.Cells["ColumnName"].Value?.ToString() == "inStock" || row.Cells["ColumnName"].Value?.ToString() == "image")
+                foreach (DataGridViewRow row in dgvColumns.Rows) // перебор всех строк таблицы
                 {
-                    MessageBox.Show($"Столбец {row.Cells["ColumnName"].Value?.ToString()} является стандартным и создаётся автоматически, удалите его для создания категории!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return; // выход из метода при обнаружении стандартного поля
+                    // проверка, не пытается ли пользователь создать стандартные поля, которые создаются автоматически
+                    if (row.Cells["ColumnName"].Value?.ToString() == "id" || row.Cells["ColumnName"].Value?.ToString() == "model" || row.Cells["ColumnName"].Value?.ToString() == "produser" || row.Cells["ColumnName"].Value?.ToString() == "cost" || row.Cells["ColumnName"].Value?.ToString() == "inStock" || row.Cells["ColumnName"].Value?.ToString() == "image")
+                    {
+                        MessageBox.Show($"Столбец {row.Cells["ColumnName"].Value?.ToString()} является стандартным и создаётся автоматически, удалите его для создания категории!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return; // выход из метода при обнаружении стандартного поля
+                    }
                 }
-            }
 
-            if (!IsValidNameRu(txtTableNameRu.Text)) // проверка корректности отображаемого имени таблицы
-            {
-                return; // выход при некорректном имени
-            }
-
-            string tableName = txtTableName.Text.Trim(); // получение и обрезка пробелов системного имени таблицы
-
-            if (!IsValidName(tableName)) // проверка корректности системного имени
-            {
-                MessageBox.Show("Некорректное имя таблицы"); // сообщение об ошибке
-                return; // выход из метода
-            }
-
-            List<string> columnsSql = new List<string>(); // создание списка для sql определений колонок
-
-            foreach (DataGridViewRow row in dgvColumns.Rows) // перебор всех строк таблицы
-            {
-                if (row.IsNewRow) continue; // пропуск строки для ввода новой
-
-                string colName = row.Cells["ColumnName"].Value?.ToString(); // получение имени колонки
-                string colType = row.Cells["ColumnType"].Value?.ToString(); // получение типа данных
-                string colLength = row.Cells["ColumnLength"].Value?.ToString(); // получение длины
-
-                if (string.IsNullOrWhiteSpace(colName) || !IsValidName(colName)) // проверка имени колонки
+                if (!IsValidNameRu(txtTableNameRu.Text)) // проверка корректности отображаемого имени таблицы
                 {
-                    MessageBox.Show("Некорректное имя поля"); // сообщение об ошибке
+                    return; // выход при некорректном имени
+                }
+
+                string tableName = txtTableName.Text.Trim(); // получение и обрезка пробелов системного имени таблицы
+
+                if (!IsValidName(tableName)) // проверка корректности системного имени
+                {
+                    MessageBox.Show("Некорректное имя таблицы"); // сообщение об ошибке
                     return; // выход из метода
                 }
 
-                if (colType == "INT") // если тип целое число
+                List<string> columnsSql = new List<string>(); // создание списка для sql определений колонок
+
+                foreach (DataGridViewRow row in dgvColumns.Rows) // перебор всех строк таблицы
                 {
-                    columnsSql.Add($"{colName} INT"); // добавление определения целочисленной колонки
-                }
-                else if (colType == "VARCHAR") // если тип строка
-                {
-                    if (!int.TryParse(colLength, out int len) || len <= 0) // проверка корректности длины
+                    if (row.IsNewRow) continue; // пропуск строки для ввода новой
+
+                    string colName = row.Cells["ColumnName"].Value?.ToString(); // получение имени колонки
+                    string colType = row.Cells["ColumnType"].Value?.ToString(); // получение типа данных
+                    string colLength = row.Cells["ColumnLength"].Value?.ToString(); // получение длины
+
+                    if (string.IsNullOrWhiteSpace(colName) || !IsValidName(colName)) // проверка имени колонки
                     {
-                        MessageBox.Show($"Неверная длина VARCHAR у поля {colName}"); // сообщение об ошибке
+                        MessageBox.Show("Некорректное имя поля"); // сообщение об ошибке
                         return; // выход из метода
                     }
 
-                    columnsSql.Add($"{colName} VARCHAR({len})"); // добавление определения строковой колонки с длиной
+                    if (colType == "INT") // если тип целое число
+                    {
+                        columnsSql.Add($"{colName} INT"); // добавление определения целочисленной колонки
+                    }
+                    else if (colType == "VARCHAR") // если тип строка
+                    {
+                        if (!int.TryParse(colLength, out int len) || len <= 0) // проверка корректности длины
+                        {
+                            MessageBox.Show($"Неверная длина VARCHAR у поля {colName}"); // сообщение об ошибке
+                            return; // выход из метода
+                        }
+
+                        columnsSql.Add($"{colName} VARCHAR({len})"); // добавление определения строковой колонки с длиной
+                    }
+                    else // если тип не выбран
+                    {
+                        MessageBox.Show($"Не выбран тип данных для поля {colName}"); // сообщение об ошибке
+                        return; // выход из метода
+                    }
                 }
-                else // если тип не выбран
+
+                if (columnsSql.Count == 0) // если не добавлено ни одной колонки
                 {
-                    MessageBox.Show($"Не выбран тип данных для поля {colName}"); // сообщение об ошибке
+                    MessageBox.Show("Добавьте хотя бы один столбец"); // сообщение об ошибке
                     return; // выход из метода
                 }
-            }
 
-            if (columnsSql.Count == 0) // если не добавлено ни одной колонки
-            {
-                MessageBox.Show("Добавьте хотя бы один столбец"); // сообщение об ошибке
-                return; // выход из метода
-            }
-
-            // формирование sql запроса для создания таблицы
-            string sql = $@"
+                // формирование sql запроса для создания таблицы
+                string sql = $@"
             CREATE TABLE `{tableName}` (
              id INT PRIMARY KEY AUTO_INCREMENT, // автоматический идентификатор
              model varchar(255) NOT NULL, // поле модели
@@ -212,8 +214,10 @@ namespace Kursovaya.ProdExpert
               cost int NOT NULL // стоимость
             );";
 
-            SaveToJSON(); // сохранение информации о таблице в json файл
-            ExecuteSql(sql); // выполнение sql запроса
+                SaveToJSON(); // сохранение информации о таблице в json файл
+                ExecuteSql(sql); // выполнение sql запроса
+            }
+            catch (Exception ex) {  MessageBox.Show($"Ошибка:\n {ex.Message}"); return; }
         }
 
         // ================= ВЫПОЛНЕНИЕ SQL =================

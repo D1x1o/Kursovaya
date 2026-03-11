@@ -123,7 +123,29 @@ namespace Kursovaya.Administrator
         }
         private void importButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                DialogResult q = MessageBox.Show("ВНИМАНИЕ\nИмпорт базы данных перезапишет все данные\nВы действительно хотите выполнить импорт", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (q == DialogResult.Yes)
+                {
+                    string sql = richTextBox1.Text;
 
+                    using (var conn = new MySql.Data.MySqlClient.MySqlConnection(connStr))
+                    {
+                        conn.Open();
+
+                        using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(sql, conn))
+                        {
+                            cmd.CommandTimeout = 0;
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show("Импорт базы данных успешно выполнен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }                
+            }
+            catch (Exception ex) { MessageBox.Show($"Ошибка: {ex.Message}"); }
+            
         }
 
         private void OpenDumpButton_Click(object sender, EventArgs e)
@@ -194,7 +216,7 @@ namespace Kursovaya.Administrator
                         // Скрываем индикатор загрузки
                         // progressBar1.Visible = false;
 
-                        MessageBox.Show($"Файл успешно загружен:\n{fileInfo.Name}\nРазмер: {fileInfo.Length:N0} байт\nСтрок: {fileContent.Split('\n').Length}",
+                        MessageBox.Show($"Файл успешно загружен: {fileInfo.Name}",
                             "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
