@@ -107,6 +107,7 @@
             this.serverPassword.Location = new System.Drawing.Point(29, 226);
             this.serverPassword.MaxLength = 100;
             this.serverPassword.Name = "serverPassword";
+            this.serverPassword.PasswordChar = '*';
             this.serverPassword.Size = new System.Drawing.Size(196, 29);
             this.serverPassword.TabIndex = 2;
             // 

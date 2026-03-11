@@ -124,6 +124,7 @@ namespace Kursovaya
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(38, 307);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(109, 18);
@@ -188,7 +189,7 @@ namespace Kursovaya
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
-            this.ClientSize = new System.Drawing.Size(254, 311);
+            this.ClientSize = new System.Drawing.Size(254, 309);
             this.Controls.Add(this.ShowPwdButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label5);

@@ -20,6 +20,7 @@ namespace Kursovaya
         public EditConn()
         {
             InitializeComponent();
+            serverPassword.UseSystemPasswordChar = true;
             CheckFolderAndCSV(); // проверяем есть ли папка AppAData/pepeShop и в ней connection.csv - файл хранящий данные для подключения к БД
         }
         private void CheckFolderAndCSV()
