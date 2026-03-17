@@ -35,7 +35,7 @@ namespace Kursovaya.Administrator
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.RowHeadersVisible = false;
-
+            dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             // добавляем в выпадающее меню элементы
             rowMenu.Items.Add("Редактировать", null, Edit_Click);
             rowMenu.Items.Add("Получить чек", null, Check_Click);
@@ -178,16 +178,47 @@ ORDER BY o.idorder;";
 
                         row["FormattedExtra"] = $"{itemName} (x{quantity})"; // отображаем готовое значение строки
                     }
+                    if (!dt.Columns.Contains("orderSetUp"))
+                        dt.Columns.Add("orderSetUp");
+                    bool det = false;
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        det = false;
+                        string orderSetupStr = "";
+                        void AddIfNotEmpty(string colName)
+                        {
+                            var val = GetSafe(row, colName);
+                            if (!string.IsNullOrWhiteSpace(val))
+                            {
+                                if (det) orderSetupStr += "\n";
+                                orderSetupStr += val;
+                                det = true;
+                            }                               
+                        }
 
-                    // Привязка данных к DGV
+                        AddIfNotEmpty("Процессор"); 
+                        AddIfNotEmpty("Материнская плата"); 
+                        AddIfNotEmpty("Видеокарта"); 
+                        AddIfNotEmpty("ОЗУ"); 
+                        AddIfNotEmpty("Кулер CPU"); 
+                        AddIfNotEmpty("Корпус"); 
+                        AddIfNotEmpty("Вентиляторы корпуса"); 
+                        AddIfNotEmpty("Накопитель"); 
+                        AddIfNotEmpty("Блок питания"); 
+                        AddIfNotEmpty("Термопаста"); 
+                        AddIfNotEmpty("FormattedExtra"); 
+                        row["orderSetUp"] = orderSetupStr;
+                        
+                    }
+                    //Привязка данных к DGV
+                    dataGridView1.DataSource = null;
                     dataGridView1.DataSource = dt;
-
                     // Скрываем лишнее, но нужное  :)
                     dataGridView1.Columns["extra_items"].Visible = false;
                     dataGridView1.Columns["FormattedExtra"].DisplayIndex = dataGridView1.ColumnCount - 7;
+                    dataGridView1.Columns["orderSetUp"].DisplayIndex = 1;
+                    dataGridView1.Columns["orderSetUp"].HeaderText = "Состав заказа";
                     dataGridView1.Columns["Номер телефона"].DisplayIndex = dataGridView1.ColumnCount - 6;
-                    dataGridView1.Columns["idorder"].Visible = false;
-                    dataGridView1.Columns["idorder"].Visible = false;
                     dataGridView1.Columns["idorder"].Visible = false;
                     dataGridView1.Columns["count_processors"].Visible = false;
                     dataGridView1.Columns["count_motherboards"].Visible = false;
@@ -199,6 +230,18 @@ ORDER BY o.idorder;";
                     dataGridView1.Columns["count_storage"].Visible = false;
                     dataGridView1.Columns["count_power_supplier"].Visible = false;
                     dataGridView1.Columns["count_thermo_interface"].Visible = false;
+
+                    dataGridView1.Columns["Процессор"].Visible = false;
+                    dataGridView1.Columns["Материнская плата"].Visible = false;
+                    dataGridView1.Columns["ОЗУ"].Visible = false;
+                    dataGridView1.Columns["Кулер CPU"].Visible = false;
+                    dataGridView1.Columns["Корпус"].Visible = false;
+                    dataGridView1.Columns["Вентиляторы корпуса"].Visible = false;
+                    dataGridView1.Columns["Накопитель"].Visible = false;
+                    dataGridView1.Columns["Блок питания"].Visible = false;
+                    dataGridView1.Columns["Термопаста"].Visible = false;
+                    dataGridView1.Columns["FormattedExtra"].Visible = false;
+                    dataGridView1.Columns["Видеокарта"].Visible = false;
 
                     dataGridView1.Columns["cost"].Visible = false;
                     dataGridView1.Columns["cost1"].Visible = false;
@@ -212,6 +255,7 @@ ORDER BY o.idorder;";
                     dataGridView1.Columns["cost9"].Visible = false;
 
                     dataGridView1.Columns["FormattedExtra"].HeaderText = "Товары доп. категорий"; // переименновываем заголовок столбца доп. категорий
+
 
                     dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; 
                 }
@@ -640,6 +684,10 @@ LEFT JOIN thermo_interface ti ON ti.id = o.id_thermo_interface
                 Marshal.ReleaseComObject(workbook);
                 Marshal.ReleaseComObject(excelApp);
             }
+        }
+        string GetSafe(DataRow r, string col)
+        {
+            return r[col] == DBNull.Value ? "" : r[col].ToString();
         }
     }
 }
