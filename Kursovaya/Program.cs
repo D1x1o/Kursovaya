@@ -16,6 +16,8 @@ namespace Kursovaya
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            UserActivityMonitor.TimeoutSeconds = 5;
+            UserActivityMonitor.Start();
             Application.Run(new Auth());
         }
     }

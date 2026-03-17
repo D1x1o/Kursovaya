@@ -95,6 +95,8 @@
     <Compile Include="Administrator\Users.Designer.cs">
       <DependentUpon>Users.cs</DependentUpon>
     </Compile>
+    <Compile Include="ActivityMessageFilter.cs" />
+    <Compile Include="UserActivityMonitor.cs" />
     <Compile Include="ProdExpert\FormWriteOff.cs">
       <SubType>Form</SubType>
     </Compile>
