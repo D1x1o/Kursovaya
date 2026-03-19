@@ -50,5 +50,13 @@ namespace Kursovaya.Administrator
             prod.ShowDialog(); // отображаем форму 
             Show(); // после окончания работы отображаем меню
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            AdminSettings settings = new AdminSettings(); // создаём экземпляр класса
+            Hide(); // скрываем текущую форму
+            settings.ShowDialog(); // отображаем форму 
+            Show(); // после окончания работы отображаем меню
+        }
     }
 }

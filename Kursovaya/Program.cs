@@ -16,7 +16,8 @@ namespace Kursovaya
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            UserActivityMonitor.TimeoutSeconds = 5;
+            int? value = SessionTime.GetValueSecond();
+            UserActivityMonitor.TimeoutSeconds = value ?? 30;
             UserActivityMonitor.Start();
             Application.Run(new Auth());
         }

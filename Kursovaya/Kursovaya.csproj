@@ -71,6 +71,12 @@
     <Compile Include="Administrator\EditOrder.Designer.cs">
       <DependentUpon>EditOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Administrator\AdminSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administrator\AdminSettings.Designer.cs">
+      <DependentUpon>AdminSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Administrator\ImportExport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +102,7 @@
       <DependentUpon>Users.cs</DependentUpon>
     </Compile>
     <Compile Include="ActivityMessageFilter.cs" />
+    <Compile Include="SessionTime.cs" />
     <Compile Include="UserActivityMonitor.cs" />
     <Compile Include="ProdExpert\FormWriteOff.cs">
       <SubType>Form</SubType>
@@ -211,6 +218,9 @@
     <EmbeddedResource Include="Administrator\AdminMenu.resx">
       <DependentUpon>AdminMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Administrator\AdminSettings.resx">
+      <DependentUpon>AdminSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Administrator\EditOrder.resx">
       <DependentUpon>EditOrder.cs</DependentUpon>
     </EmbeddedResource>
@@ -325,6 +335,7 @@
     <Content Include="pepega.ico" />
     <None Include="Resources\eye_icon.png" />
     <None Include="Resources\eye_icon_invert.png" />
+    <None Include="Resources\free-icon-settings-126472.png" />
     <Content Include="Resources\pepega.png" />
     <None Include="Resources\pepegaCrop.png" />
     <None Include="Resources\83733882.png" />

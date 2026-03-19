@@ -93,6 +93,16 @@ namespace Kursovaya.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap free_icon_settings_126472 {
+            get {
+                object obj = ResourceManager.GetObject("free-icon-settings-126472", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pepega {
             get {
                 object obj = ResourceManager.GetObject("pepega", resourceCulture);

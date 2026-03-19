@@ -34,6 +34,8 @@ namespace Kursovaya.Administrator
             this.ShowOrders = new System.Windows.Forms.Button();
             this.ShowProducts = new System.Windows.Forms.Button();
             this.exportImport = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // ShowUsers
@@ -92,12 +94,24 @@ namespace Kursovaya.Administrator
             this.exportImport.UseVisualStyleBackColor = false;
             this.exportImport.Click += new System.EventHandler(this.exportImport_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Kursovaya.Properties.Resources.free_icon_settings_126472;
+            this.pictureBox1.Location = new System.Drawing.Point(272, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(36, 31);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // AdminMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(320, 294);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.exportImport);
             this.Controls.Add(this.ShowProducts);
             this.Controls.Add(this.ShowOrders);
@@ -110,6 +124,7 @@ namespace Kursovaya.Administrator
             this.Name = "AdminMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Меню администратора";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -120,5 +135,6 @@ namespace Kursovaya.Administrator
         private System.Windows.Forms.Button ShowOrders;
         private System.Windows.Forms.Button ShowProducts;
         private System.Windows.Forms.Button exportImport;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
