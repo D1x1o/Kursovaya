@@ -858,6 +858,7 @@ namespace Kursovaya.User
                 addresTextBox.Visible = true;
                 label2.Visible = true;
                 calendar.Visible = true;
+                button1.Visible = true;
             }
             else
             {
@@ -865,6 +866,7 @@ namespace Kursovaya.User
                 addresTextBox.Visible = false;
                 label2.Visible = false;
                 calendar.Visible = false;
+                button1.Visible = false;
             }
 
         }
@@ -1278,10 +1280,14 @@ namespace Kursovaya.User
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ChooseAddress ca = new ChooseAddress();
-            Hide();
-            ca.ShowDialog();
-            Show();
+            using (var mapForm = new ChooseAddress())
+            {
+                if (mapForm.ShowDialog() == DialogResult.OK)
+                {
+                    string address = mapForm.SelectedAddress;
+                    addresTextBox.Text = address; 
+                }
+            }
         }
     }
 }

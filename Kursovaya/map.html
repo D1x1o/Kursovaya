@@ -9,39 +9,43 @@
 <script>
     var myMap, myPlacemark;
 
-    function init() {
+    ymaps.ready(function () {
         myMap = new ymaps.Map("map", {
-            center: [56.62, 43.38],
-            zoom: 10
+            center: [56.63, 43.40],
+            zoom: 10,
+            controls: ['searchControl']
         });
 
         myMap.events.add('click', function (e) {
             var coords = e.get('coords');
 
-            // если маркер уже есть — двигаем
-            if (myPlacemark) {
-                myPlacemark.geometry.setCoordinates(coords);
-            } else {
-                // иначе создаём
-                myPlacemark = new ymaps.Placemark(coords);
-                myMap.geoObjects.add(myPlacemark);
-            }
+            setPlacemark(coords);
 
-            // отправка в C#
-            if (window.external) {
+            ymaps.geocode(coords).then(function (res) {
+                var firstGeoObject = res.geoObjects.get(0);
+                var address = firstGeoObject ? firstGeoObject.getAddressLine() : "Адрес не найден";
+
                 window.chrome.webview.postMessage({
-    lat: coords[0],
-    lon: coords[1]
-});
-            }
+                    lat: coords[0],
+                    lon: coords[1],
+                    address: address
+                });
+            });
         });
-    }
+    });
 
-    ymaps.ready(init);
+    function setPlacemark(coords) {
+        if (myPlacemark) {
+            myPlacemark.geometry.setCoordinates(coords);
+        } else {
+            myPlacemark = new ymaps.Placemark(coords);
+            myMap.geoObjects.add(myPlacemark);
+        }
+    }
 </script>
 </head>
 
 <body>
-<div id="map" style="width:100%; height:100vh;"></div>
+<div id="map" style="width:100%; height:97vh;"></div>
 </body>
 </html>

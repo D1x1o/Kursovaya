@@ -33,7 +33,6 @@ namespace Kursovaya.User
             this.deliveryCB = new System.Windows.Forms.CheckBox();
             this.buildCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.addresTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.makeBuyButton = new System.Windows.Forms.Button();
@@ -51,6 +50,7 @@ namespace Kursovaya.User
             this.phoneTextBox = new System.Windows.Forms.MaskedTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.addresTextBox = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,17 +94,6 @@ namespace Kursovaya.User
             this.label1.TabIndex = 3;
             this.label1.Text = "Настройки заказа";
             // 
-            // addresTextBox
-            // 
-            this.addresTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.addresTextBox.ForeColor = System.Drawing.Color.White;
-            this.addresTextBox.Location = new System.Drawing.Point(18, 625);
-            this.addresTextBox.MaxLength = 252;
-            this.addresTextBox.Name = "addresTextBox";
-            this.addresTextBox.Size = new System.Drawing.Size(265, 29);
-            this.addresTextBox.TabIndex = 4;
-            this.addresTextBox.Visible = false;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -132,7 +121,7 @@ namespace Kursovaya.User
             this.makeBuyButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.makeBuyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.makeBuyButton.ForeColor = System.Drawing.Color.White;
-            this.makeBuyButton.Location = new System.Drawing.Point(959, 615);
+            this.makeBuyButton.Location = new System.Drawing.Point(957, 667);
             this.makeBuyButton.Name = "makeBuyButton";
             this.makeBuyButton.Size = new System.Drawing.Size(114, 39);
             this.makeBuyButton.TabIndex = 6;
@@ -250,7 +239,7 @@ namespace Kursovaya.User
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(388, 467);
+            this.label5.Location = new System.Drawing.Point(388, 445);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(124, 20);
             this.label5.TabIndex = 3;
@@ -261,7 +250,7 @@ namespace Kursovaya.User
             // 
             this.calendar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.calendar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
-            this.calendar.Location = new System.Drawing.Point(392, 492);
+            this.calendar.Location = new System.Drawing.Point(392, 469);
             this.calendar.Name = "calendar";
             this.calendar.TabIndex = 9;
             this.calendar.TitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
@@ -293,20 +282,36 @@ namespace Kursovaya.User
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(294, 625);
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(392, 677);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(37, 29);
             this.button1.TabIndex = 11;
             this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // addresTextBox
+            // 
+            this.addresTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.addresTextBox.ForeColor = System.Drawing.Color.White;
+            this.addresTextBox.Location = new System.Drawing.Point(18, 625);
+            this.addresTextBox.Name = "addresTextBox";
+            this.addresTextBox.Size = new System.Drawing.Size(362, 81);
+            this.addresTextBox.TabIndex = 12;
+            this.addresTextBox.Text = "";
+            this.addresTextBox.Visible = false;
             // 
             // UserCart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
-            this.ClientSize = new System.Drawing.Size(1083, 662);
+            this.ClientSize = new System.Drawing.Size(1083, 715);
+            this.Controls.Add(this.addresTextBox);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.phoneTextBox);
             this.Controls.Add(this.calendar);
@@ -318,7 +323,6 @@ namespace Kursovaya.User
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.addresTextBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
@@ -346,7 +350,6 @@ namespace Kursovaya.User
         private System.Windows.Forms.CheckBox deliveryCB;
         private System.Windows.Forms.CheckBox buildCheckBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox addresTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button makeBuyButton;
@@ -364,5 +367,6 @@ namespace Kursovaya.User
         private System.Windows.Forms.MaskedTextBox phoneTextBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox addresTextBox;
     }
 }
