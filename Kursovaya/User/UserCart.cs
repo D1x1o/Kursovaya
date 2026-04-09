@@ -1275,5 +1275,13 @@ namespace Kursovaya.User
 
             return null; // Если таблица не найдена
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ChooseAddress ca = new ChooseAddress();
+            Hide();
+            ca.ShowDialog();
+            Show();
+        }
     }
 }

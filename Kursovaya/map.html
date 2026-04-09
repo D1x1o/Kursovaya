@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=11" />
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey=62c277b8-c600-48b7-994c-82e61719f334&lang=ru_RU"></script>
+
+<script>
+    var myMap, myPlacemark;
+
+    function init() {
+        myMap = new ymaps.Map("map", {
+            center: [56.62, 43.38],
+            zoom: 10
+        });
+
+        myMap.events.add('click', function (e) {
+            var coords = e.get('coords');
+
+            // если маркер уже есть — двигаем
+            if (myPlacemark) {
+                myPlacemark.geometry.setCoordinates(coords);
+            } else {
+                // иначе создаём
+                myPlacemark = new ymaps.Placemark(coords);
+                myMap.geoObjects.add(myPlacemark);
+            }
+
+            // отправка в C#
+            if (window.external) {
+                window.chrome.webview.postMessage({
+    lat: coords[0],
+    lon: coords[1]
+});
+            }
+        });
+    }
+
+    ymaps.ready(init);
+</script>
+</head>
+
+<body>
+<div id="map" style="width:100%; height:100vh;"></div>
+</body>
+</html>

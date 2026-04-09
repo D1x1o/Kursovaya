@@ -50,6 +50,7 @@ namespace Kursovaya.User
             this.calendar = new System.Windows.Forms.MonthCalendar();
             this.phoneTextBox = new System.Windows.Forms.MaskedTextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,7 +101,7 @@ namespace Kursovaya.User
             this.addresTextBox.Location = new System.Drawing.Point(18, 625);
             this.addresTextBox.MaxLength = 252;
             this.addresTextBox.Name = "addresTextBox";
-            this.addresTextBox.Size = new System.Drawing.Size(343, 29);
+            this.addresTextBox.Size = new System.Drawing.Size(265, 29);
             this.addresTextBox.TabIndex = 4;
             this.addresTextBox.Visible = false;
             // 
@@ -290,12 +291,23 @@ namespace Kursovaya.User
             this.label7.TabIndex = 3;
             this.label7.Text = "Номер телефона";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(294, 625);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(37, 29);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "...";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // UserCart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(1083, 662);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.phoneTextBox);
             this.Controls.Add(this.calendar);
             this.Controls.Add(this.cartEndPrice);
@@ -351,5 +363,6 @@ namespace Kursovaya.User
         private System.Windows.Forms.MonthCalendar calendar;
         private System.Windows.Forms.MaskedTextBox phoneTextBox;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button1;
     }
 }
