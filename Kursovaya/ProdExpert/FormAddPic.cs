@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -46,6 +47,7 @@ namespace Kursovaya.ProdExpert
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.ReadOnly = true;
+            dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
         // отображаем в выпадающем списке все категори
@@ -110,143 +112,176 @@ namespace Kursovaya.ProdExpert
         // функция отображения данных
         private void fillDGV()
         {
-            dataGridView1.Columns.Clear();
-            theme = categoryComboBox.SelectedItem as string;
-            switch (theme)
-            { // формируем запрос к БД
-                case "Процессоры":
-                    theme = "processors";
-                    break;
-                case "Видеокарты":
-                    theme = "videocards";
-                    break;
-                case "Материские платы":
-                    theme = "motherboards";
-                    break;
-                case "Оперативная память":
-                    theme = "ram";
-                    break;
-                case "Кулеры":
-                    theme = "cpu_cooler";
-                    break;
-                case "Корпусы":
-                    theme = "cases";
-                    break;
-                case "Блоки питания":
-                    theme = "power_supplier";
-                    break;
-                case "Корпусные кулеры":
-                    theme = "case_coolers";
-                    break;
-                case "Накопители":
-                    theme = "storage";
-                    break;
-                case "Термопаста":
-                    theme = "thermo_interface";
-                    break;
-                default:
-                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
-                    if (File.Exists(path))
-                    {
+            try
+            {
 
-                        string json = File.ReadAllText(path);
-                        if (string.IsNullOrWhiteSpace(json))
+
+                theme = categoryComboBox.SelectedItem as string;
+                switch (theme)
+                { // формируем запрос к БД
+                    case "Процессоры":
+                        theme = "processors";
+                        break;
+                    case "Видеокарты":
+                        theme = "videocards";
+                        break;
+                    case "Материские платы":
+                        theme = "motherboards";
+                        break;
+                    case "Оперативная память":
+                        theme = "ram";
+                        break;
+                    case "Кулеры":
+                        theme = "cpu_cooler";
+                        break;
+                    case "Корпусы":
+                        theme = "cases";
+                        break;
+                    case "Блоки питания":
+                        theme = "power_supplier";
+                        break;
+                    case "Корпусные кулеры":
+                        theme = "case_coolers";
+                        break;
+                    case "Накопители":
+                        theme = "storage";
+                        break;
+                    case "Термопаста":
+                        theme = "thermo_interface";
+                        break;
+                    default:
+                        string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                        if (File.Exists(path))
                         {
 
+                            string json = File.ReadAllText(path);
+                            if (string.IsNullOrWhiteSpace(json))
+                            {
+
+                            }
+                            else
+                            {
+                                JObject root = JObject.Parse(json);
+
+                                JArray tables = (JArray)root["tables"];
+                                foreach (JObject table in tables)
+                                {
+                                    if (table["displayName"].ToString() == theme)
+                                    {
+                                        theme = table["systemName"].ToString();
+
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                }
+                string query = "SELECT id, ";
+                if (theme == "processors") { query += "concat(processors.produser, space(1), processors.model) as Процессоры "; }
+                else if (theme == "motherboards") { query += "concat(motherboards.produser, space(1), motherboards.model) as 'Материнские платы' "; }
+                else if (theme == "videocards") { query += "concat(videocards.produser, space(1), videocards.vender, space(1), videocards.model) as Видеокарты "; }
+                else if (theme == "cpu_cooler") { query += "concat(cpu_cooler.produser, space(1), cpu_cooler.model) as Кулеры "; }
+                else if (theme == "cases") { query += "concat(cases.produser, space(1), cases.model) as Копрусы "; }
+                else if (theme == "case_coolers") { query += "concat(case_coolers.produser, space(1), case_coolers.model) as 'Корпусные кулеры' "; }
+                else if (theme == "power_supplier") { query += "concat(power_supplier.produser, space(1), power_supplier.model, space(1), power_supplier.power, space(1), 'ВАТТ') as 'Блоки питания' "; }
+                else if (theme == "thermo_interface") { query += "concat(thermo_interface.produser, space(1), thermo_interface.model) as Термопаста "; }
+                else if (theme == "ram") { query += "concat(ram.produser, space(1), ram.model, space(1), ram.capacity_gb, space(1), 'ГБ') as 'Оперативная память' "; }
+                else if (theme == "storage") { query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as Накопители "; }
+                else { query += "concat(produser, space(1), model) as 'Другие категории'"; }
+                query += ", image ";
+                if (theme == "case") { query += "FROM cases "; }
+                else { query += $"FROM {theme} "; }
+                if (searchTextBox.Text != "") // если есть условие поиска по наименованию применяем его к запросу
+                {
+                    query += $"WHERE concat(produser, space(1), model) LIKE '%{searchTextBox.Text}%' ";
+                }
+                query += $"LIMIT 10 OFFSET {pageOffset};"; // ограничиваем количество записей на одной странице 
+
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(connStr)) // выполняем запрос
+                    {
+                        conn.Open();
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        MySqlDataReader reader = cmd.ExecuteReader();
+                        System.Data.DataTable dt = new System.Data.DataTable();
+                        dt.Load(reader);
+                        dataGridView1.DataSource = dt; // отображаем полученные данные на DGV 
+                        conn.Close();
+                    }
+                    using (MySqlConnection conn = new MySqlConnection(connStr)) // запрос на получение количеста товаров по условиям
+                    {
+                        string query2 = "";
+                        conn.Open();
+                        if (searchTextBox.Text == "")
+                        {
+                            query2 = $"SELECT count(*) FROM {theme}";
                         }
                         else
                         {
-                            JObject root = JObject.Parse(json);
-
-                            JArray tables = (JArray)root["tables"];
-                            foreach (JObject table in tables)
-                            {
-                               if (table["displayName"].ToString() == theme)
-                               {
-                                    theme = table["systemName"].ToString();
-                                    
-                               }
-                            }
+                            query2 = $"SELECT count(*) FROM {theme} WHERE concat(produser, space(1), model) LIKE '%{searchTextBox.Text}%'"; // если есть условие поиска по наименованию применяем его к запросу
                         }
-                    }
-                    break;
-            }
-            string query = "SELECT id, ";
-            if (theme == "processors") { query += "concat(processors.produser, space(1), processors.model) as Процессоры "; }
-            else if (theme == "motherboards") { query += "concat(motherboards.produser, space(1), motherboards.model) as 'Материнские платы' "; }
-            else if (theme == "videocards") { query += "concat(videocards.produser, space(1), videocards.vender, space(1), videocards.model) as Видеокарты "; }
-            else if (theme == "cpu_cooler") { query += "concat(cpu_cooler.produser, space(1), cpu_cooler.model) as Кулеры "; }
-            else if (theme == "cases") { query += "concat(cases.produser, space(1), cases.model) as Копрусы "; }
-            else if (theme == "case_coolers") { query += "concat(case_coolers.produser, space(1), case_coolers.model) as 'Корпусные кулеры' "; }
-            else if (theme == "power_supplier") { query += "concat(power_supplier.produser, space(1), power_supplier.model, space(1), power_supplier.power, space(1), 'ВАТТ') as 'Блоки питания' "; }
-            else if (theme == "thermo_interface") { query += "concat(thermo_interface.produser, space(1), thermo_interface.model) as Термопаста "; }
-            else if (theme == "ram") { query += "concat(ram.produser, space(1), ram.model, space(1), ram.capacity_gb, space(1), 'ГБ') as 'Оперативная память' "; }
-            else if (theme == "storage") { query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as Накопители "; }
-            else { query += "concat(produser, space(1), model) as 'Другие категории'"; }
-            query += ", image ";
-            if (theme == "case") { query += "FROM cases "; }
-            else { query += $"FROM {theme} "; }
-            if(searchTextBox.Text != "") // если есть условие поиска по наименованию применяем его к запросу
-            {
-                query += $"WHERE concat(produser, space(1), model) LIKE '%{searchTextBox.Text}%' ";
-            }
-            query += $"LIMIT 10 OFFSET {pageOffset};"; // ограничиваем количество записей на одной странице 
-
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connStr)) // выполняем запрос
-                {
-                    conn.Open();
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    MySqlDataReader reader = cmd.ExecuteReader();
-                    System.Data.DataTable dt = new System.Data.DataTable();
-                    dt.Load(reader);
-                    dataGridView1.DataSource = dt; // отображаем полученные данные на DGV 
-                    conn.Close();
-                }
-                using (MySqlConnection conn = new MySqlConnection(connStr)) // запрос на получение количеста товаров по условиям
-                {
-                    string query2 = "";
-                    conn.Open();
-                    if(searchTextBox.Text == "")
-                    {
-                        query2 = $"SELECT count(*) FROM {theme}";
-                    }
-                    else
-                    {
-                        query2 = $"SELECT count(*) FROM {theme} WHERE concat(produser, space(1), model) LIKE '%{searchTextBox.Text}%'"; // если есть условие поиска по наименованию применяем его к запросу
-                    }
                         MySqlCommand cmd = new MySqlCommand(query2, conn);
-                    allPage = Convert.ToInt32(Math.Ceiling((double)Convert.ToInt32(cmd.ExecuteScalar()) / 10)); // считаем количестов страниц исходя из количества полученных товаров
-                }
-                if (!dataGridView1.Columns.Contains("ActionColumn")) // добавляем в DGV кнопку добавления изображения
-                {
-                    DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
-                    buttonColumn.Name = "ActionColumn";
-                    buttonColumn.HeaderText = "Добавить изображение";
-                    buttonColumn.Text = "Добавить изображение";
-                    buttonColumn.UseColumnTextForButtonValue = true;
-                    dataGridView1.AutoGenerateColumns = true;
-                    dataGridView1.Columns.Add(buttonColumn);                    
-                }
-                dataGridView1.Columns["id"].Visible = false; // скрываем столбец айди
-                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; // устанавиваем для столбца ширину
-                dataGridView1.Columns[1].DisplayIndex = 0; // указываем каким по счету будет столбец
-                dataGridView1.Columns["image"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //устанавиваем для столбца ширину
-                dataGridView1.Columns["image"].DisplayIndex = dataGridView1.Columns.Count - 2;// указываем каким по счету будет столбец
-                dataGridView1.Columns["image"].HeaderText = "Изображение"; // имя столбца
-                dataGridView1.Columns["ActionColumn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; //устанавиваем для столбца ширину
-                dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.Columns.Count - 1;// указываем каким по счету будет столбец
+                        allPage = Convert.ToInt32(Math.Ceiling((double)Convert.ToInt32(cmd.ExecuteScalar()) / 10)); // считаем количестов страниц исходя из количества полученных товаров
+                    }
+                    if (!dataGridView1.Columns.Contains("ActionColumn")) // добавляем в DGV кнопку добавления изображения
+                    {
+                        DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
+                        buttonColumn.Name = "ActionColumn";
+                        buttonColumn.HeaderText = "Добавить изображение";
+                        buttonColumn.Text = "Добавить изображение";
+                        buttonColumn.UseColumnTextForButtonValue = true;
+                        dataGridView1.AutoGenerateColumns = true;
+                        dataGridView1.Columns.Add(buttonColumn);
+                    }
+                    //if (!dataGridView1.Columns.Contains("imageColumn"))
+                    //{
+                    //    DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
+                    //    imageColumn.Name = "imageColumn";
+                    //    imageColumn.HeaderText = "Изображение";
+                    //    imageColumn.ImageLayout = DataGridViewImageCellLayout.Zoom;
 
+                    //    dataGridView1.Columns.Add(imageColumn);
+                    //    dataGridView1.RowTemplate.Height = 80;
+                    //    dataGridView1.Columns["imageColumn"].Width = 80;
+                    //}
+                    //foreach (DataGridViewRow row in dataGridView1.Rows) { 
+                    //    if (!string.IsNullOrWhiteSpace(row.Cells["image"].Value?.ToString())) 
+                    //    { string path = row.Cells["image"].Value.ToString();
+                    //        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop"); 
+                    //        string imagePath = Path.Combine(imgFolder, path);
+                    //        using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+                    //        {
+                    //            row.Cells["imageColumn"].Value = System.Drawing.Image.FromStream(fs);
+                    //        }
+                    //    } 
+                    //    else 
+                    //    {
+                    //        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop/img"); 
+                    //        string imagePath = Path.Combine(imgFolder, "no-image.png");
+                    //        row.Cells["imageColumn"].Value = System.Drawing.Image.FromFile(imagePath); 
+                    //    } 
+                    //}
+                    dataGridView1.Columns["id"].Visible = false; // скрываем столбец айди
+                    dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; // устанавиваем для столбца ширину
+                    dataGridView1.Columns[1].DisplayIndex = 0; // указываем каким по счету будет столбец
+                    dataGridView1.Columns["image"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //устанавиваем для столбца ширину
+                    dataGridView1.Columns["image"].DisplayIndex = dataGridView1.Columns.Count - 2;// указываем каким по счету будет столбец
+                    dataGridView1.Columns["image"].HeaderText = "Имя изображения"; // имя столбца
+                    dataGridView1.Columns["ActionColumn"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; //устанавиваем для столбца ширину
+                    dataGridView1.Columns["ActionColumn"].DisplayIndex = dataGridView1.Columns.Count - 1;// указываем каким по счету будет столбец
+
+                }
+                catch (Exception e) { MessageBox.Show(e.Message); }
+                if (dgvPage == 0)
+                {
+                    dgvPage = 1;
+                }
+                actualPageLabel.Text = dgvPage.ToString();
+                allPageLabel.Text = allPage.ToString();
+                CheckButtons();
             }
-            catch (Exception e) { MessageBox.Show(e.Message); }
-            if(dgvPage == 0)
-            {
-                dgvPage = 1;
-            }
-            actualPageLabel.Text = dgvPage.ToString();
-            allPageLabel.Text = allPage.ToString();
-            CheckButtons();
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
 
@@ -325,12 +360,7 @@ namespace Kursovaya.ProdExpert
 
                         // здесь проверяем что изображение имеет вес менее 5Мб
                         long fileSize = new FileInfo(filePath).Length;
-                        if (fileSize > 5 * 1024 * 1024)
-                        {
-                            MessageBox.Show("Файл слишком большой! Выберите изображение меньше 5 МБ.",
-                                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return; // если файл больше 5МБ отображаем ошибку и выходим из функции
-                        }
+                        
 
                         string imgFolder = Path.Combine( //получаем путь до нашей папки в AppData
                             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -343,7 +373,7 @@ namespace Kursovaya.ProdExpert
 
                         string destPath = Path.Combine(imgFolder, uniqueName); // получаем путь куда нужно поместить новое изображение (в нашу папку в AppData)
 
-                        File.Copy(filePath, destPath, true); // копируем выбранное пользователем изображение в нашу папку в AppData
+                        CompressImageToTargetSize(filePath, destPath, 5 * 1024 * 1024); // копируем выбранное пользователем изображение в нашу папку в AppData
 
                         using (MySqlConnection conn = new MySqlConnection(connStr))
                         {
@@ -421,6 +451,58 @@ namespace Kursovaya.ProdExpert
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void CompressImageToTargetSize(string sourcePath, string destPath, long maxBytes)
+        {
+            using (System.Drawing.Image original = System.Drawing.Image.FromFile(sourcePath))
+            {
+                int width = original.Width;
+                int height = original.Height;
+
+                ImageCodecInfo jpgEncoder = ImageCodecInfo.GetImageDecoders()
+                    .First(c => c.FormatID == ImageFormat.Jpeg.Guid);
+
+                long quality = 90; // стартовое качество
+
+                while (true)
+                {
+                    using (Bitmap bmp = new Bitmap(original, new Size(width, height)))
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            EncoderParameters encParams = new EncoderParameters(1);
+                            encParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+
+                            bmp.Save(ms, jpgEncoder, encParams);
+
+                            if (ms.Length <= maxBytes)
+                            {
+                                File.WriteAllBytes(destPath, ms.ToArray());
+                                return;
+                            }
+                        }
+                    }
+
+                    // сначала уменьшаем качество
+                    if (quality > 30)
+                    {
+                        quality -= 10;
+                    }
+                    else
+                    {
+                        // если качество уже низкое — уменьшаем размеры
+                        width = (int)(width * 0.8);
+                        height = (int)(height * 0.8);
+
+                        quality = 90; // сбрасываем качество
+
+                        // защита от бесконечного уменьшения
+                        if (width < 200 || height < 200)
+                            throw new Exception("Не удалось ужать изображение до нужного размера");
+                    }
+                }
+            }
         }
     }
 }
