@@ -51,6 +51,9 @@ namespace Kursovaya.User
             this.label7 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.addresTextBox = new System.Windows.Forms.RichTextBox();
+            this.chooseCheck = new System.Windows.Forms.ComboBox();
+            this.checkbox = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -239,7 +242,7 @@ namespace Kursovaya.User
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(388, 445);
+            this.label5.Location = new System.Drawing.Point(598, 446);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(124, 20);
             this.label5.TabIndex = 3;
@@ -250,7 +253,7 @@ namespace Kursovaya.User
             // 
             this.calendar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.calendar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
-            this.calendar.Location = new System.Drawing.Point(392, 469);
+            this.calendar.Location = new System.Drawing.Point(602, 470);
             this.calendar.Name = "calendar";
             this.calendar.TabIndex = 9;
             this.calendar.TitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
@@ -285,7 +288,7 @@ namespace Kursovaya.User
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(392, 677);
+            this.button1.Location = new System.Drawing.Point(535, 677);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(37, 29);
             this.button1.TabIndex = 11;
@@ -300,10 +303,53 @@ namespace Kursovaya.User
             this.addresTextBox.ForeColor = System.Drawing.Color.White;
             this.addresTextBox.Location = new System.Drawing.Point(18, 625);
             this.addresTextBox.Name = "addresTextBox";
-            this.addresTextBox.Size = new System.Drawing.Size(362, 81);
+            this.addresTextBox.Size = new System.Drawing.Size(511, 81);
             this.addresTextBox.TabIndex = 12;
             this.addresTextBox.Text = "";
             this.addresTextBox.Visible = false;
+            // 
+            // chooseCheck
+            // 
+            this.chooseCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.chooseCheck.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.chooseCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.chooseCheck.ForeColor = System.Drawing.Color.White;
+            this.chooseCheck.FormattingEnabled = true;
+            this.chooseCheck.Items.AddRange(new object[] {
+            "MS Word",
+            "PDF"});
+            this.chooseCheck.Location = new System.Drawing.Point(885, 625);
+            this.chooseCheck.Name = "chooseCheck";
+            this.chooseCheck.Size = new System.Drawing.Size(186, 32);
+            this.chooseCheck.TabIndex = 13;
+            this.chooseCheck.Visible = false;
+            // 
+            // checkbox
+            // 
+            this.checkbox.AutoSize = true;
+            this.checkbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.checkbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkbox.ForeColor = System.Drawing.Color.White;
+            this.checkbox.Location = new System.Drawing.Point(1014, 588);
+            this.checkbox.Margin = new System.Windows.Forms.Padding(6);
+            this.checkbox.Name = "checkbox";
+            this.checkbox.Size = new System.Drawing.Size(57, 28);
+            this.checkbox.TabIndex = 1;
+            this.checkbox.Text = "Чек";
+            this.checkbox.UseVisualStyleBackColor = false;
+            this.checkbox.CheckedChanged += new System.EventHandler(this.checkbox_CheckedChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(881, 602);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(110, 20);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "Формат чека";
+            this.label8.Visible = false;
             // 
             // UserCart
             // 
@@ -311,6 +357,7 @@ namespace Kursovaya.User
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.ClientSize = new System.Drawing.Size(1083, 715);
+            this.Controls.Add(this.chooseCheck);
             this.Controls.Add(this.addresTextBox);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.phoneTextBox);
@@ -323,6 +370,7 @@ namespace Kursovaya.User
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
@@ -331,6 +379,7 @@ namespace Kursovaya.User
             this.Controls.Add(this.deliveryPrice);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buildCheckBox);
+            this.Controls.Add(this.checkbox);
             this.Controls.Add(this.deliveryCB);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -368,5 +417,8 @@ namespace Kursovaya.User
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RichTextBox addresTextBox;
+        private System.Windows.Forms.ComboBox chooseCheck;
+        private System.Windows.Forms.CheckBox checkbox;
+        private System.Windows.Forms.Label label8;
     }
 }

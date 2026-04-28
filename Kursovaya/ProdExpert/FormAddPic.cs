@@ -455,6 +455,7 @@ namespace Kursovaya.ProdExpert
 
         private void CompressImageToTargetSize(string sourcePath, string destPath, long maxBytes)
         {
+            MessageBox.Show("Изображение будет сжато!\nОжидайте", "Предупреждение!",MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             using (System.Drawing.Image original = System.Drawing.Image.FromFile(sourcePath))
             {
                 int width = original.Width;

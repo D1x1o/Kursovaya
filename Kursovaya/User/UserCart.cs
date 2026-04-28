@@ -58,7 +58,8 @@ namespace Kursovaya.User
             dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.RowHeadersVisible = false;
             makeCalendar();
-            mathEndPriceNew();                       
+            mathEndPriceNew();      
+            chooseCheck.SelectedIndex = 0;
         }
         private void makeCalendar()
         {
@@ -1091,29 +1092,55 @@ namespace Kursovaya.User
                     
                     MySqlCommand cmdEnd = new MySqlCommand(resultQuery, conn);
                     cmdEnd.ExecuteNonQuery();
-                    DialogResult chech = MessageBox.Show("Заказ успешно оформлен! \n\nХотите получить чек?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (chech == DialogResult.Yes)
+                    MessageBox.Show("Заказ успешно оформлен!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    if (checkbox.Checked == true)
                     {
-                        List<string> names = new List<string>();
-                        List<int> costs = new List<int>();
-                        List<int> counts = new List<int>();
-                        foreach (DataGridViewRow row in dataGridView1.Rows)
+                        if(chooseCheck.SelectedIndex == 0)
                         {
-                            if (row.IsNewRow) continue; // пропускаем пустую строку
-                            string costt = row.Cells["cost"].Value.ToString().Replace(" ", "").Replace("₽", "");
-                            names.Add(row.Cells["type"].Value.ToString() + ": " + row.Cells["value"].Value.ToString());
-                            costs.Add(Convert.ToInt32(costt));
-                            counts.Add(Convert.ToInt32(row.Cells["Amount"].Value));
-                        }
-                        SaveCheck saveCheck = new SaveCheck();
-                        if(deliveryCB.Checked == false)
-                        {
-                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{DateTime.Now.Date.AddDays(3).ToString("dd.MM.yyyy")}", deliveryCB.Checked, buildCheckBox.Checked, phoneTextBox.Text, "");
+                            List<string> names = new List<string>();
+                            List<int> costs = new List<int>();
+                            List<int> counts = new List<int>();
+                            foreach (DataGridViewRow row in dataGridView1.Rows)
+                            {
+                                if (row.IsNewRow) continue; // пропускаем пустую строку
+                                string costt = row.Cells["cost"].Value.ToString().Replace(" ", "").Replace("₽", "");
+                                names.Add(row.Cells["type"].Value.ToString() + ": " + row.Cells["value"].Value.ToString());
+                                costs.Add(Convert.ToInt32(costt));
+                                counts.Add(Convert.ToInt32(row.Cells["Amount"].Value));
+                            }
+                            SaveCheck saveCheck = new SaveCheck();
+                            if (deliveryCB.Checked == false)
+                            {
+                                saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{DateTime.Now.Date.AddDays(3).ToString("dd.MM.yyyy")}", deliveryCB.Checked, buildCheckBox.Checked, phoneTextBox.Text, "");
+                            }
+                            else
+                            {
+                                saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{deliveryDate}", deliveryCB.Checked, buildCheckBox.Checked, phoneTextBox.Text, addresTextBox.Text);
+                            }
                         }
                         else
                         {
-                            saveCheck.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{deliveryDate}", deliveryCB.Checked, buildCheckBox.Checked, phoneTextBox.Text, addresTextBox.Text);
-                        }
+                            List<string> names = new List<string>();
+                            List<int> costs = new List<int>();
+                            List<int> counts = new List<int>();
+                            foreach (DataGridViewRow row in dataGridView1.Rows)
+                            {
+                                if (row.IsNewRow) continue; // пропускаем пустую строку
+                                string costt = row.Cells["cost"].Value.ToString().Replace(" ", "").Replace("₽", "");
+                                names.Add(row.Cells["type"].Value.ToString() + ": " + row.Cells["value"].Value.ToString());
+                                costs.Add(Convert.ToInt32(costt));
+                                counts.Add(Convert.ToInt32(row.Cells["Amount"].Value));
+                            }
+                            SaveCheckPDF saveCheckPDF = new SaveCheckPDF();
+                            if (deliveryCB.Checked == false)
+                            {
+                                saveCheckPDF.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{DateTime.Now.Date.AddDays(3).ToString("dd.MM.yyyy")}", deliveryCB.Checked, buildCheckBox.Checked, phoneTextBox.Text, "");
+                            }
+                            else
+                            {
+                                saveCheckPDF.SaveMakeCheck(names.ToArray(), costs.ToArray(), counts.ToArray(), $"{checkDate}", $"{deliveryDate}", deliveryCB.Checked, buildCheckBox.Checked, phoneTextBox.Text, addresTextBox.Text);
+                            }
+                        }                        
                     }
                 }
             }
@@ -1287,6 +1314,20 @@ namespace Kursovaya.User
                     string address = mapForm.SelectedAddress;
                     addresTextBox.Text = address; 
                 }
+            }
+        }
+
+        private void checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkbox.Checked)
+            {
+                label8.Visible = true;
+                chooseCheck.Visible = true;
+            }
+            else
+            {
+                label8.Visible = false;
+                chooseCheck.Visible = false;   
             }
         }
     }
