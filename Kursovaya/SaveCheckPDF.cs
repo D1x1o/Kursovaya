@@ -1,22 +1,15 @@
-﻿using iText.IO.Font;
-using iText.IO.Font.Constants;
-using iText.Kernel.Font;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using iText.Layout.Properties;
+﻿using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Kursovaya
 {
     internal class SaveCheckPDF
     {
         public void SaveMakeCheck(
-
             string[] itemsNames,
             int[] itemsCosts,
             int[] itemsCounts,
@@ -27,141 +20,121 @@ namespace Kursovaya
             string phone_number,
             string delivery_address)
         {
-            string fontPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fonts", "arialmt.ttf");
+            string path = Path.Combine(Path.GetTempPath(), $"Receipt_{Guid.NewGuid()}.pdf");
 
-            if (!File.Exists(fontPath))
+            PdfDocument doc = new PdfDocument();
+            PdfPage page = doc.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            XFont title = new XFont("Arial", 16);
+            XFont bold = new XFont("Arial", 11);
+            XFont font = new XFont("Arial", 10);
+
+            double y = 40;
+
+            void DrawCenter(string text, XFont f)
             {
-                throw new Exception("Файл шрифта НЕ найден: " + fontPath);
+                gfx.DrawString(text, f, XBrushes.Black,
+                    new XRect(0, y, page.Width, page.Height),
+                    XStringFormats.TopCenter);
+                y += 18;
             }
-            //MessageBox.Show(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fonts"));
-            var font = PdfFontFactory.CreateFont(
-    fontPath,
-    PdfEncodings.IDENTITY_H
-);
 
-            var boldFont = PdfFontFactory.CreateFont(
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fonts", "arialbolditalicmt.ttf"),
-                PdfEncodings.IDENTITY_H
-            );
-            string path = Path.Combine(
-            Path.GetTempPath(),
-            $"Receipt_{Guid.NewGuid()}.pdf"
-            );
-            using (var writer = new PdfWriter(path))
-            using (var pdf = new PdfDocument(writer))
-            using (var doc = new Document(pdf))
+            void DrawLeft(string text, XFont f)
             {
-                // ===== Магазин =====
-                doc.Add(new Paragraph("pepeShop")
-                    .SetTextAlignment(TextAlignment.CENTER)
-                    .SetFontSize(26)
-                    .SetFont(boldFont));
-
-                // ===== ЧЕК =====
-                doc.Add(new Paragraph("ЧЕК")
-                    .SetTextAlignment(TextAlignment.CENTER)
-                    .SetFontSize(16)
-                    .SetFont(boldFont));
-
-                // ===== Даты =====
-                doc.Add(new Paragraph(
-                    $"Дата заказа: {orderDateTime}\nДата выполнения: {orderCompDateTime}")
-                    .SetTextAlignment(TextAlignment.CENTER)
-                    .SetFont(font)
-                    .SetFontSize(12));
-
-                // ===== Телефон =====
-                if (!string.IsNullOrWhiteSpace(phone_number))
-                {
-                    doc.Add(new Paragraph("Телефон: " + phone_number)
-                    .SetFont(font)
-                        .SetTextAlignment(TextAlignment.CENTER));
-                }
-
-                // ===== Адрес =====
-                if (!string.IsNullOrWhiteSpace(delivery_address))
-                {
-                    doc.Add(new Paragraph("Адрес: " + delivery_address)
-                    .SetFont(font)
-                        .SetTextAlignment(TextAlignment.CENTER));
-                }
-
-                doc.Add(new Paragraph("\n"));
-
-                // ===== Подсчёт товаров =====
-                int counter = 0;
-                for (int i = 0; i < itemsNames.Length; i++)
-                {
-                    if (!string.IsNullOrWhiteSpace(itemsNames[i]))
-                        counter++;
-                }
-
-                int itemsRows = counter;
-                int extraRows = 4;
-                int totalRows = itemsRows + 1 + extraRows;
-
-                // ===== Таблица =====
-                Table table = new Table(4).UseAllAvailableWidth();
-                table.SetFont(font);
-                table.AddHeaderCell("Товар");
-                table.AddHeaderCell("Цена");
-                table.AddHeaderCell("Кол-во");
-                table.AddHeaderCell("Подытог");
-
-                int total = 0;
-                int j = 0;
-
-                for (int i = 0; i < itemsNames.Length; i++)
-                {
-                    if (string.IsNullOrWhiteSpace(itemsNames[i]))
-                        continue;
-
-                    int subtotal = itemsCosts[i] * itemsCounts[i];
-                    total += subtotal;
-
-                    table.AddCell(itemsNames[i]);
-                    table.AddCell(getMakedString(itemsCosts[i].ToString()));
-                    table.AddCell(itemsCounts[i].ToString());
-                    table.AddCell(getMakedString(subtotal.ToString()));
-
-                    j++;
-                }
-
-                // ===== ДОСТАВКА =====
-                table.AddCell("Доставка");
-                table.AddCell(delivery ? "3 000 ₽" : "0 ₽");
-                table.AddCell(delivery ? "1" : "0");
-                table.AddCell(delivery ? "3 000 ₽" : "0 ₽");
-
-                // ===== СБОРКА =====
-                table.AddCell("Сборка");
-                table.AddCell(build ? "3 000 ₽" : "0 ₽");
-                table.AddCell(build ? "1" : "0");
-                table.AddCell(build ? "3 000 ₽" : "0 ₽");
-
-                // ===== СКИДКА =====
-                table.AddCell(new Cell(1, 3).Add(new Paragraph("Скидка")));
-                table.AddCell((build && delivery) ? "2 000 ₽" : "0 ₽");
-
-                // ===== ИТОГО =====
-                int grandTotal = total
-                    + (delivery ? 3000 : 0)
-                    + (build ? 3000 : 0)
-                    - ((build && delivery) ? 2000 : 0);
-
-                table.AddCell(new Cell(1, 3)
-                    .Add(new Paragraph("ИТОГО:").SetFont(boldFont)));
-
-                table.AddCell(new Paragraph(getMakedString(grandTotal.ToString()))
-                    .SetFont(font)
-                    .SetFont(boldFont));
-
-                doc.Add(table);
-
-                doc.Add(new Paragraph("\nСпасибо за покупку!")
-                    .SetFont(font)
-                    .SetTextAlignment(TextAlignment.CENTER));
+                gfx.DrawString(text, f, XBrushes.Black, new XPoint(40, y));
+                y += 15;
             }
+
+            // ===== HEADER =====
+            DrawCenter("pepeShop", title);
+            DrawCenter("ЧЕК", title);
+
+            DrawCenter($"Дата заказа: {orderDateTime}", font);
+            DrawCenter($"Дата выполнения: {orderCompDateTime}", font);
+
+            if (!string.IsNullOrWhiteSpace(phone_number))
+                DrawCenter("Телефон: " + phone_number, font);
+
+            if (!string.IsNullOrWhiteSpace(delivery_address))
+                DrawCenter("Адрес: " + delivery_address, font);
+
+            y += 15;
+
+            // ===== TABLE HEADER =====
+            double x1 = 40;   // товар
+            double x2 = 300;  // цена
+            double x3 = 380;  // кол-во
+            double x4 = 460;  // подытог
+
+            gfx.DrawString("Товар", bold, XBrushes.Black, new XPoint(x1, y));
+            gfx.DrawString("Цена", bold, XBrushes.Black, new XPoint(x2, y));
+            gfx.DrawString("Кол-во", bold, XBrushes.Black, new XPoint(x3, y));
+            gfx.DrawString("Подытог", bold, XBrushes.Black, new XPoint(x4, y));
+
+            y += 12;
+            gfx.DrawLine(XPens.Black, 40, y, 550, y);
+            y += 15;
+
+            // ===== ITEMS =====
+            int total = 0;
+
+            for (int i = 0; i < itemsNames.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(itemsNames[i]))
+                    continue;
+
+                int subtotal = itemsCosts[i] * itemsCounts[i];
+                total += subtotal;
+
+                gfx.DrawString(itemsNames[i], font, XBrushes.Black, new XPoint(x1, y));
+                gfx.DrawString(Format(itemsCosts[i]), font, XBrushes.Black, new XPoint(x2, y));
+                gfx.DrawString(itemsCounts[i].ToString(), font, XBrushes.Black, new XPoint(x3, y));
+                gfx.DrawString(Format(subtotal), font, XBrushes.Black, new XPoint(x4, y));
+
+                y += 16;
+            }
+
+            // ===== DELIVERY =====
+            int deliveryCost = delivery ? 3000 : 0;
+            gfx.DrawString("Доставка", font, XBrushes.Black, new XPoint(x1, y));
+            gfx.DrawString(Format(deliveryCost), font, XBrushes.Black, new XPoint(x2, y));
+            gfx.DrawString(delivery ? "1" : "0", font, XBrushes.Black, new XPoint(x3, y));
+            gfx.DrawString(Format(deliveryCost), font, XBrushes.Black, new XPoint(x4, y));
+            y += 16;
+
+            // ===== BUILD =====
+            int buildCost = build ? 3000 : 0;
+            gfx.DrawString("Сборка", font, XBrushes.Black, new XPoint(x1, y));
+            gfx.DrawString(Format(buildCost), font, XBrushes.Black, new XPoint(x2, y));
+            gfx.DrawString(build ? "1" : "0", font, XBrushes.Black, new XPoint(x3, y));
+            gfx.DrawString(Format(buildCost), font, XBrushes.Black, new XPoint(x4, y));
+            y += 16;
+
+            // ===== DISCOUNT =====
+            int discount = (delivery && build) ? 2000 : 0;
+
+            gfx.DrawString("Скидка", font, XBrushes.Black, new XPoint(x1, y));
+            gfx.DrawString("", font, XBrushes.Black, new XPoint(x2, y));
+            gfx.DrawString("", font, XBrushes.Black, new XPoint(x3, y));
+            gfx.DrawString(Format(discount), font, XBrushes.Black, new XPoint(x4, y));
+            y += 20;
+
+            // ===== TOTAL =====
+            int grandTotal = total + deliveryCost + buildCost - discount;
+
+            gfx.DrawLine(XPens.Black, 40, y, 550, y);
+            y += 20;
+
+            gfx.DrawString("ИТОГО:", bold, XBrushes.Black, new XPoint(x1, y));
+            gfx.DrawString(Format(grandTotal), bold, XBrushes.Black, new XPoint(x4, y));
+
+            y += 30;
+
+            DrawCenter("Спасибо за покупку!", font);
+
+            doc.Save(path);
+            doc.Close();
 
             Process.Start(new ProcessStartInfo
             {
@@ -170,19 +143,9 @@ namespace Kursovaya
             });
         }
 
-        private string getMakedString(string cartSumStr)
+        private string Format(int value)
         {
-            string cost = "";
-            string reversed = new string(cartSumStr.Reverse().ToArray());
-
-            for (int j = 0; j < reversed.Length; j++)
-            {
-                cost += reversed[j];
-                if ((j + 1) % 3 == 0 && j != reversed.Length - 1)
-                    cost += " ";
-            }
-
-            return new string(cost.Reverse().ToArray()) + " ₽";
+            return value.ToString("N0").Replace(",", " ") + " ₽";
         }
     }
 }
