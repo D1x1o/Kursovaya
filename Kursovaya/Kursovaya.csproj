@@ -418,6 +418,9 @@
     <Content Include="img\no-image.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\pepe.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="pepega.ico" />
     <Content Include="map.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

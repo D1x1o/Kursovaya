@@ -9,6 +9,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 
 namespace Kursovaya.Administrator
 {
@@ -23,15 +25,18 @@ namespace Kursovaya.Administrator
             fillComboBox(); // Заполняем выпадающие списки
             filldgv(); // Отображаем всех пользователей
             // Настраиваем дизайн для dataGridView
-            dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.ForeColor = Color.White;
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.BackgroundColor = Color.Silver;
+            dataGridView1.DefaultCellStyle.BackColor = Color.Silver;
+            dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Silver;
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
+            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.Gray;
             dataGridView1.RowHeadersVisible = false;
+            this.MinimumSize = new Size(1150, 428);
+            this.MaximumSize = new Size(1800, 900);
+            tableLayoutPanel1.MaximumSize = new Size(600; 200);
         }
 
         // Функция заполнения выпадающего списка
@@ -432,6 +437,11 @@ namespace Kursovaya.Administrator
 
         private void userPatronymicTextBox_Leave(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(userPatronymicTextBox.Text))
+            {
+                userPatronymicTextBox.Text = "Необязательное поле";
+                userPatronymicTextBox.ForeColor = Color.LightGray;
+            }
             userPatronymicTextBox.Text = FormatingText(userPatronymicTextBox.Text);
         }
 
@@ -448,6 +458,44 @@ namespace Kursovaya.Administrator
             if ((c >= 'А' && c <= 'я') || c == 'Ё' || c == 'ё' || c == '-')
                 return;
             e.Handled = true;
+        }
+
+        private void userPatronymicTextBox_Enter(object sender, EventArgs e)
+        {
+            if (userPatronymicTextBox.Text == "Необязательное поле")
+            {
+                userPatronymicTextBox.Text = "";
+                userPatronymicTextBox.ForeColor = Color.White;
+            }
+        }
+
+        private void Users_Load(object sender, EventArgs e)
+        {
+            userPatronymicTextBox.Text = "Необязательное поле";
+            userPatronymicTextBox.ForeColor = Color.LightGray;
+        }
+
+        private void generatePwd_Click(object sender, EventArgs e)
+        {
+            Random r = new Random();
+            string[] letters = new string[62];
+            int index = 0;
+            for (char c = 'a'; c <= 'z'; c++)
+            {
+                letters[index++] = c.ToString();
+                letters[index++] = char.ToUpper(c).ToString();
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                letters[i] = i.ToString();
+            }
+            string res = "";
+            for (int i = 0; i < 9; i++)
+            {
+                res += letters[r.Next(0,62)];
+            }
+            userPasswordTextBox.Text = res;
+            userPasswordConfirmTextBox.Text = res;
         }
     }
 }

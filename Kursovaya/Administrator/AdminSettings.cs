@@ -23,5 +23,10 @@ namespace Kursovaya.Administrator
             SessionTime.SetValueSecond(Convert.ToInt32(numericUpDown1.Value));
             MessageBox.Show("Данные сохранены!\nИзменения вступят в силу после перезапуска приложения.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

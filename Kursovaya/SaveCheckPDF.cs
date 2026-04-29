@@ -25,7 +25,15 @@ namespace Kursovaya
             PdfDocument doc = new PdfDocument();
             PdfPage page = doc.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page);
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", "pepe.png");
 
+            if (File.Exists(imagePath))
+            {
+                XImage logo = XImage.FromFile(imagePath);
+
+                // рисуем в левом верхнем углу
+                gfx.DrawImage(logo, 40, 20, 100, 100);
+            }
             XFont title = new XFont("Arial", 16);
             XFont bold = new XFont("Arial", 11);
             XFont font = new XFont("Arial", 10);
@@ -59,6 +67,10 @@ namespace Kursovaya
             if (!string.IsNullOrWhiteSpace(delivery_address))
                 DrawCenter("Адрес: " + delivery_address, font);
 
+            DrawCenter("ИНН: 0000000000", font);
+            DrawCenter("Смена: 0000", font);
+            Random r = new Random();
+            DrawCenter($"Чек номер: {r.Next(1000, 9999)}", font);
             y += 15;
 
             // ===== TABLE HEADER =====
@@ -128,9 +140,9 @@ namespace Kursovaya
 
             gfx.DrawString("ИТОГО:", bold, XBrushes.Black, new XPoint(x1, y));
             gfx.DrawString(Format(grandTotal), bold, XBrushes.Black, new XPoint(x4, y));
-
+            
             y += 30;
-
+           
             DrawCenter("Спасибо за покупку!", font);
 
             doc.Save(path);
