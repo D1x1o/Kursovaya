@@ -36,7 +36,7 @@ namespace Kursovaya.Administrator
             dataGridView1.RowHeadersVisible = false;
             this.MinimumSize = new Size(1150, 428);
             this.MaximumSize = new Size(1800, 900);
-            tableLayoutPanel1.MaximumSize = new Size(600; 200);
+            tableLayoutPanel1.MaximumSize = new Size(600, 200);
         }
 
         // Функция заполнения выпадающего списка

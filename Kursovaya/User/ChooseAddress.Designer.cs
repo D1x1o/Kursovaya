@@ -55,6 +55,7 @@
             this.Name = "ChooseAddress";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Выбор адреса";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChooseAddress_FormClosing);
             this.Load += new System.EventHandler(this.ChooseAddress_Load);
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
             this.ResumeLayout(false);

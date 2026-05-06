@@ -7,41 +7,111 @@
 <script src="https://api-maps.yandex.ru/2.1/?apikey=62c277b8-c600-48b7-994c-82e61719f334&lang=ru_RU"></script>
 
 <script>
-    var myMap, myPlacemark;
+var mapReady = false;
+var pendingCenter = null;
+var pendingZoom = null;
+var myMap, myPlacemark;
 
-    ymaps.ready(function () {
-        myMap = new ymaps.Map("map", {
-            center: [56.63, 43.40],
-            zoom: 10,
-            controls: ['searchControl']
-        });
+var currentPlacemark = null;   // текущая точка (клик)
+var savedPlacemark = null;     // сохранённая точка
 
-        myMap.events.add('click', function (e) {
-            var coords = e.get('coords');
 
-            setPlacemark(coords);
 
-            ymaps.geocode(coords).then(function (res) {
-                var firstGeoObject = res.geoObjects.get(0);
-                var address = firstGeoObject ? firstGeoObject.getAddressLine() : "Адрес не найден";
+ymaps.ready(function () {
 
-                window.chrome.webview.postMessage({
-                    lat: coords[0],
-                    lon: coords[1],
-                    address: address
-                });
+    myMap = new ymaps.Map("map", {
+        center: pendingCenter || [56.63, 43.40],
+        zoom: pendingZoom || 10,
+        controls: ['searchControl']
+    });
+
+    mapReady = true;
+
+    myMap.events.add('click', function (e) {
+        var coords = e.get('coords');
+        console.log("CLICK:", coords);
+        setPlacemark(coords);
+        
+        ymaps.geocode(coords).then(function (res) {
+            var firstGeoObject = res.geoObjects.get(0);
+            if (!firstGeoObject) return;
+
+            var meta = firstGeoObject.properties.get('metaDataProperty');
+            if (!meta || !meta.GeocoderMetaData) return;
+
+            var precision = meta.GeocoderMetaData.precision;
+
+            if (precision !== "exact") {
+                alert("Выберите точный адрес дома");
+                return;
+            }
+
+            var address = firstGeoObject.getAddressLine();
+
+            window.chrome.webview.postMessage({
+                lat: coords[0],
+                lon: coords[1],
+                zoom: myMap.getZoom(),
+                address: address
             });
         });
     });
+});
 
-    function setPlacemark(coords) {
-        if (myPlacemark) {
-            myPlacemark.geometry.setCoordinates(coords);
-        } else {
-            myPlacemark = new ymaps.Placemark(coords);
-            myMap.geoObjects.add(myPlacemark);
-        }
+function setPlacemark(coords) {
+    if (myPlacemark) {
+        myPlacemark.geometry.setCoordinates(coords);
+    } else {
+        myPlacemark = new ymaps.Placemark(coords);
+        myMap.geoObjects.add(myPlacemark);
     }
+}
+// 👉 текущая точка (новый клик)
+function setCurrentPlacemark(coords) {
+    if (currentPlacemark) {
+        currentPlacemark.geometry.setCoordinates(coords);
+    } else {
+        currentPlacemark = new ymaps.Placemark(coords, {
+            balloonContent: "Выбранная точка"
+        }, {
+            preset: 'islands#redIcon'
+        });
+
+        myMap.geoObjects.add(currentPlacemark);
+    }
+}
+
+
+// 👉 старая точка (из сохранения)
+function setSavedPlacemark(lat, lon) {
+    var coords = [lat, lon];
+
+    if (savedPlacemark) {
+        savedPlacemark.geometry.setCoordinates(coords);
+    } else {
+        savedPlacemark = new ymaps.Placemark(coords, {
+            balloonContent: "Сохранённая точка"
+        }, {
+            preset: 'islands#blueIcon'
+        });
+
+        myMap.geoObjects.add(savedPlacemark);
+    }
+}
+
+
+function setInitialLocation(lat, lon, zoom) {
+    if (!isFinite(lat) || !isFinite(lon)) return;
+
+    var center = [lat, lon];
+
+    if (mapReady) {
+        myMap.setCenter(center, zoom || 10);
+    } else {
+        pendingCenter = center;
+        pendingZoom = zoom;
+    }
+}
 </script>
 </head>
 

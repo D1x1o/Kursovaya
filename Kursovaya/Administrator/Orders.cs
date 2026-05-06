@@ -19,53 +19,57 @@ namespace Kursovaya.Administrator
 {
     public partial class Orders : Form
     {
+        
         int rowIndex=1; // переменая хранящая номер строки в DGV с которой работаем 
         string connStr = ConnectionString.GetConnectionString(); // переменная хранящая строку подключения из класса
         ContextMenuStrip rowMenu = new ContextMenuStrip(); // экземпляр класса выпадающего меню
+        
         public Orders()
         {
+
+            this.MinimumSize = new Size(1329, 735);
+            this.MaximumSize = new Size(2000, 1000);
             InitializeComponent();
             // настройки дизайна DGV 
-            dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.ForeColor = Color.White;
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             // добавляем в выпадающее меню элементы
             rowMenu.Items.Add("Редактировать", null, Edit_Click);
             rowMenu.Items.Add("Получить чек", null, Check_Click);
-
+            
             dataGridView1.CellMouseDown += dataGridView1_CellMouseDown; // подписываемся на событие нажатия на нажатие на ячейку
             LoadOrders(); // отображаем заказы
             FillQuarterComboBox();
+
         }
 
         private void FillQuarterComboBox() // функция запоняет выпадающий список кварталами года для получения отчёта
         {
-            quarterForReport.Items.Clear(); // очищаем 
-            int startYear = 2025; // год начала
-            DateTime now = DateTime.Now; // текущая дата и время            
-            int currentQuarter = (now.Month - 1) / 3 + 1; // текущий квартал            
-            int endYear = now.Year; // текущий год
-
-            for (int year = startYear; year <= endYear; year++)
+            try
             {
-                int maxQuarter = 4;
-                if (year == endYear)
-                    maxQuarter = currentQuarter; // включаем текущий квартал
-                for (int quarter = 1; quarter <= maxQuarter; quarter++)
+                quarterForReport.Items.Clear(); // очищаем 
+                int startYear = 2025; // год начала
+                DateTime now = DateTime.Now; // текущая дата и время            
+                int currentQuarter = (now.Month - 1) / 3 + 1; // текущий квартал            
+                int endYear = now.Year; // текущий год
+
+                for (int year = startYear; year <= endYear; year++)
                 {
-                    quarterForReport.Items.Add($"Квартал: {quarter}, год: {year}"); // добавляем кварталы
+                    int maxQuarter = 4;
+                    if (year == endYear)
+                        maxQuarter = currentQuarter; // включаем текущий квартал
+                    for (int quarter = 1; quarter <= maxQuarter; quarter++)
+                    {
+                        quarterForReport.Items.Add($"Квартал: {quarter}, год: {year}"); // добавляем кварталы
+                    }
                 }
+                // Опционально: выбрать последний квартал в списке по умолчанию
+                if (quarterForReport.Items.Count > 0)
+                    quarterForReport.SelectedIndex = quarterForReport.Items.Count - 1;
             }
-            // Опционально: выбрать последний квартал в списке по умолчанию
-            if (quarterForReport.Items.Count > 0)
-                quarterForReport.SelectedIndex = quarterForReport.Items.Count - 1;
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         public void LoadOrders() // функция отображения заказов 
         {
@@ -75,7 +79,7 @@ namespace Kursovaya.Administrator
                 {
                     conn.Open(); // открываем подключение 
                     // формируем запрос на получение данных о заказах 
-                    string query = @"SELECT  
+                    string query = $@"SELECT  
     o.idorder as idorder,
     o.extra_items,
 
@@ -118,9 +122,11 @@ namespace Kursovaya.Administrator
     CONCAT(ti.produser, ' ', ti.model, ' (x', o.count_thermo_interface, ')') AS 'Термопаста',
     ti.cost,
     o.count_thermo_interface,
-
+    
     CASE WHEN o.delivery = 'True' THEN 'Да' ELSE 'Нет' END AS 'Доставка',
     CASE WHEN o.build = 'True' THEN 'Да' ELSE 'Нет' END AS 'Сборка',
+
+    CONCAT('Сборка: ', CASE WHEN o.build = 'True' THEN 'Да' ELSE 'Нет' END, '\n', 'Доставка: ', CASE WHEN o.delivery = 'True' THEN 'Да' ELSE 'Нет' END,'\n\n', o.deliveryaddress) as 'Информация',
 
     o.deliveryaddress AS 'Адрес',
     o.ordertime AS 'Дата заказа',
@@ -142,7 +148,7 @@ LEFT JOIN storage st ON st.id = o.id_storage
 LEFT JOIN power_supplier ps ON ps.id = o.id_power_supplier
 LEFT JOIN statuses s ON s.id = o.status
 LEFT JOIN thermo_interface ti ON ti.id = o.id_thermo_interface
-ORDER BY o.idorder;";
+ORDER BY o.idorder; ";
 
 
                     // отображаем данные в DGV
@@ -177,6 +183,10 @@ ORDER BY o.idorder;";
                         string itemName = string.Join(" ", parts.Take(parts.Length - 3));
 
                         row["FormattedExtra"] = $"{itemName} (x{quantity})"; // отображаем готовое значение строки
+
+
+
+                        
                     }
                     if (!dt.Columns.Contains("orderSetUp"))
                         dt.Columns.Add("orderSetUp");
@@ -215,10 +225,16 @@ ORDER BY o.idorder;";
                     dataGridView1.DataSource = dt;
                     // Скрываем лишнее, но нужное  :)
                     dataGridView1.Columns["extra_items"].Visible = false;
+                    dataGridView1.Columns["Дата выполнения"].DefaultCellStyle.Format = "dd.MM.yyyy";
+                    dataGridView1.Columns["Статус"].Visible = false;
+                    dataGridView1.Columns["Адрес"].Visible = false;
+                    //dataGridView1.Columns["Информация"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    //dataGridView1.Columns["Информация"].Width = 200;
+                    dataGridView1.Columns["Стоимость заказа"].Visible = false;
                     dataGridView1.Columns["FormattedExtra"].DisplayIndex = dataGridView1.ColumnCount - 7;
                     dataGridView1.Columns["orderSetUp"].DisplayIndex = 1;
                     dataGridView1.Columns["orderSetUp"].HeaderText = "Состав заказа";
-                    dataGridView1.Columns["Номер телефона"].DisplayIndex = dataGridView1.ColumnCount - 6;
+                    dataGridView1.Columns["Номер телефона"].DisplayIndex = dataGridView1.ColumnCount - 1;
                     dataGridView1.Columns["idorder"].Visible = false;
                     dataGridView1.Columns["count_processors"].Visible = false;
                     dataGridView1.Columns["count_motherboards"].Visible = false;
@@ -257,7 +273,7 @@ ORDER BY o.idorder;";
                     dataGridView1.Columns["FormattedExtra"].HeaderText = "Товары доп. категорий"; // переименновываем заголовок столбца доп. категорий
 
 
-                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; 
+                    //dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; 
                 }
             }
             catch (Exception ex)
@@ -280,6 +296,7 @@ ORDER BY o.idorder;";
 
         public class OrderHelper // класс строки подключения
         {
+            
             private string connStr; // строка подключения
 
             public OrderHelper()
@@ -447,16 +464,7 @@ ORDER BY o.idorder;";
             SC.SaveMakeCheck(names.ToArray(), prices.ToArray(), counts.ToArray(), row.Cells["Дата заказа"].Value.ToString(), row.Cells["Дата выполнения"].Value.ToString(), del, bui, row.Cells["Номер телефона"].Value.ToString(), row.Cells["Адрес"].Value.ToString()); // и вызываем отображение чека 
         }
 
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) // форматирование DGV
-        {
-            if (dataGridView1.Columns[e.ColumnIndex].HeaderText == "Адрес" && e.Value != null) // прячем у поля Адрес половину за звёздочки
-            { 
-                string text = e.Value.ToString(); 
-                int hide = text.Length / 2;
-                e.Value = text.Substring(0, text.Length - hide) + new string('*', hide);
-                e.FormattingApplied = true;
-            }
-        }
+        
 
         private void CancelOrder_Click(object sender, EventArgs e) // обработчик нажатия кнопки "Отменить заказ" в выпадающем меню
         {
@@ -688,6 +696,28 @@ LEFT JOIN thermo_interface ti ON ti.id = o.id_thermo_interface
         string GetSafe(DataRow r, string col)
         {
             return r[col] == DBNull.Value ? "" : r[col].ToString();
+        }
+
+        private void ShowAllInfo_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadOrders();
+        }
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (!ShowAllInfo.Checked &&
+        dataGridView1.Columns[e.ColumnIndex].HeaderText == "Номер телефона" &&
+        e.Value != null)
+            {
+                string phone = e.Value.ToString();
+
+                if (!string.IsNullOrEmpty(phone))
+                {
+                    int hide = phone.Length / 2;
+                    e.Value = phone.Substring(0, phone.Length - hide) + new string('*', hide);
+                    e.FormattingApplied = true;
+                }
+            }
         }
     }
 }

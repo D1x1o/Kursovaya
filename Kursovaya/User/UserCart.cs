@@ -1330,5 +1330,10 @@ namespace Kursovaya.User
                 chooseCheck.Visible = false;   
             }
         }
+
+        private void phoneTextBox_Click(object sender, EventArgs e)
+        {
+            phoneTextBox.SelectionStart = 0;
+        }
     }
 }

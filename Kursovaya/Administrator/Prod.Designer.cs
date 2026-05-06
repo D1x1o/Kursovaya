@@ -69,9 +69,12 @@ namespace Kursovaya.Administrator
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.dataGridView1.Location = new System.Drawing.Point(12, 74);
@@ -104,8 +107,9 @@ namespace Kursovaya.Administrator
             // 
             // allPageLabel
             // 
+            this.allPageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.allPageLabel.AutoSize = true;
-            this.allPageLabel.ForeColor = System.Drawing.Color.White;
+            this.allPageLabel.ForeColor = System.Drawing.Color.Black;
             this.allPageLabel.Location = new System.Drawing.Point(508, 478);
             this.allPageLabel.Name = "allPageLabel";
             this.allPageLabel.Size = new System.Drawing.Size(57, 24);
@@ -114,8 +118,9 @@ namespace Kursovaya.Administrator
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(474, 478);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(31, 24);
@@ -124,8 +129,9 @@ namespace Kursovaya.Administrator
             // 
             // actualPageLabel
             // 
+            this.actualPageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.actualPageLabel.AutoSize = true;
-            this.actualPageLabel.ForeColor = System.Drawing.Color.White;
+            this.actualPageLabel.ForeColor = System.Drawing.Color.Black;
             this.actualPageLabel.Location = new System.Drawing.Point(450, 478);
             this.actualPageLabel.Name = "actualPageLabel";
             this.actualPageLabel.Size = new System.Drawing.Size(21, 24);
@@ -134,8 +140,9 @@ namespace Kursovaya.Administrator
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(347, 478);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 24);
@@ -144,9 +151,10 @@ namespace Kursovaya.Administrator
             // 
             // ForwardPageButton
             // 
+            this.ForwardPageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ForwardPageButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ForwardPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ForwardPageButton.ForeColor = System.Drawing.Color.White;
+            this.ForwardPageButton.ForeColor = System.Drawing.Color.Black;
             this.ForwardPageButton.Location = new System.Drawing.Point(643, 470);
             this.ForwardPageButton.Name = "ForwardPageButton";
             this.ForwardPageButton.Size = new System.Drawing.Size(63, 40);
@@ -157,9 +165,10 @@ namespace Kursovaya.Administrator
             // 
             // BackPageButton
             // 
+            this.BackPageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BackPageButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.BackPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BackPageButton.ForeColor = System.Drawing.Color.White;
+            this.BackPageButton.ForeColor = System.Drawing.Color.Black;
             this.BackPageButton.Location = new System.Drawing.Point(574, 470);
             this.BackPageButton.Name = "BackPageButton";
             this.BackPageButton.Size = new System.Drawing.Size(63, 40);
@@ -172,7 +181,7 @@ namespace Kursovaya.Administrator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(716, 520);
             this.Controls.Add(this.allPageLabel);
             this.Controls.Add(this.label5);
@@ -186,14 +195,14 @@ namespace Kursovaya.Administrator
             this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.dataGridView1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.ForeColor = System.Drawing.Color.Black;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "Prod";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Товары";
+            this.Resize += new System.EventHandler(this.Prod_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -271,6 +271,7 @@ namespace Kursovaya.User
             this.phoneTextBox.Name = "phoneTextBox";
             this.phoneTextBox.Size = new System.Drawing.Size(173, 29);
             this.phoneTextBox.TabIndex = 10;
+            this.phoneTextBox.Click += new System.EventHandler(this.phoneTextBox_Click);
             // 
             // label7
             // 

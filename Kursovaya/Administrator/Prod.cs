@@ -20,24 +20,21 @@ namespace Kursovaya.Administrator
         int dgvPage = 0; // переменная для хранения текущей страницы dataGridView
         int pageOffset = 0; // смещение для пагинации (сколько записей пропустить)
         int allPage = 0; // общее количество страниц
-        
+        int items = 10;
+
         public Prod() // конструктор формы
         {
             InitializeComponent(); // инициализация компонентов формы
             SetComboBox(); // заполнение выпадающего списка категорий
             CheckButtons(); // проверка состояния кнопок навигации
             dataGridView1.RowHeadersVisible = false; // скрыть заголовки строк
-            dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104); // установка цвета фона таблицы
-            dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104); // цвет фона ячеек
-            dataGridView1.DefaultCellStyle.ForeColor = Color.White; // цвет текста в ячейках
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104); // цвет фона заголовков колонок
-            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; // цвет текста заголовков
             dataGridView1.EnableHeadersVisualStyles = false; // отключение визуальных стилей для заголовков
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // выделение всей строки при клике
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125); // цвет выделенной строки
             dataGridView1.ReadOnly = true; // таблица только для чтения
             actualPageLabel.Text = dgvPage.ToString(); // отображение текущей страницы
             allPageLabel.Text = "0"; // начальное значение общего количества страниц
+            this.MinimumSize = new Size(732, 559);
+            this.MaximumSize = new Size(1200, 800);
         }
         
         public void SetComboBox() // метод заполнения выпадающего списка
@@ -156,7 +153,7 @@ namespace Kursovaya.Administrator
             {
                 query += $"WHERE concat(produser, space(1), model) LIKE '%{SearchTextBox.Text}%' "; // добавление условия поиска
             }
-            query += $"LIMIT 10 OFFSET {pageOffset};"; // добавление пагинации (10 записей со смещением)
+            query += $"LIMIT {items} OFFSET {pageOffset};"; // добавление пагинации (10 записей со смещением)
 
             try // блок обработки исключений
             {
@@ -185,7 +182,7 @@ namespace Kursovaya.Administrator
                         query2 = $"SELECT count(*) FROM {theme} WHERE concat(produser, space(1), model) LIKE '%{SearchTextBox.Text}%'"; // подсчет записей по условию поиска
                     }
                     MySqlCommand cmd = new MySqlCommand(query2, conn); // создание команды
-                    allPage = Convert.ToInt32(Math.Ceiling((double)Convert.ToInt32(cmd.ExecuteScalar()) / 10)); // расчет количества страниц (общее кол-во / 10, округление вверх)
+                    allPage = Convert.ToInt32(Math.Ceiling((double)Convert.ToInt32(cmd.ExecuteScalar()) / items)); // расчет количества страниц (общее кол-во / 10, округление вверх)
                 }
             }
             catch (Exception e) { MessageBox.Show(e.Message); } // обработка ошибок с выводом сообщения
@@ -202,7 +199,7 @@ namespace Kursovaya.Administrator
         private void ForwardPageButton_Click(object sender, EventArgs e) // обработчик кнопки "вперед"
         {
             dataGridView1.Columns.Clear(); // очистка колонок таблицы
-            pageOffset += 10; // увеличение смещения на 10
+            pageOffset += items; // увеличение смещения на 10
             dgvPage += 1; // увеличение номера текущей страницы
             actualPageLabel.Text = dgvPage.ToString(); // обновление отображения номера страницы
             fillDGV(); // повторное заполнение таблицы
@@ -211,7 +208,7 @@ namespace Kursovaya.Administrator
         private void BackPageButton_Click(object sender, EventArgs e) // обработчик кнопки "назад"
         {
             dataGridView1.Columns.Clear(); // очистка колонок таблицы
-            pageOffset -= 10; // уменьшение смещения на 10
+            pageOffset -= items; // уменьшение смещения на 10
             dgvPage -= 1; // уменьшение номера текущей страницы
             actualPageLabel.Text = dgvPage.ToString(); // обновление отображения номера страницы
             fillDGV(); // повторное заполнение таблицы
@@ -267,6 +264,34 @@ namespace Kursovaya.Administrator
                 actualPageLabel.Text = dgvPage.ToString(); // отображение номера страницы
                 fillDGV(); // заполнение таблицы с учетом поиска
             }
+        }
+
+        private void Prod_Resize(object sender, EventArgs e)
+        {
+            dgvPage = 1;
+            pageOffset = 0;
+            //MessageBox.Show(categoryComboBox.SelectedIndex.ToString());
+            if(categoryComboBox.SelectedIndex > -1)
+            {
+                fillDGV();
+            }
+            if (this.Height > 600)
+            {
+                items = 20;
+            }
+            else if (this.Height > 800)
+            {
+                items = 35;
+            }
+            else if (this.Height < 600)
+            {
+                items = 10;
+            }
+            else if (this.Height < 800)
+            {
+                items = 20;
+            }
+            
         }
     }
 }

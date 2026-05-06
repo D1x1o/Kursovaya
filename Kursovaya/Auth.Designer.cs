@@ -86,7 +86,7 @@ namespace Kursovaya
             this.label2.Location = new System.Drawing.Point(38, 102);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(110, 18);
-            this.label2.TabIndex = 3;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Введите логин";
             // 
             // label3
@@ -97,7 +97,7 @@ namespace Kursovaya
             this.label3.Location = new System.Drawing.Point(38, 168);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(120, 18);
-            this.label3.TabIndex = 3;
+            this.label3.TabIndex = 0;
             this.label3.Text = "Введите пароль";
             // 
             // LogInButton
@@ -108,7 +108,7 @@ namespace Kursovaya
             this.LogInButton.Location = new System.Drawing.Point(62, 257);
             this.LogInButton.Name = "LogInButton";
             this.LogInButton.Size = new System.Drawing.Size(129, 42);
-            this.LogInButton.TabIndex = 4;
+            this.LogInButton.TabIndex = 3;
             this.LogInButton.Text = "Войти";
             this.LogInButton.UseVisualStyleBackColor = false;
             this.LogInButton.Click += new System.EventHandler(this.LogInButton_Click);
@@ -138,7 +138,7 @@ namespace Kursovaya
             this.label5.Location = new System.Drawing.Point(112, 41);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(100, 24);
-            this.label5.TabIndex = 9;
+            this.label5.TabIndex = 0;
             this.label5.Text = "PepeShop";
             // 
             // ShowPwdButton
@@ -151,7 +151,7 @@ namespace Kursovaya
             this.ShowPwdButton.Location = new System.Drawing.Point(184, 190);
             this.ShowPwdButton.Name = "ShowPwdButton";
             this.ShowPwdButton.Size = new System.Drawing.Size(24, 28);
-            this.ShowPwdButton.TabIndex = 11;
+            this.ShowPwdButton.TabIndex = 4;
             this.ShowPwdButton.UseVisualStyleBackColor = false;
             this.ShowPwdButton.Click += new System.EventHandler(this.ShowPwdButton_Click);
             // 
