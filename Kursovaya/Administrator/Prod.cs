@@ -69,7 +69,10 @@ namespace Kursovaya.Administrator
                 }
             }
         }
-        
+        public void mathProdInCategory()
+        {
+            label4.Text = "Всего товаров: " + dataGridView1.RowCount;
+        }
         private void fillDGV() // метод заполнения dataGridView данными
         {
             dataGridView1.Columns.Clear(); // очистка колонок таблицы
@@ -193,6 +196,7 @@ namespace Kursovaya.Administrator
             }
             actualPageLabel.Text = dgvPage.ToString(); // отображение текущей страницы
             allPageLabel.Text = allPage.ToString(); // отображение общего количества страниц
+            mathProdInCategory();
             CheckButtons(); // проверка состояния кнопок навигации
         }
         
@@ -292,6 +296,11 @@ namespace Kursovaya.Administrator
                 items = 20;
             }
             
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

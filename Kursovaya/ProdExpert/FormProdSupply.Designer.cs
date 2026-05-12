@@ -100,7 +100,7 @@ namespace Kursovaya.ProdExpert
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(313, 56);
             this.resetButton.TabIndex = 1;
-            this.resetButton.Text = "Сбросить товавы для поставки";
+            this.resetButton.Text = "Сбросить товары для поставки";
             this.resetButton.UseVisualStyleBackColor = false;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 

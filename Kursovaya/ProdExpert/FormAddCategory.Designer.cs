@@ -45,7 +45,7 @@
             this.txtTableName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.txtTableName.ForeColor = System.Drawing.Color.White;
             this.txtTableName.Location = new System.Drawing.Point(11, 40);
-            this.txtTableName.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtTableName.Margin = new System.Windows.Forms.Padding(6);
             this.txtTableName.MaxLength = 50;
             this.txtTableName.Name = "txtTableName";
             this.txtTableName.Size = new System.Drawing.Size(194, 29);
@@ -62,7 +62,7 @@
             this.btnAddColumn.Name = "btnAddColumn";
             this.btnAddColumn.Size = new System.Drawing.Size(224, 60);
             this.btnAddColumn.TabIndex = 2;
-            this.btnAddColumn.Text = "Добавить столбец";
+            this.btnAddColumn.Text = "Добавить характеристику";
             this.btnAddColumn.UseVisualStyleBackColor = false;
             this.btnAddColumn.Click += new System.EventHandler(this.btnAddColumn_Click);
             // 
@@ -76,7 +76,7 @@
             this.btnRemoveColumn.Name = "btnRemoveColumn";
             this.btnRemoveColumn.Size = new System.Drawing.Size(224, 60);
             this.btnRemoveColumn.TabIndex = 2;
-            this.btnRemoveColumn.Text = "Удалить столбец";
+            this.btnRemoveColumn.Text = "Удалить характеристику";
             this.btnRemoveColumn.UseVisualStyleBackColor = false;
             this.btnRemoveColumn.Click += new System.EventHandler(this.btnRemoveColumn_Click);
             // 
@@ -89,7 +89,7 @@
             this.btnCreateTable.Name = "btnCreateTable";
             this.btnCreateTable.Size = new System.Drawing.Size(224, 60);
             this.btnCreateTable.TabIndex = 2;
-            this.btnCreateTable.Text = "Создать таблицу";
+            this.btnCreateTable.Text = "Создать категорию";
             this.btnCreateTable.UseVisualStyleBackColor = false;
             this.btnCreateTable.Click += new System.EventHandler(this.btnCreateTable_Click);
             // 
@@ -99,9 +99,9 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(8, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 24);
+            this.label1.Size = new System.Drawing.Size(144, 24);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Имя таблицы";
+            this.label1.Text = "Имя категории";
             // 
             // dgvColumns
             // 
@@ -135,9 +135,9 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(237, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(250, 24);
+            this.label2.Size = new System.Drawing.Size(267, 24);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Имя таблицы (кириллицей)";
+            this.label2.Text = "Имя категории (кириллицей)";
             // 
             // FormAddCategory
             // 
@@ -156,7 +156,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "FormAddCategory";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

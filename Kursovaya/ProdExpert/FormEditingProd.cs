@@ -64,14 +64,8 @@ namespace Kursovaya.ProdExpert
             FillDGV(theme, idProduct);
             setProductName(theme, idProduct);
             dataGridView1.RowHeadersVisible = false;
-            dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.ForeColor = Color.White;
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
         }
         public void FillDGV(string theme, int idProduct)
         {

@@ -89,7 +89,7 @@
             this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.searchTextBox.Enabled = false;
             this.searchTextBox.ForeColor = System.Drawing.Color.White;
-            this.searchTextBox.Location = new System.Drawing.Point(69, 12);
+            this.searchTextBox.Location = new System.Drawing.Point(154, 12);
             this.searchTextBox.MaxLength = 50;
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(266, 26);
@@ -101,9 +101,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(8, 15);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 20);
+            this.label2.Size = new System.Drawing.Size(140, 20);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Поиск";
+            this.label2.Text = "Поиск по модели";
             // 
             // BackPageButton
             // 

@@ -50,7 +50,7 @@ namespace Kursovaya
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(31, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
@@ -61,7 +61,7 @@ namespace Kursovaya
             // loginTextBox
             // 
             this.loginTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.loginTextBox.ForeColor = System.Drawing.Color.White;
+            this.loginTextBox.ForeColor = System.Drawing.Color.Black;
             this.loginTextBox.Location = new System.Drawing.Point(41, 123);
             this.loginTextBox.MaxLength = 50;
             this.loginTextBox.Name = "loginTextBox";
@@ -71,7 +71,7 @@ namespace Kursovaya
             // pwdTextBox
             // 
             this.pwdTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.pwdTextBox.ForeColor = System.Drawing.Color.White;
+            this.pwdTextBox.ForeColor = System.Drawing.Color.Black;
             this.pwdTextBox.Location = new System.Drawing.Point(41, 189);
             this.pwdTextBox.MaxLength = 50;
             this.pwdTextBox.Name = "pwdTextBox";
@@ -82,7 +82,7 @@ namespace Kursovaya
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(38, 102);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(110, 18);
@@ -93,7 +93,7 @@ namespace Kursovaya
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(38, 168);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(120, 18);
@@ -104,7 +104,7 @@ namespace Kursovaya
             // 
             this.LogInButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.LogInButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LogInButton.ForeColor = System.Drawing.Color.White;
+            this.LogInButton.ForeColor = System.Drawing.Color.Black;
             this.LogInButton.Location = new System.Drawing.Point(62, 257);
             this.LogInButton.Name = "LogInButton";
             this.LogInButton.Size = new System.Drawing.Size(129, 42);
@@ -134,7 +134,7 @@ namespace Kursovaya
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(112, 41);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(100, 24);
@@ -147,7 +147,7 @@ namespace Kursovaya
             this.ShowPwdButton.BackgroundImage = global::Kursovaya.Properties.Resources.eye_icon_invert;
             this.ShowPwdButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ShowPwdButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ShowPwdButton.ForeColor = System.Drawing.Color.White;
+            this.ShowPwdButton.ForeColor = System.Drawing.Color.Black;
             this.ShowPwdButton.Location = new System.Drawing.Point(184, 190);
             this.ShowPwdButton.Name = "ShowPwdButton";
             this.ShowPwdButton.Size = new System.Drawing.Size(24, 28);
@@ -188,7 +188,7 @@ namespace Kursovaya
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(254, 309);
             this.Controls.Add(this.ShowPwdButton);
             this.Controls.Add(this.pictureBox1);

@@ -41,6 +41,7 @@ namespace Kursovaya.Administrator
             this.label3 = new System.Windows.Forms.Label();
             this.ForwardPageButton = new System.Windows.Forms.Button();
             this.BackPageButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,9 +50,10 @@ namespace Kursovaya.Administrator
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 24);
+            this.label1.Size = new System.Drawing.Size(164, 24);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Поиск";
+            this.label1.Text = "Поиск по модели";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // SearchTextBox
             // 
@@ -177,6 +179,17 @@ namespace Kursovaya.Administrator
             this.BackPageButton.UseVisualStyleBackColor = false;
             this.BackPageButton.Click += new System.EventHandler(this.BackPageButton_Click);
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(12, 478);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(218, 24);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "Товаров на странице:  ";
+            // 
             // Prod
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -186,6 +199,7 @@ namespace Kursovaya.Administrator
             this.Controls.Add(this.allPageLabel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.actualPageLabel);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ForwardPageButton);
             this.Controls.Add(this.BackPageButton);
@@ -222,5 +236,6 @@ namespace Kursovaya.Administrator
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button ForwardPageButton;
         private System.Windows.Forms.Button BackPageButton;
+        private System.Windows.Forms.Label label4;
     }
 }

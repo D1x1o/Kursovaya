@@ -398,7 +398,7 @@ UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'stora
 
             // Шапка таблицы
             table.Cell(1, 1).Range.Text = "Наименование комплектующего";
-            table.Cell(1, 2).Range.Text = "Количество для поставки";
+            table.Cell(1, 2).Range.Text = "Количество для поставки(шт.)";
             table.Rows[1].Range.Bold = 1;
             table.Rows[1].Shading.BackgroundPatternColor = Word.WdColor.wdColorGray25;
 

@@ -38,6 +38,10 @@ namespace Kursovaya.Administrator
             this.MaximumSize = new Size(1800, 900);
             tableLayoutPanel1.MaximumSize = new Size(600, 200);
         }
+        public void MathCountUsers()
+        {
+            label7.Text = "Количество пользователей: " + dataGridView1.RowCount;
+        }
 
         // Функция заполнения выпадающего списка
         public void fillComboBox()
@@ -99,6 +103,7 @@ namespace Kursovaya.Administrator
                     dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect; 
                     
                 }
+                MathCountUsers();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }

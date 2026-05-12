@@ -37,6 +37,7 @@ namespace Kursovaya.ProdExpert
             this.AmountTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.countOfProd = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +47,6 @@ namespace Kursovaya.ProdExpert
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.dataGridView1.Location = new System.Drawing.Point(12, 74);
@@ -72,9 +72,9 @@ namespace Kursovaya.ProdExpert
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(8, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(231, 24);
+            this.label1.Size = new System.Drawing.Size(164, 24);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Поиск по наименованию";
+            this.label1.Text = "Поиск по модели";
             // 
             // SignComboBox
             // 
@@ -119,21 +119,31 @@ namespace Kursovaya.ProdExpert
             this.label3.TabIndex = 2;
             this.label3.Text = "Условие";
             // 
+            // countOfProd
+            // 
+            this.countOfProd.AutoSize = true;
+            this.countOfProd.Location = new System.Drawing.Point(8, 609);
+            this.countOfProd.Name = "countOfProd";
+            this.countOfProd.Size = new System.Drawing.Size(97, 24);
+            this.countOfProd.TabIndex = 2;
+            this.countOfProd.Text = "Товаров: ";
+            // 
             // ProdInStock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
-            this.ClientSize = new System.Drawing.Size(597, 618);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(597, 645);
             this.Controls.Add(this.SignComboBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.countOfProd);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.AmountTextBox);
             this.Controls.Add(this.SearchTextBox);
             this.Controls.Add(this.dataGridView1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ForeColor = System.Drawing.Color.White;
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
@@ -156,5 +166,6 @@ namespace Kursovaya.ProdExpert
         private System.Windows.Forms.TextBox AmountTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label countOfProd;
     }
 }

@@ -28,15 +28,11 @@ namespace Kursovaya.ProdExpert
             SetComboBox();
             CheckButtons();
             dataGridView1.RowHeadersVisible = false;
-            dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.ForeColor = Color.White;
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.ReadOnly = true;
+            this.MinimumSize = new Size(682, 355);
+            this.MaximumSize = new Size(1000, 600);
         }
 
         public void SetComboBox()
@@ -294,6 +290,11 @@ namespace Kursovaya.ProdExpert
                 edit.ShowDialog();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

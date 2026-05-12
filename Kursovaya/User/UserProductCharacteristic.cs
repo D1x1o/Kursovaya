@@ -31,14 +31,8 @@ namespace Kursovaya.User
             CopyDefaultImagesToAppData(); // копируем имеющиеся изображения в AppData
 
             // настройки дизайна
-            dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.ForeColor = Color.White;
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
         }
         // функция отображения характеристик
         public void showProductCharacteristic(string theme, int idProduct)

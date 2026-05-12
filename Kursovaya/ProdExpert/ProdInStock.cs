@@ -62,6 +62,11 @@ namespace Kursovaya.ProdExpert
                 MessageBox.Show(e.Message);
             }
         }
+
+        public void mathCountProd()
+        {
+            countOfProd.Text = "Товаров: " + dataGridView1.RowCount;
+        }
         public void fillDgv() 
         {
             string query = $@"SELECT * FROM (SELECT id, model, inStock, 'processors'   AS SourceTable FROM processors
@@ -124,6 +129,7 @@ UNION ALL SELECT id, model, inStock, 'storage'            FROM storage ";
             dataGridView1.Columns["inStock"].HeaderText = "Количество";
             dataGridView1.Columns["id"].Visible = false;
             dataGridView1.Columns["SourceTable"].Visible = false;
+            mathCountProd();
         }
 
         private void SearchTextBox_TextChanged(object sender, EventArgs e)

@@ -36,6 +36,11 @@ namespace Kursovaya.Administrator
             this.quarterForReport = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.ShowAllInfo = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,7 +60,7 @@ namespace Kursovaya.Administrator
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(6);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1285, 590);
+            this.dataGridView1.Size = new System.Drawing.Size(1285, 585);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
@@ -65,9 +70,9 @@ namespace Kursovaya.Administrator
             this.CancelOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CancelOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.CancelOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CancelOrder.Location = new System.Drawing.Point(1116, 621);
+            this.CancelOrder.Location = new System.Drawing.Point(1116, 690);
             this.CancelOrder.Name = "CancelOrder";
-            this.CancelOrder.Size = new System.Drawing.Size(184, 71);
+            this.CancelOrder.Size = new System.Drawing.Size(184, 59);
             this.CancelOrder.TabIndex = 1;
             this.CancelOrder.Text = "Отменить заказ";
             this.CancelOrder.UseVisualStyleBackColor = false;
@@ -78,9 +83,9 @@ namespace Kursovaya.Administrator
             this.getReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.getReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.getReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.getReport.Location = new System.Drawing.Point(327, 614);
+            this.getReport.Location = new System.Drawing.Point(15, 690);
             this.getReport.Name = "getReport";
-            this.getReport.Size = new System.Drawing.Size(309, 71);
+            this.getReport.Size = new System.Drawing.Size(309, 59);
             this.getReport.TabIndex = 1;
             this.getReport.Text = "Получить отчёт";
             this.getReport.UseVisualStyleBackColor = false;
@@ -94,7 +99,7 @@ namespace Kursovaya.Administrator
             this.quarterForReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.quarterForReport.ForeColor = System.Drawing.Color.Black;
             this.quarterForReport.FormattingEnabled = true;
-            this.quarterForReport.Location = new System.Drawing.Point(15, 641);
+            this.quarterForReport.Location = new System.Drawing.Point(15, 642);
             this.quarterForReport.Name = "quarterForReport";
             this.quarterForReport.Size = new System.Drawing.Size(306, 32);
             this.quarterForReport.TabIndex = 2;
@@ -103,7 +108,7 @@ namespace Kursovaya.Administrator
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 614);
+            this.label1.Location = new System.Drawing.Point(11, 615);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(280, 24);
             this.label1.TabIndex = 3;
@@ -113,7 +118,7 @@ namespace Kursovaya.Administrator
             // 
             this.ShowAllInfo.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.ShowAllInfo.AutoSize = true;
-            this.ShowAllInfo.Location = new System.Drawing.Point(840, 656);
+            this.ShowAllInfo.Location = new System.Drawing.Point(1045, 614);
             this.ShowAllInfo.Name = "ShowAllInfo";
             this.ShowAllInfo.Size = new System.Drawing.Size(255, 28);
             this.ShowAllInfo.TabIndex = 4;
@@ -121,13 +126,68 @@ namespace Kursovaya.Administrator
             this.ShowAllInfo.UseVisualStyleBackColor = true;
             this.ShowAllInfo.CheckedChanged += new System.EventHandler(this.ShowAllInfo_CheckedChanged);
             // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(1041, 655);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(144, 24);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Всего заказов:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(456, 612);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(43, 29);
+            this.textBox1.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(505, 615);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(123, 24);
+            this.label3.TabIndex = 3;
+            this.label3.Text = " - просрочен";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(245)))), ((int)(((byte)(200)))));
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(456, 650);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(43, 29);
+            this.textBox2.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(505, 655);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(148, 24);
+            this.label4.TabIndex = 3;
+            this.label4.Text = " - менее 7 дней";
+            // 
             // Orders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1313, 696);
+            this.ClientSize = new System.Drawing.Size(1313, 788);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.ShowAllInfo);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.quarterForReport);
             this.Controls.Add(this.getReport);
@@ -155,5 +215,10 @@ namespace Kursovaya.Administrator
         private System.Windows.Forms.ComboBox quarterForReport;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox ShowAllInfo;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label4;
     }
 }
