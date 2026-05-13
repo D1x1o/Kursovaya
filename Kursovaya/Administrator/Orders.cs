@@ -48,7 +48,8 @@ namespace Kursovaya.Administrator
         private void Return_Click(object sender, EventArgs e) // обработка нажатия на кнопку "Возврат" в выпадающем меню
         {
             int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["idorder"].Value); // получаем айди заказа с которым работаем
-            ReturnOrder EO = new ReturnOrder(id); // эзмепляр класса возврата заказа
+            string status = dataGridView1.SelectedRows[0].Cells["Статус"].Value.ToString(); // получаем айди заказа с которым работаем
+            ReturnOrder EO = new ReturnOrder(id, status); // эзмепляр класса возврата заказа
             EO.ShowDialog(); // отображаем форму
         }
 
@@ -749,6 +750,15 @@ LEFT JOIN thermo_interface ti ON ti.id = o.id_thermo_interface
                         dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor =
                             Color.FromArgb(255, 245, 200);
                     }
+                }
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Статус")
+            {
+                //MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells["Статус"].Value.ToString());
+                if (e.Value != null && dataGridView1.Rows[e.RowIndex].Cells["Статус"].Value.ToString() == "Возвращен")
+                {
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray;
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.DarkGray;
                 }
             }
         }

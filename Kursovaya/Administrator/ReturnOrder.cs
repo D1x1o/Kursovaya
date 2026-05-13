@@ -1,39 +1,51 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Word;
+using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace Kursovaya.Administrator
 {
     public partial class ReturnOrder : Form
     {
+        string OrderStatus;
+        bool returnAccept = true; 
         DateTime today = DateTime.Today;
         DateTime orderDate;
+        int orderId;
         bool build = false;
         string connStr = ConnectionString.GetConnectionString();
-        public ReturnOrder(int order_id)
+        public ReturnOrder(int order_id, string status)
         {
+            orderId = order_id;
+            OrderStatus = status;
             InitializeComponent();
+            this.MinimumSize = new Size(872, 348);
+            this.MaximumSize = new Size(1141, 820);
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.RowHeadersVisible = false;
             ShowOrderDetail(order_id);
-            if(build) MessageBox.Show("Так как была выполнена сборка возврат возможен только в случае неисправности какого либо компонента!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            if((today - orderDate).TotalDays >= 14) MessageBox.Show("С дня заказа прошло 14 дней!\nВозврат нельзя выполнить!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if ((today - orderDate).TotalDays >= 14) MessageBox.Show("С дня заказа прошло 14 дней!\nВозврат нельзя выполнить!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information); returnAccept = false;
+            if (build) MessageBox.Show("Так как была выполнена сборка возврат возможен только в случае неисправности какого либо компонента!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
+        
         public void ShowOrderDetail(int order_id)
         {
             try
             {
-                DataTable dt = new DataTable();
+                System.Data.DataTable dt = new System.Data.DataTable();
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
+                    conn.Open();
                     string query = $@"SELECT  
     o.idorder as idorder,
     o.extra_items,
@@ -126,7 +138,7 @@ ORDER BY o.idorder ;";
                 }
                 foreach (DataRow row in dt.Rows)
                 {
-                    orderDate = Convert.ToDateTime(row["ordertime"].ToString());
+                    orderDate = Convert.ToDateTime(row["Дата заказа"].ToString());
                     if(row["Сборка"].ToString() == "Да") build = true;
                     dataGridView1.Columns.Add("prodType","Тип товара");
                     dataGridView1.Columns.Add("model", "Модель");
@@ -177,6 +189,71 @@ ORDER BY o.idorder ;";
                 }
             }
             catch (Exception e) { MessageBox.Show(e.Message); }
+        }
+        string produser, character, category, model;
+
+        private void returnProducts_Click(object sender, EventArgs e)
+        {
+            if (OrderStatus == "Удалён" || OrderStatus == "Отменён" || OrderStatus == "Возвращен") { MessageBox.Show("Заказ ранее был возвращён или отменён!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information); } 
+            if (string.IsNullOrEmpty(textBoxReturn.Text)) return;
+            if (returnAccept) MessageBox.Show("С дня заказа прошло 14 дней!\nВозврат нельзя выполнить!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DialogResult dr =  MessageBox.Show("Вы уверены что хотите вернуть товар(ы)?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(dr == DialogResult.Yes)
+            {
+                try
+                {
+                    using (var conn = new MySqlConnection(connStr))
+                    {
+                        conn.Open();
+                        string query = "UPDATE ";
+                        switch (category)
+                        {
+                            case "Процессор":               query += "processors ";         break;
+                            case "Материнская плата":       query += "motherboards ";       break;
+                            case "Видеокарта":              query += "videocards ";         break;
+                            case "ОЗУ":                     query += "ram ";                break;
+                            case "Кулер ЦПУ":               query += "cpu_cooler ";         break;
+                            case "Корпус":                  query += "cases ";              break;
+                            case "Вентиляторы корпуса":     query += "case_coolers ";       break;
+                            case "Накопитель":              query += "storage ";            break;
+                            case "Блок питания":            query += "power_supplier ";     break;
+                            case "Термопаста":              query += "thermo_interface ";   break;
+                        }
+                        query += $"SET inStock = inStock + {Convert.ToInt32(numericReturn.Value)} WHERE model = '{model}' and ";
+                        if (category == "Материнская плата") query += $" vender = '{produser}'";
+                        else query += $" produser = '{produser}'";
+                        MySqlCommand cmd = new MySqlCommand(query, conn);   
+                        int returnFromDB = cmd.ExecuteNonQuery();
+                        if (returnFromDB > 0)
+                        {
+                            string query2 = $"UPDATE `db95`.`order` SET `status` = '8' WHERE (`idorder` = {orderId}); ";
+                            MySqlCommand cmd2 = new MySqlCommand(query2, conn);
+                            int res = cmd2.ExecuteNonQuery();
+                            if (res > 0)
+                            {
+                                MessageBox.Show("Возврат успешно выполнен! Статус заказа изменён!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                            
+                    }
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            model = dataGridView1.Rows[e.RowIndex].Cells["model"].Value.ToString();
+            category = dataGridView1.Rows[e.RowIndex].Cells["prodType"].Value.ToString();
+            character = dataGridView1.Rows[e.RowIndex].Cells["character"].Value.ToString();
+            produser = dataGridView1.Rows[e.RowIndex].Cells["produser"].Value.ToString();
+            textBoxReturn.Text = dataGridView1.Rows[e.RowIndex].Cells["produser"].Value.ToString() + " " + dataGridView1.Rows[e.RowIndex].Cells["model"].Value.ToString();
+            numericReturn.Value = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["count"].Value);
+            numericReturn.Maximum = numericReturn.Value;
         }
     }
 }
