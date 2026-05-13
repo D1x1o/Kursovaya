@@ -38,11 +38,18 @@ namespace Kursovaya.Administrator
             // добавляем в выпадающее меню элементы
             rowMenu.Items.Add("Редактировать", null, Edit_Click);
             rowMenu.Items.Add("Получить чек", null, Check_Click);
-            
+            rowMenu.Items.Add("Возврат", null, Return_Click);
+
             dataGridView1.CellMouseDown += dataGridView1_CellMouseDown; // подписываемся на событие нажатия на нажатие на ячейку
             LoadOrders(); // отображаем заказы
             FillQuarterComboBox();
 
+        }
+        private void Return_Click(object sender, EventArgs e) // обработка нажатия на кнопку "Возврат" в выпадающем меню
+        {
+            int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["idorder"].Value); // получаем айди заказа с которым работаем
+            ReturnOrder EO = new ReturnOrder(id); // эзмепляр класса возврата заказа
+            EO.ShowDialog(); // отображаем форму
         }
 
         private void FillQuarterComboBox() // функция запоняет выпадающий список кварталами года для получения отчёта

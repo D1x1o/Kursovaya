@@ -147,6 +147,12 @@
     <Compile Include="Administrator\AdminSettings.Designer.cs">
       <DependentUpon>AdminSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Administrator\ReturnOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Administrator\ReturnOrder.Designer.cs">
+      <DependentUpon>ReturnOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Administrator\ImportExport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -310,6 +316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Administrator\Prod.resx">
       <DependentUpon>Prod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Administrator\ReturnOrder.resx">
+      <DependentUpon>ReturnOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Administrator\Users.resx">
       <DependentUpon>Users.cs</DependentUpon>
