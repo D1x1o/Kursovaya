@@ -220,6 +220,12 @@ ORDER BY o.idorder ;";
                             case "Термопаста":              query += "thermo_interface ";   break;
                         }
                         query += $"SET inStock = inStock + {Convert.ToInt32(numericReturn.Value)} WHERE model = '{model}' and ";
+                        if (category == "Видеокарта") query += $"memory = {Convert.ToInt32(character)} and ";
+                        if (category == "ОЗУ" || category == "Накопитель") query += $"capacity_gb = {Convert.ToInt32(character)} and ";
+                        if (category == "Вентиляторы корпуса") query += $"scale = {Convert.ToInt32(character)} and ";
+                        if (category == "Блок питания") query += $"power = {Convert.ToInt32(character)} and ";
+
+
                         if (category == "Материнская плата") query += $" vender = '{produser}'";
                         else query += $" produser = '{produser}'";
                         MySqlCommand cmd = new MySqlCommand(query, conn);   
@@ -249,7 +255,7 @@ ORDER BY o.idorder ;";
         {
             model = dataGridView1.Rows[e.RowIndex].Cells["model"].Value.ToString();
             category = dataGridView1.Rows[e.RowIndex].Cells["prodType"].Value.ToString();
-            character = dataGridView1.Rows[e.RowIndex].Cells["character"].Value.ToString();
+            character = dataGridView1.Rows[e.RowIndex].Cells["character"].Value.ToString().Replace("ГБ","").Replace("мм","").Replace("ВТ","").Replace(" ","");
             produser = dataGridView1.Rows[e.RowIndex].Cells["produser"].Value.ToString();
             textBoxReturn.Text = dataGridView1.Rows[e.RowIndex].Cells["produser"].Value.ToString() + " " + dataGridView1.Rows[e.RowIndex].Cells["model"].Value.ToString();
             numericReturn.Value = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["count"].Value);
