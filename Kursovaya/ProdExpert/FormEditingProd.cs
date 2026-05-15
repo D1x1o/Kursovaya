@@ -24,7 +24,7 @@ namespace Kursovaya.ProdExpert
         {
             globalIdProduct = idProduct;
             if (theme == "Процессоры") { theme = "processors"; }
-            else if (theme == "Материские платы") { theme = "motherboards"; }
+            else if (theme == "Материнские платы") { theme = "motherboards"; }
             else if (theme == "Видеокарты") { theme = "videocards"; }
             else if (theme == "Кулеры") { theme = "cpu_cooler"; }
             else if (theme == "Корпусы") { theme = "cases"; }

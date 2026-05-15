@@ -18,13 +18,32 @@ namespace Kursovaya
     public partial class Auth : Form
     {
         int AuthAtt = 0; // количество попыток входа
-
+        private Timer blockTimer = new Timer();
+        private int blockSeconds = 10;
         public Auth()
         {
             InitializeComponent();
             TestDataBaseConn();
             pwdTextBox.UseSystemPasswordChar = true; // скрываем пароль
             CopyDefaultImagesToAppData(); // метод копирования изображений
+            blockTimer.Interval = 1000; // 1 секунда
+            blockTimer.Tick += BlockTimer_Tick;
+        }
+        private void BlockTimer_Tick(object sender, EventArgs e)
+        {
+            blockSeconds--;
+
+            LogInButton.Text = $"Подождите {blockSeconds} сек.";
+
+            if (blockSeconds <= 0)
+            {
+                blockTimer.Stop();
+
+                LogInButton.Enabled = true;
+                LogInButton.Text = "Войти";
+
+                blockSeconds = 10;
+            }
         }
         void CopyDefaultImagesToAppData() // метод копирования изображений по умолчанию из папки приложения в папку appdata
         {
@@ -90,9 +109,9 @@ namespace Kursovaya
             }
             if (inCaptcha) // если нужно решение капчи
             {
-                if(CaptchaTextBox.Text.Trim() == captchaAnewer) // проверяем корректность капчи
+                if (CaptchaTextBox.Text.Trim() == captchaAnewer) // проверяем корректность капчи
                 {
-                    inCaptcha = false; 
+                    inCaptcha = false;
                     CheckUser(); // проверяем пользователя
                     this.Height = 350; // уменьшаем форму если капча решена правильно
                 }
@@ -101,6 +120,9 @@ namespace Kursovaya
                     MessageBox.Show("Капча введена не верно!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error); // уведомление
                     Captcha(); loginTextBox.Text = ""; // генерируем новую капчу и затираем введённые данные для входа
                     pwdTextBox.Text = "";
+
+                    LogInButton.Enabled = false; // блокируем кнопку
+                    blockTimer.Start(); // запускаем таймер
                 }
             }
             else 
@@ -261,6 +283,7 @@ namespace Kursovaya
         private void ReCaptcha_Click(object sender, EventArgs e) // обработчик кнопки перегенерации капчи
         {
             Captcha();
+            CaptchaTextBox.Text = "";
         }
 
 

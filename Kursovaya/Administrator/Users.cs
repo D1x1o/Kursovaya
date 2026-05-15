@@ -500,7 +500,6 @@ namespace Kursovaya.Administrator
                 res += letters[r.Next(0,62)];
             }
             userPasswordTextBox.Text = res;
-            userPasswordConfirmTextBox.Text = res;
         }
     }
 }

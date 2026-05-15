@@ -105,9 +105,9 @@ namespace Kursovaya
             this.LogInButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.LogInButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LogInButton.ForeColor = System.Drawing.Color.Black;
-            this.LogInButton.Location = new System.Drawing.Point(62, 257);
+            this.LogInButton.Location = new System.Drawing.Point(41, 257);
             this.LogInButton.Name = "LogInButton";
-            this.LogInButton.Size = new System.Drawing.Size(129, 42);
+            this.LogInButton.Size = new System.Drawing.Size(177, 42);
             this.LogInButton.TabIndex = 3;
             this.LogInButton.Text = "Войти";
             this.LogInButton.UseVisualStyleBackColor = false;
@@ -115,7 +115,8 @@ namespace Kursovaya
             // 
             // CaptchaTextBox
             // 
-            this.CaptchaTextBox.Location = new System.Drawing.Point(41, 435);
+            this.CaptchaTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.CaptchaTextBox.Location = new System.Drawing.Point(41, 439);
             this.CaptchaTextBox.Name = "CaptchaTextBox";
             this.CaptchaTextBox.Size = new System.Drawing.Size(106, 29);
             this.CaptchaTextBox.TabIndex = 6;
@@ -124,7 +125,7 @@ namespace Kursovaya
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(38, 307);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(109, 18);
@@ -168,12 +169,14 @@ namespace Kursovaya
             // 
             // ReCaptcha
             // 
+            this.ReCaptcha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
+            this.ReCaptcha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ReCaptcha.Image = global::Kursovaya.Properties.Resources._83733882;
-            this.ReCaptcha.Location = new System.Drawing.Point(153, 435);
+            this.ReCaptcha.Location = new System.Drawing.Point(153, 437);
             this.ReCaptcha.Name = "ReCaptcha";
-            this.ReCaptcha.Size = new System.Drawing.Size(55, 29);
+            this.ReCaptcha.Size = new System.Drawing.Size(59, 35);
             this.ReCaptcha.TabIndex = 7;
-            this.ReCaptcha.UseVisualStyleBackColor = true;
+            this.ReCaptcha.UseVisualStyleBackColor = false;
             this.ReCaptcha.Click += new System.EventHandler(this.ReCaptcha_Click);
             // 
             // CaptcaImg
@@ -189,7 +192,7 @@ namespace Kursovaya
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(254, 309);
+            this.ClientSize = new System.Drawing.Size(254, 311);
             this.Controls.Add(this.ShowPwdButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label5);

@@ -186,9 +186,8 @@ namespace Kursovaya.Administrator
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(12, 478);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(218, 24);
+            this.label4.Size = new System.Drawing.Size(0, 24);
             this.label4.TabIndex = 22;
-            this.label4.Text = "Товаров на странице:  ";
             // 
             // Prod
             // 

@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -71,7 +72,7 @@ namespace Kursovaya.Administrator
         }
         public void mathProdInCategory()
         {
-            label4.Text = "Всего товаров: " + dataGridView1.RowCount;
+            
         }
         private void fillDGV() // метод заполнения dataGridView данными
         {
@@ -185,6 +186,7 @@ namespace Kursovaya.Administrator
                         query2 = $"SELECT count(*) FROM {theme} WHERE concat(produser, space(1), model) LIKE '%{SearchTextBox.Text}%'"; // подсчет записей по условию поиска
                     }
                     MySqlCommand cmd = new MySqlCommand(query2, conn); // создание команды
+                    label4.Text = $"Всего товаров: {cmd.ExecuteScalar().ToString()}";
                     allPage = Convert.ToInt32(Math.Ceiling((double)Convert.ToInt32(cmd.ExecuteScalar()) / items)); // расчет количества страниц (общее кол-во / 10, округление вверх)
                 }
             }
