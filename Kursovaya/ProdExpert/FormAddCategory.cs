@@ -33,15 +33,10 @@ namespace Kursovaya.ProdExpert
 
             dgvColumns.AutoGenerateColumns = false; // отключение автоматической генерации колонок
             dgvColumns.AllowUserToAddRows = true; // разрешение добавления строк пользователем
-            dgvColumns.BackgroundColor = Color.FromArgb(97, 91, 104); // установка цвета фона таблицы
-            dgvColumns.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104); // цвет фона ячеек
-            dgvColumns.DefaultCellStyle.ForeColor = Color.White; // цвет текста в ячейках
-            dgvColumns.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104); // цвет фона заголовков
-            dgvColumns.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; // цвет текста заголовков
+            dgvColumns.DefaultCellStyle.ForeColor = Color.Black; // цвет текста в ячейках
             dgvColumns.EnableHeadersVisualStyles = false; // отключение визуальных стилей для заголовков
             dgvColumns.RowHeadersVisible = false; // скрытие заголовков строк
             dgvColumns.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // выделение всей строки
-            dgvColumns.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125); // цвет выделенной строки
 
             // Имя столбца (системное)
             var colName = new DataGridViewTextBoxColumn // создание колонки для системного имени поля

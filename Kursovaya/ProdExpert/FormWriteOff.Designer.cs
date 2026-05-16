@@ -55,6 +55,7 @@
             // 
             this.itemNameLabel.AutoSize = true;
             this.itemNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.itemNameLabel.ForeColor = System.Drawing.Color.Black;
             this.itemNameLabel.Location = new System.Drawing.Point(10, 5);
             this.itemNameLabel.Name = "itemNameLabel";
             this.itemNameLabel.Size = new System.Drawing.Size(40, 24);
@@ -65,7 +66,7 @@
             // 
             this.IncButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.IncButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.IncButton.ForeColor = System.Drawing.Color.White;
+            this.IncButton.ForeColor = System.Drawing.Color.Black;
             this.IncButton.Location = new System.Drawing.Point(195, 58);
             this.IncButton.Name = "IncButton";
             this.IncButton.Size = new System.Drawing.Size(73, 40);
@@ -78,7 +79,7 @@
             // 
             this.DecButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.DecButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DecButton.ForeColor = System.Drawing.Color.White;
+            this.DecButton.ForeColor = System.Drawing.Color.Black;
             this.DecButton.Location = new System.Drawing.Point(14, 58);
             this.DecButton.Name = "DecButton";
             this.DecButton.Size = new System.Drawing.Size(73, 40);
@@ -91,7 +92,7 @@
             // 
             this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.ForeColor = System.Drawing.Color.Black;
             this.button3.Location = new System.Drawing.Point(273, 124);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(102, 40);
@@ -104,6 +105,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(12, 32);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(367, 20);
@@ -114,7 +116,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(387, 176);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.DecButton);

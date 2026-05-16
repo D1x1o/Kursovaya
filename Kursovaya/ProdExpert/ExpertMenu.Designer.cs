@@ -42,7 +42,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.ProdInStock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ProdInStock.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ProdInStock.ForeColor = System.Drawing.Color.White;
+            this.ProdInStock.ForeColor = System.Drawing.Color.Black;
             this.ProdInStock.Location = new System.Drawing.Point(47, 23);
             this.ProdInStock.Name = "ProdInStock";
             this.ProdInStock.Size = new System.Drawing.Size(227, 62);
@@ -55,7 +55,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.FormDocSupplyProd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.FormDocSupplyProd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.FormDocSupplyProd.ForeColor = System.Drawing.Color.White;
+            this.FormDocSupplyProd.ForeColor = System.Drawing.Color.Black;
             this.FormDocSupplyProd.Location = new System.Drawing.Point(47, 91);
             this.FormDocSupplyProd.Name = "FormDocSupplyProd";
             this.FormDocSupplyProd.Size = new System.Drawing.Size(227, 78);
@@ -68,7 +68,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.addPic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.addPic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addPic.ForeColor = System.Drawing.Color.White;
+            this.addPic.ForeColor = System.Drawing.Color.Black;
             this.addPic.Location = new System.Drawing.Point(47, 175);
             this.addPic.Name = "addPic";
             this.addPic.Size = new System.Drawing.Size(227, 82);
@@ -81,7 +81,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.EditProdButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.EditProdButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.EditProdButton.ForeColor = System.Drawing.Color.White;
+            this.EditProdButton.ForeColor = System.Drawing.Color.Black;
             this.EditProdButton.Location = new System.Drawing.Point(47, 263);
             this.EditProdButton.Name = "EditProdButton";
             this.EditProdButton.Size = new System.Drawing.Size(227, 82);
@@ -94,7 +94,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.ForeColor = System.Drawing.Color.Black;
             this.button1.Location = new System.Drawing.Point(47, 351);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(227, 82);
@@ -107,7 +107,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.ForeColor = System.Drawing.Color.Black;
             this.button2.Location = new System.Drawing.Point(47, 439);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(227, 82);
@@ -120,7 +120,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(315, 536);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -129,6 +129,7 @@ namespace Kursovaya.ProdExpert
             this.Controls.Add(this.FormDocSupplyProd);
             this.Controls.Add(this.ProdInStock);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ForeColor = System.Drawing.SystemColors.Control;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);

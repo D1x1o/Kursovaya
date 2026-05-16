@@ -61,6 +61,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(503, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 20);
@@ -73,9 +74,8 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dataGridView1.Location = new System.Drawing.Point(12, 48);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(768, 329);
@@ -99,6 +99,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(8, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(140, 20);
@@ -109,6 +110,7 @@
             // 
             this.BackPageButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.BackPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BackPageButton.ForeColor = System.Drawing.Color.Black;
             this.BackPageButton.Location = new System.Drawing.Point(647, 387);
             this.BackPageButton.Name = "BackPageButton";
             this.BackPageButton.Size = new System.Drawing.Size(63, 40);
@@ -121,6 +123,7 @@
             // 
             this.ForwardPageButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ForwardPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ForwardPageButton.ForeColor = System.Drawing.Color.Black;
             this.ForwardPageButton.Location = new System.Drawing.Point(716, 387);
             this.ForwardPageButton.Name = "ForwardPageButton";
             this.ForwardPageButton.Size = new System.Drawing.Size(63, 40);
@@ -132,6 +135,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(445, 397);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 20);
@@ -141,6 +145,7 @@
             // actualPageLabel
             // 
             this.actualPageLabel.AutoSize = true;
+            this.actualPageLabel.ForeColor = System.Drawing.Color.Black;
             this.actualPageLabel.Location = new System.Drawing.Point(534, 397);
             this.actualPageLabel.Name = "actualPageLabel";
             this.actualPageLabel.Size = new System.Drawing.Size(18, 20);
@@ -150,6 +155,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(558, 397);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(26, 20);
@@ -159,6 +165,7 @@
             // allPageLabel
             // 
             this.allPageLabel.AutoSize = true;
+            this.allPageLabel.ForeColor = System.Drawing.Color.Black;
             this.allPageLabel.Location = new System.Drawing.Point(590, 397);
             this.allPageLabel.Name = "allPageLabel";
             this.allPageLabel.Size = new System.Drawing.Size(47, 20);
@@ -170,6 +177,7 @@
             this.deletePicButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.deletePicButton.Enabled = false;
             this.deletePicButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deletePicButton.ForeColor = System.Drawing.Color.Black;
             this.deletePicButton.Location = new System.Drawing.Point(12, 381);
             this.deletePicButton.Name = "deletePicButton";
             this.deletePicButton.Size = new System.Drawing.Size(158, 52);
@@ -182,7 +190,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(792, 439);
             this.Controls.Add(this.deletePicButton);
             this.Controls.Add(this.allPageLabel);

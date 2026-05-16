@@ -42,7 +42,7 @@ namespace Kursovaya.Administrator
             // 
             this.ShowUsers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowUsers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ShowUsers.ForeColor = System.Drawing.Color.White;
+            this.ShowUsers.ForeColor = System.Drawing.Color.Black;
             this.ShowUsers.Location = new System.Drawing.Point(74, 28);
             this.ShowUsers.Margin = new System.Windows.Forms.Padding(6);
             this.ShowUsers.Name = "ShowUsers";
@@ -56,7 +56,7 @@ namespace Kursovaya.Administrator
             // 
             this.ShowOrders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowOrders.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ShowOrders.ForeColor = System.Drawing.Color.White;
+            this.ShowOrders.ForeColor = System.Drawing.Color.Black;
             this.ShowOrders.Location = new System.Drawing.Point(74, 82);
             this.ShowOrders.Margin = new System.Windows.Forms.Padding(6);
             this.ShowOrders.Name = "ShowOrders";
@@ -70,7 +70,7 @@ namespace Kursovaya.Administrator
             // 
             this.ShowProducts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowProducts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ShowProducts.ForeColor = System.Drawing.Color.White;
+            this.ShowProducts.ForeColor = System.Drawing.Color.Black;
             this.ShowProducts.Location = new System.Drawing.Point(74, 136);
             this.ShowProducts.Margin = new System.Windows.Forms.Padding(6);
             this.ShowProducts.Name = "ShowProducts";
@@ -84,7 +84,7 @@ namespace Kursovaya.Administrator
             // 
             this.exportImport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.exportImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exportImport.ForeColor = System.Drawing.Color.White;
+            this.exportImport.ForeColor = System.Drawing.Color.Black;
             this.exportImport.Location = new System.Drawing.Point(74, 190);
             this.exportImport.Margin = new System.Windows.Forms.Padding(6);
             this.exportImport.Name = "exportImport";
@@ -109,7 +109,7 @@ namespace Kursovaya.Administrator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(320, 294);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.exportImport);

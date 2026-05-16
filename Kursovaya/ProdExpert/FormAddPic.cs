@@ -37,14 +37,9 @@ namespace Kursovaya.ProdExpert
             SetComboBox(); // отображаем в выпадающем списке все категории
             CheckButtons(); // проверяем состояние кнопок
             // настройки дизайна DGV
-            dataGridView1.BackgroundColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.DefaultCellStyle.ForeColor = Color.White;
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(97, 91, 104);
-            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.FromArgb(77, 150, 125);
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.ReadOnly = true;
             dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;

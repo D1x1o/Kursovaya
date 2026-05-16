@@ -38,6 +38,7 @@ namespace Kursovaya.User
             // 
             this.OpenUserProdButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.OpenUserProdButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenUserProdButton.ForeColor = System.Drawing.Color.Black;
             this.OpenUserProdButton.Location = new System.Drawing.Point(39, 15);
             this.OpenUserProdButton.Margin = new System.Windows.Forms.Padding(6);
             this.OpenUserProdButton.Name = "OpenUserProdButton";
@@ -51,6 +52,7 @@ namespace Kursovaya.User
             // 
             this.OpenUserOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.OpenUserOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenUserOrder.ForeColor = System.Drawing.Color.Black;
             this.OpenUserOrder.Location = new System.Drawing.Point(39, 69);
             this.OpenUserOrder.Margin = new System.Windows.Forms.Padding(6);
             this.OpenUserOrder.Name = "OpenUserOrder";
@@ -64,7 +66,7 @@ namespace Kursovaya.User
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(223, 207);
             this.Controls.Add(this.OpenUserOrder);
             this.Controls.Add(this.OpenUserProdButton);

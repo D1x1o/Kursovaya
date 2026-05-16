@@ -57,7 +57,7 @@
             // 
             this.btnAddColumn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.btnAddColumn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddColumn.ForeColor = System.Drawing.Color.White;
+            this.btnAddColumn.ForeColor = System.Drawing.Color.Black;
             this.btnAddColumn.Location = new System.Drawing.Point(11, 455);
             this.btnAddColumn.Name = "btnAddColumn";
             this.btnAddColumn.Size = new System.Drawing.Size(224, 60);
@@ -84,7 +84,7 @@
             // 
             this.btnCreateTable.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.btnCreateTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCreateTable.ForeColor = System.Drawing.Color.White;
+            this.btnCreateTable.ForeColor = System.Drawing.Color.Black;
             this.btnCreateTable.Location = new System.Drawing.Point(561, 455);
             this.btnCreateTable.Name = "btnCreateTable";
             this.btnCreateTable.Size = new System.Drawing.Size(224, 60);
@@ -96,7 +96,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(8, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(144, 24);
@@ -107,8 +107,8 @@
             // 
             this.dgvColumns.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvColumns.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvColumns.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dgvColumns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvColumns.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dgvColumns.Location = new System.Drawing.Point(11, 78);
             this.dgvColumns.Name = "dgvColumns";
             this.dgvColumns.Size = new System.Drawing.Size(770, 371);
@@ -132,7 +132,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(237, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(267, 24);
@@ -143,7 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(797, 529);
             this.Controls.Add(this.dgvColumns);
             this.Controls.Add(this.label2);

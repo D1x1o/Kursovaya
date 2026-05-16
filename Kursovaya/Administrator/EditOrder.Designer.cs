@@ -46,7 +46,7 @@
             this.addressTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.addressTextBox.ForeColor = System.Drawing.Color.White;
             this.addressTextBox.Location = new System.Drawing.Point(15, 62);
-            this.addressTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.addressTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.addressTextBox.MaxLength = 255;
             this.addressTextBox.Name = "addressTextBox";
             this.addressTextBox.Size = new System.Drawing.Size(343, 29);
@@ -55,6 +55,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(11, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(156, 24);
@@ -65,6 +66,7 @@
             // 
             this.numberOfOrderLabel.AutoSize = true;
             this.numberOfOrderLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numberOfOrderLabel.ForeColor = System.Drawing.Color.Black;
             this.numberOfOrderLabel.Location = new System.Drawing.Point(12, 8);
             this.numberOfOrderLabel.Name = "numberOfOrderLabel";
             this.numberOfOrderLabel.Size = new System.Drawing.Size(104, 25);
@@ -86,6 +88,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(13, 162);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(136, 24);
@@ -105,6 +108,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(11, 97);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(162, 24);
@@ -121,6 +125,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(14, 241);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(233, 24);
@@ -131,7 +136,7 @@
             // 
             this.saveChangesButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.saveChangesButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveChangesButton.ForeColor = System.Drawing.Color.White;
+            this.saveChangesButton.ForeColor = System.Drawing.Color.Black;
             this.saveChangesButton.Location = new System.Drawing.Point(207, 371);
             this.saveChangesButton.Name = "saveChangesButton";
             this.saveChangesButton.Size = new System.Drawing.Size(151, 65);
@@ -144,7 +149,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(374, 448);
             this.Controls.Add(this.saveChangesButton);
             this.Controls.Add(this.monthCalendar1);
@@ -160,7 +165,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "EditOrder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

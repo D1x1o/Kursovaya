@@ -39,8 +39,8 @@ namespace Kursovaya.User
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dataGridView1.Location = new System.Drawing.Point(15, 15);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(6);
             this.dataGridView1.Name = "dataGridView1";
@@ -53,6 +53,7 @@ namespace Kursovaya.User
             // 
             this.CancelOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.CancelOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CancelOrder.ForeColor = System.Drawing.Color.Black;
             this.CancelOrder.Location = new System.Drawing.Point(791, 501);
             this.CancelOrder.Margin = new System.Windows.Forms.Padding(6);
             this.CancelOrder.Name = "CancelOrder";
@@ -66,7 +67,7 @@ namespace Kursovaya.User
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(978, 558);
             this.Controls.Add(this.CancelOrder);
             this.Controls.Add(this.dataGridView1);

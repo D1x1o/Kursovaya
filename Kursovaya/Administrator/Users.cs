@@ -25,14 +25,8 @@ namespace Kursovaya.Administrator
             fillComboBox(); // Заполняем выпадающие списки
             filldgv(); // Отображаем всех пользователей
             // Настраиваем дизайн для dataGridView
-            dataGridView1.BackgroundColor = Color.Silver;
-            dataGridView1.DefaultCellStyle.BackColor = Color.Silver;
-            dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Silver;
-            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.DefaultCellStyle.SelectionBackColor = Color.Gray;
             dataGridView1.RowHeadersVisible = false;
             this.MinimumSize = new Size(1150, 428);
             this.MaximumSize = new Size(1800, 900);

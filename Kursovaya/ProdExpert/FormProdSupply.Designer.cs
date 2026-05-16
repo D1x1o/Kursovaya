@@ -46,9 +46,8 @@ namespace Kursovaya.ProdExpert
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dataGridView1.Location = new System.Drawing.Point(12, 71);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -64,6 +63,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.MakeDoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.MakeDoc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MakeDoc.ForeColor = System.Drawing.Color.Black;
             this.MakeDoc.Location = new System.Drawing.Point(657, 560);
             this.MakeDoc.Name = "MakeDoc";
             this.MakeDoc.Size = new System.Drawing.Size(276, 53);
@@ -86,6 +86,7 @@ namespace Kursovaya.ProdExpert
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(12, 6);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(231, 24);
@@ -96,6 +97,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.resetButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.resetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.resetButton.ForeColor = System.Drawing.Color.Black;
             this.resetButton.Location = new System.Drawing.Point(620, 9);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(313, 56);
@@ -119,6 +121,7 @@ namespace Kursovaya.ProdExpert
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(332, 6);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(108, 24);
@@ -129,7 +132,7 @@ namespace Kursovaya.ProdExpert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(945, 625);
             this.Controls.Add(this.supplierComboBox);
             this.Controls.Add(this.label2);

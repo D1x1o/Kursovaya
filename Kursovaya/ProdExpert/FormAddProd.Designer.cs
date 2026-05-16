@@ -55,6 +55,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(17, 4);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(105, 24);
@@ -67,9 +68,8 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dataGridView1.Location = new System.Drawing.Point(288, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(729, 516);
@@ -89,6 +89,7 @@
             // 
             this.addPic.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.addPic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addPic.ForeColor = System.Drawing.Color.Black;
             this.addPic.Location = new System.Drawing.Point(21, 335);
             this.addPic.Name = "addPic";
             this.addPic.Size = new System.Drawing.Size(186, 61);
@@ -101,6 +102,7 @@
             // 
             this.addProd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.addProd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addProd.ForeColor = System.Drawing.Color.Black;
             this.addProd.Location = new System.Drawing.Point(827, 534);
             this.addProd.Name = "addProd";
             this.addProd.Size = new System.Drawing.Size(186, 61);
@@ -113,7 +115,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1025, 606);
             this.Controls.Add(this.addProd);
             this.Controls.Add(this.addPic);

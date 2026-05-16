@@ -63,9 +63,8 @@ namespace Kursovaya.User
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dataGridView1.Location = new System.Drawing.Point(26, 182);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -80,7 +79,7 @@ namespace Kursovaya.User
             this.ShowProc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowProc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowProc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowProc.ForeColor = System.Drawing.Color.White;
+            this.ShowProc.ForeColor = System.Drawing.Color.Black;
             this.ShowProc.Location = new System.Drawing.Point(26, 23);
             this.ShowProc.Name = "ShowProc";
             this.ShowProc.Size = new System.Drawing.Size(176, 36);
@@ -94,7 +93,7 @@ namespace Kursovaya.User
             this.ShowVideoCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowVideoCards.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowVideoCards.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowVideoCards.ForeColor = System.Drawing.Color.White;
+            this.ShowVideoCards.ForeColor = System.Drawing.Color.Black;
             this.ShowVideoCards.Location = new System.Drawing.Point(26, 65);
             this.ShowVideoCards.Name = "ShowVideoCards";
             this.ShowVideoCards.Size = new System.Drawing.Size(176, 36);
@@ -108,7 +107,7 @@ namespace Kursovaya.User
             this.ShowMotherBoard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowMotherBoard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowMotherBoard.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowMotherBoard.ForeColor = System.Drawing.Color.White;
+            this.ShowMotherBoard.ForeColor = System.Drawing.Color.Black;
             this.ShowMotherBoard.Location = new System.Drawing.Point(208, 23);
             this.ShowMotherBoard.Name = "ShowMotherBoard";
             this.ShowMotherBoard.Size = new System.Drawing.Size(177, 36);
@@ -122,7 +121,7 @@ namespace Kursovaya.User
             this.ShowRam.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowRam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowRam.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowRam.ForeColor = System.Drawing.Color.White;
+            this.ShowRam.ForeColor = System.Drawing.Color.Black;
             this.ShowRam.Location = new System.Drawing.Point(208, 65);
             this.ShowRam.Name = "ShowRam";
             this.ShowRam.Size = new System.Drawing.Size(177, 36);
@@ -136,7 +135,7 @@ namespace Kursovaya.User
             this.ShowDrivers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowDrivers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowDrivers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowDrivers.ForeColor = System.Drawing.Color.White;
+            this.ShowDrivers.ForeColor = System.Drawing.Color.Black;
             this.ShowDrivers.Location = new System.Drawing.Point(391, 23);
             this.ShowDrivers.Name = "ShowDrivers";
             this.ShowDrivers.Size = new System.Drawing.Size(175, 36);
@@ -150,7 +149,7 @@ namespace Kursovaya.User
             this.ShowPowerSuplier.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowPowerSuplier.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowPowerSuplier.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowPowerSuplier.ForeColor = System.Drawing.Color.White;
+            this.ShowPowerSuplier.ForeColor = System.Drawing.Color.Black;
             this.ShowPowerSuplier.Location = new System.Drawing.Point(391, 65);
             this.ShowPowerSuplier.Name = "ShowPowerSuplier";
             this.ShowPowerSuplier.Size = new System.Drawing.Size(175, 36);
@@ -164,7 +163,7 @@ namespace Kursovaya.User
             this.ShowCases.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowCases.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowCases.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowCases.ForeColor = System.Drawing.Color.White;
+            this.ShowCases.ForeColor = System.Drawing.Color.Black;
             this.ShowCases.Location = new System.Drawing.Point(572, 23);
             this.ShowCases.Name = "ShowCases";
             this.ShowCases.Size = new System.Drawing.Size(164, 36);
@@ -178,7 +177,7 @@ namespace Kursovaya.User
             this.ShowCaseFan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowCaseFan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowCaseFan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowCaseFan.ForeColor = System.Drawing.Color.White;
+            this.ShowCaseFan.ForeColor = System.Drawing.Color.Black;
             this.ShowCaseFan.Location = new System.Drawing.Point(742, 23);
             this.ShowCaseFan.Name = "ShowCaseFan";
             this.ShowCaseFan.Size = new System.Drawing.Size(183, 36);
@@ -192,7 +191,7 @@ namespace Kursovaya.User
             this.ShowCpuFan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowCpuFan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowCpuFan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowCpuFan.ForeColor = System.Drawing.Color.White;
+            this.ShowCpuFan.ForeColor = System.Drawing.Color.Black;
             this.ShowCpuFan.Location = new System.Drawing.Point(572, 65);
             this.ShowCpuFan.Name = "ShowCpuFan";
             this.ShowCpuFan.Size = new System.Drawing.Size(164, 36);
@@ -206,7 +205,7 @@ namespace Kursovaya.User
             this.ShowTermo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowTermo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ShowTermo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ShowTermo.ForeColor = System.Drawing.Color.White;
+            this.ShowTermo.ForeColor = System.Drawing.Color.Black;
             this.ShowTermo.Location = new System.Drawing.Point(742, 65);
             this.ShowTermo.Name = "ShowTermo";
             this.ShowTermo.Size = new System.Drawing.Size(183, 36);
@@ -220,7 +219,7 @@ namespace Kursovaya.User
             this.ShowCart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.ShowCart.Enabled = false;
             this.ShowCart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ShowCart.ForeColor = System.Drawing.Color.White;
+            this.ShowCart.ForeColor = System.Drawing.Color.Black;
             this.ShowCart.Location = new System.Drawing.Point(931, 23);
             this.ShowCart.Name = "ShowCart";
             this.ShowCart.Size = new System.Drawing.Size(159, 78);
@@ -269,7 +268,7 @@ namespace Kursovaya.User
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(722, 108);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 24);
@@ -279,7 +278,7 @@ namespace Kursovaya.User
             // filterLabel
             // 
             this.filterLabel.AutoSize = true;
-            this.filterLabel.ForeColor = System.Drawing.Color.White;
+            this.filterLabel.ForeColor = System.Drawing.Color.Black;
             this.filterLabel.Location = new System.Drawing.Point(492, 108);
             this.filterLabel.Name = "filterLabel";
             this.filterLabel.Size = new System.Drawing.Size(166, 24);
@@ -289,7 +288,7 @@ namespace Kursovaya.User
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.SystemColors.Control;
+            this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(26, 111);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(144, 24);
@@ -300,7 +299,7 @@ namespace Kursovaya.User
             // 
             this.btnResetFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.btnResetFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnResetFilter.ForeColor = System.Drawing.Color.White;
+            this.btnResetFilter.ForeColor = System.Drawing.Color.Black;
             this.btnResetFilter.Location = new System.Drawing.Point(931, 107);
             this.btnResetFilter.Name = "btnResetFilter";
             this.btnResetFilter.Size = new System.Drawing.Size(159, 63);
@@ -313,7 +312,7 @@ namespace Kursovaya.User
             // 
             this.resetSelectedItems.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.resetSelectedItems.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.resetSelectedItems.ForeColor = System.Drawing.Color.White;
+            this.resetSelectedItems.ForeColor = System.Drawing.Color.Black;
             this.resetSelectedItems.Location = new System.Drawing.Point(1100, 107);
             this.resetSelectedItems.Name = "resetSelectedItems";
             this.resetSelectedItems.Size = new System.Drawing.Size(159, 63);
@@ -324,7 +323,7 @@ namespace Kursovaya.User
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.anotherTablesСВ);
             this.panel1.Controls.Add(this.ShowRam);
@@ -355,7 +354,7 @@ namespace Kursovaya.User
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(1103, 35);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(146, 24);
