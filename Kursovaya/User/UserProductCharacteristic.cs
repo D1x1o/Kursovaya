@@ -32,6 +32,7 @@ namespace Kursovaya.User
 
             // настройки дизайна
             dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.DefaultCellStyle.ForeColor = Color.Black;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
         // функция отображения характеристик
