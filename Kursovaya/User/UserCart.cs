@@ -569,10 +569,7 @@ namespace Kursovaya.User
 
 
                     dataGridView1.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    if (dataGridView1.Rows.Count == 0)
-                    {
-                        MessageBox.Show("В корзине нет товаров!","Корзина", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    
                 }
                 else
                 {

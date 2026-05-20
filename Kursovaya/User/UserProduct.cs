@@ -1158,6 +1158,17 @@ namespace Kursovaya.User
                         ArrChecked["cpu_cooler"] = false;
                         ArrChecked["thermo_interface"] = false;
                         ArrChecked["case"] = false;
+                        checkedItems.Default.processors = false;
+                        checkedItems.Default.videocards = false;
+                        checkedItems.Default.motherboards = false;
+                        checkedItems.Default.ram = false;
+                        checkedItems.Default.storage = false;
+                        checkedItems.Default.power_supplier = false;
+                        checkedItems.Default.cases = false;
+                        checkedItems.Default.case_coolers = false;
+                        checkedItems.Default.cpu_cooler = false;
+                        checkedItems.Default.thermo_interface = false;
+                        //checkedItems.Default.'case' = false;
                     }
                 }
             }
@@ -1165,16 +1176,16 @@ namespace Kursovaya.User
         }
         private void buttonsColorUnchecked()
         {
-            ShowProc.ForeColor = Color.White; ShowProc.Text = "Процессоры"; 
-            ShowVideoCards.ForeColor = Color.White; ShowVideoCards.Text = "Видеокарты"; 
-            ShowMotherBoard.ForeColor = Color.White; ShowMotherBoard.Text = "Материнские платы"; 
-            ShowRam.ForeColor = Color.White; ShowRam.Text = "Оперативная память"; 
-            ShowDrivers.ForeColor = Color.White; ShowDrivers.Text = "Накопители"; 
-            ShowPowerSuplier.ForeColor = Color.White; ShowPowerSuplier.Text = "Блоки питания"; 
-            ShowCaseFan.ForeColor = Color.White; ShowCaseFan.Text = "Корпусные кулеры";
-            ShowCases.ForeColor = Color.White; ShowCases.Text = "Корпусы"; 
-            ShowCpuFan.ForeColor = Color.White; ShowCpuFan.Text = "Кулеры"; 
-            ShowTermo.ForeColor = Color.White; ShowTermo.Text = "Термопаста"; 
+            ShowProc.ForeColor = Color.Black; ShowProc.Text = "Процессоры"; 
+            ShowVideoCards.ForeColor = Color.Black; ShowVideoCards.Text = "Видеокарты"; 
+            ShowMotherBoard.ForeColor = Color.Black; ShowMotherBoard.Text = "Материнские платы"; 
+            ShowRam.ForeColor = Color.Black; ShowRam.Text = "Оперативная память"; 
+            ShowDrivers.ForeColor = Color.Black; ShowDrivers.Text = "Накопители"; 
+            ShowPowerSuplier.ForeColor = Color.Black; ShowPowerSuplier.Text = "Блоки питания"; 
+            ShowCaseFan.ForeColor = Color.Black; ShowCaseFan.Text = "Корпусные кулеры";
+            ShowCases.ForeColor = Color.Black; ShowCases.Text = "Корпусы"; 
+            ShowCpuFan.ForeColor = Color.Black; ShowCpuFan.Text = "Кулеры"; 
+            ShowTermo.ForeColor = Color.Black; ShowTermo.Text = "Термопаста"; 
 
         }
         private List<string> GetSelectedComponents()
@@ -1338,34 +1349,34 @@ namespace Kursovaya.User
         private void loadItemsAll()
         {
             if (checkedItems.Default.processors){ShowProc.ForeColor = Color.LightGreen; ShowProc.Text = "Процессоры✔"; checkedItems.Default.processors = true;}
-            else {ShowProc.ForeColor = Color.White; ShowProc.Text = "Процессоры"; checkedItems.Default.processors = false;}
+            else {ShowProc.ForeColor = Color.Black; ShowProc.Text = "Процессоры"; checkedItems.Default.processors = false;}
 
             if (checkedItems.Default.videocards){ShowVideoCards.ForeColor = Color.LightGreen; ShowVideoCards.Text = "Видеокарты✔"; checkedItems.Default.videocards = true;}
-            else { ShowVideoCards.ForeColor = Color.White; ShowVideoCards.Text = "Видеокарты"; checkedItems.Default.videocards = false; }
+            else { ShowVideoCards.ForeColor = Color.Black; ShowVideoCards.Text = "Видеокарты"; checkedItems.Default.videocards = false; }
 
             if (checkedItems.Default.motherboards) { ShowMotherBoard.ForeColor = Color.LightGreen; ShowMotherBoard.Text = "Материнские платы✔"; checkedItems.Default.motherboards = true; }
-            else { ShowMotherBoard.ForeColor = Color.White; ShowMotherBoard.Text = "Материнские платы"; checkedItems.Default.motherboards = false; }
+            else { ShowMotherBoard.ForeColor = Color.Black; ShowMotherBoard.Text = "Материнские платы"; checkedItems.Default.motherboards = false; }
 
             if (checkedItems.Default.ram) { ShowRam.ForeColor = Color.LightGreen; ShowRam.Text = "Оперативная память✔"; checkedItems.Default.ram = true; }
-            else { ShowRam.ForeColor = Color.White; ShowRam.Text = "Оперативная память"; checkedItems.Default.ram = false; }
+            else { ShowRam.ForeColor = Color.Black; ShowRam.Text = "Оперативная память"; checkedItems.Default.ram = false; }
 
             if (checkedItems.Default.storage) { ShowDrivers.ForeColor = Color.LightGreen; ShowDrivers.Text = "Накопители✔"; checkedItems.Default.storage = true; }
-            else { ShowDrivers.ForeColor = Color.White; ShowDrivers.Text = "Накопители"; checkedItems.Default.storage = false; }
+            else { ShowDrivers.ForeColor = Color.Black; ShowDrivers.Text = "Накопители"; checkedItems.Default.storage = false; }
 
             if (checkedItems.Default.power_supplier) { ShowPowerSuplier.ForeColor = Color.LightGreen; ShowPowerSuplier.Text = "Блоки питания✔"; checkedItems.Default.power_supplier = true; }
-            else { ShowPowerSuplier.ForeColor = Color.White; ShowPowerSuplier.Text = "Блоки питания"; checkedItems.Default.power_supplier = false; }
+            else { ShowPowerSuplier.ForeColor = Color.Black; ShowPowerSuplier.Text = "Блоки питания"; checkedItems.Default.power_supplier = false; }
 
             if (checkedItems.Default.case_coolers) { ShowCaseFan.ForeColor = Color.LightGreen; ShowCaseFan.Text = "Корпусные кулеры✔"; checkedItems.Default.case_coolers = true; }
-            else { ShowCaseFan.ForeColor = Color.White; ShowCaseFan.Text = "Корпусные кулеры"; checkedItems.Default.case_coolers = false; }
+            else { ShowCaseFan.ForeColor = Color.Black; ShowCaseFan.Text = "Корпусные кулеры"; checkedItems.Default.case_coolers = false; }
 
             if (checkedItems.Default.cases) { ShowCases.ForeColor = Color.LightGreen; ShowCases.Text = "Корпусы✔"; checkedItems.Default.cases = true; }
-            else { ShowCases.ForeColor = Color.White; ShowCases.Text = "Корпусы"; checkedItems.Default.cases = false; }
+            else { ShowCases.ForeColor = Color.Black; ShowCases.Text = "Корпусы"; checkedItems.Default.cases = false; }
 
             if (checkedItems.Default.cpu_cooler) { ShowCpuFan.ForeColor = Color.LightGreen; ShowCpuFan.Text = "Кулеры✔"; checkedItems.Default.cpu_cooler = true; }
-            else { ShowCpuFan.ForeColor = Color.White; ShowCpuFan.Text = "Кулеры"; checkedItems.Default.cpu_cooler = false; }
+            else { ShowCpuFan.ForeColor = Color.Black; ShowCpuFan.Text = "Кулеры"; checkedItems.Default.cpu_cooler = false; }
 
             if (checkedItems.Default.thermo_interface) { ShowTermo.ForeColor = Color.LightGreen; ShowTermo.Text = "Термопаста✔"; checkedItems.Default.thermo_interface = true; }
-            else { ShowTermo.ForeColor = Color.White; ShowTermo.Text = "Термопаста"; checkedItems.Default.thermo_interface = false; }
+            else { ShowTermo.ForeColor = Color.Black; ShowTermo.Text = "Термопаста"; checkedItems.Default.thermo_interface = false; }
             if(checkedItems.Default.processors == false &&
                 checkedItems.Default.motherboards == false &&
                 checkedItems.Default.videocards == false &&
