@@ -43,6 +43,7 @@ namespace Kursovaya.Administrator
             dataGridView1.CellMouseDown += dataGridView1_CellMouseDown; // подписываемся на событие нажатия на нажатие на ячейку
             LoadOrders(); // отображаем заказы
             FillQuarterComboBox();
+            dataGridView1.Refresh();
 
         }
         private void Return_Click(object sender, EventArgs e) // обработка нажатия на кнопку "Возврат" в выпадающем меню
@@ -751,16 +752,7 @@ LEFT JOIN thermo_interface ti ON ti.id = o.id_thermo_interface
                             Color.FromArgb(255, 245, 200);
                     }
                 }
-            }
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "Статус")
-            {
-                //MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells["Статус"].Value.ToString());
-                if (e.Value != null && dataGridView1.Rows[e.RowIndex].Cells["Статус"].Value.ToString() == "Возвращен")
-                {
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGray;
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.DarkGray;
-                }
-            }
+            }            
         }
     }
 }
