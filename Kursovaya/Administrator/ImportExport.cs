@@ -36,7 +36,6 @@ namespace Kursovaya.Administrator
                         if (string.IsNullOrEmpty(databaseName))
                         {
                             MessageBox.Show("Не удалось определить имя базы данных из строки подключения.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
                         }
 
                         string fileName = $"{databaseName}_backup_{DateTime.Now:yyyyMMdd_HHmmss}.sql";
@@ -115,6 +114,7 @@ namespace Kursovaya.Administrator
                         MessageBox.Show($"База данных экспортирована:\n{fullPath}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
+                
             }
             catch (Exception ex)
             {
