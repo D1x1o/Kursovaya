@@ -389,6 +389,7 @@ namespace Kursovaya.User
             this.Name = "UserCart";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Корзина";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserCart_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

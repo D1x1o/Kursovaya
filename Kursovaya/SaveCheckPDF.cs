@@ -54,12 +54,11 @@ namespace Kursovaya
                 y += 15;
             }
 
-            // ===== HEADER =====
             DrawCenter("pepeShop", title);
             DrawCenter("ЧЕК", title);
 
-            DrawCenter($"Дата заказа: {orderDateTime}", font);
-            DrawCenter($"Дата выполнения: {orderCompDateTime}", font);
+            DrawCenter($"Дата заказа: {DateTime.Parse(orderDateTime).ToString("dd.MM.yyyy HH:mm:ss")}", font);
+            DrawCenter($"Дата выполнения: {DateTime.Parse(orderCompDateTime).ToString("dd.MM.yyyy")}", font);
 
             if (!string.IsNullOrWhiteSpace(phone_number))
                 DrawCenter("Телефон: " + phone_number, font);
@@ -73,7 +72,6 @@ namespace Kursovaya
             DrawCenter($"Чек номер: {r.Next(1000, 9999)}", font);
             y += 15;
 
-            // ===== TABLE HEADER =====
             double x1 = 40;   // товар
             double x2 = 300;  // цена
             double x3 = 380;  // кол-во
@@ -88,7 +86,6 @@ namespace Kursovaya
             gfx.DrawLine(XPens.Black, 40, y, 550, y);
             y += 15;
 
-            // ===== ITEMS =====
             int total = 0;
 
             for (int i = 0; i < itemsNames.Length; i++)
@@ -107,7 +104,6 @@ namespace Kursovaya
                 y += 16;
             }
 
-            // ===== DELIVERY =====
             int deliveryCost = delivery ? 3000 : 0;
             gfx.DrawString("Доставка", font, XBrushes.Black, new XPoint(x1, y));
             gfx.DrawString(Format(deliveryCost), font, XBrushes.Black, new XPoint(x2, y));
@@ -115,7 +111,6 @@ namespace Kursovaya
             gfx.DrawString(Format(deliveryCost), font, XBrushes.Black, new XPoint(x4, y));
             y += 16;
 
-            // ===== BUILD =====
             int buildCost = build ? 3000 : 0;
             gfx.DrawString("Сборка", font, XBrushes.Black, new XPoint(x1, y));
             gfx.DrawString(Format(buildCost), font, XBrushes.Black, new XPoint(x2, y));
@@ -123,7 +118,6 @@ namespace Kursovaya
             gfx.DrawString(Format(buildCost), font, XBrushes.Black, new XPoint(x4, y));
             y += 16;
 
-            // ===== DISCOUNT =====
             int discount = (delivery && build) ? 2000 : 0;
 
             gfx.DrawString("Скидка", font, XBrushes.Black, new XPoint(x1, y));
@@ -132,7 +126,6 @@ namespace Kursovaya
             gfx.DrawString(Format(discount), font, XBrushes.Black, new XPoint(x4, y));
             y += 20;
 
-            // ===== TOTAL =====
             int grandTotal = total + deliveryCost + buildCost - discount;
 
             gfx.DrawLine(XPens.Black, 40, y, 550, y);

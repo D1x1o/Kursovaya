@@ -20,42 +20,65 @@ var savedPlacemark = null;     // сохранённая точка
 ymaps.ready(function () {
 
     myMap = new ymaps.Map("map", {
-        center: pendingCenter || [56.63, 43.40],
-        zoom: pendingZoom || 10,
+        center: pendingCenter ?? [56.63, 43.40],
+        zoom: pendingZoom ?? 10,
         controls: ['searchControl']
     });
 
     mapReady = true;
 
     myMap.events.add('click', function (e) {
-        var coords = e.get('coords');
-        console.log("CLICK:", coords);
+
+    var coords = e.get('coords');
+
+    ymaps.geocode(coords).then(function (res) {
+
+        var firstGeoObject = res.geoObjects.get(0);
+
+        if (!firstGeoObject)
+            return;
+
+        var meta = firstGeoObject.properties.get('metaDataProperty');
+
+        if (!meta || !meta.GeocoderMetaData)
+            return;
+
+        var precision = meta.GeocoderMetaData.precision;
+
+        // только точный дом
+        if (precision !== "exact") {
+            alert("Выберите точный адрес дома");
+            return;
+        }
+
+        // полный адрес
+        var address = firstGeoObject.getAddressLine();
+
+        // проверка города
+        var text = address.toLowerCase();
+
+        var isZavolzhye =
+            text.includes("заволжье") &&
+            text.includes("нижегород");
+
+        if (!isZavolzhye) {
+            alert("Можно выбирать адреса только в городе Заволжье");
+            return;
+        }
+
+        // ставим метку ТОЛЬКО после проверки
         setPlacemark(coords);
-        
-        ymaps.geocode(coords).then(function (res) {
-            var firstGeoObject = res.geoObjects.get(0);
-            if (!firstGeoObject) return;
 
-            var meta = firstGeoObject.properties.get('metaDataProperty');
-            if (!meta || !meta.GeocoderMetaData) return;
-
-            var precision = meta.GeocoderMetaData.precision;
-
-            if (precision !== "exact") {
-                alert("Выберите точный адрес дома");
-                return;
-            }
-
-            var address = firstGeoObject.getAddressLine();
-
-            window.chrome.webview.postMessage({
-                lat: coords[0],
-                lon: coords[1],
-                zoom: myMap.getZoom(),
-                address: address
-            });
+        window.chrome.webview.postMessage({
+            lat: coords[0],
+            lon: coords[1],
+            zoom: myMap.getZoom(),
+            address: address
         });
+
     });
+
+});
 });
 
 function setPlacemark(coords) {
@@ -101,13 +124,27 @@ function setSavedPlacemark(lat, lon) {
 
 
 function setInitialLocation(lat, lon, zoom) {
-    if (!isFinite(lat) || !isFinite(lon)) return;
+
+    lat = Number(lat);
+    lon = Number(lon);
+    zoom = Number(zoom);
+
+    if (!isFinite(lat) || !isFinite(lon))
+        return;
+
+    // Заволжье
+    if (lat < 56 || lat > 57 || lon < 42 || lon > 45)
+        return;
 
     var center = [lat, lon];
 
     if (mapReady) {
-        myMap.setCenter(center, zoom || 10);
+
+        myMap.setCenter(center, zoom || 16);
+        setSavedPlacemark(lat, lon);
+
     } else {
+
         pendingCenter = center;
         pendingZoom = zoom;
     }

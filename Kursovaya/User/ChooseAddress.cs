@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -29,6 +30,7 @@ namespace Kursovaya.User
         public ChooseAddress()
         {
             InitializeComponent();
+            this.MinimumSize = new Size(800, 600);
         }
 
         private async void ChooseAddress_Load(object sender, EventArgs e)
@@ -49,12 +51,24 @@ namespace Kursovaya.User
                     double lat = Properties.Settings.Default.LastLat;
                     double lon = Properties.Settings.Default.LastLon;
                     double zoom = Properties.Settings.Default.LastZoom;
-                    MessageBox.Show($"LOAD: {lat}, {lon}, zoom={zoom}");
+                    //MessageBox.Show($"LOAD: {lat}, {lon}, zoom={zoom}");
                     if (IsValid(lat, lon) && zoom > 0)
                     {
-                        await webView21.CoreWebView2.ExecuteScriptAsync(
-                            $"setInitialLocation({lat}, {lon}, {zoom});"
+                        string script = string.Format(
+                            CultureInfo.InvariantCulture,
+                            "setInitialLocation({0}, {1}, {2});",
+                            lat,
+                            lon,
+                            zoom
                         );
+                        await webView21.CoreWebView2.ExecuteScriptAsync(script);
+                        string script2 = string.Format(
+                            CultureInfo.InvariantCulture,
+                            "setSavedPlacemark({0}, {1});",
+                            lat,
+                            lon
+                        );
+                        await webView21.CoreWebView2.ExecuteScriptAsync(script2);
                     }
                 };
             }
@@ -77,11 +91,8 @@ namespace Kursovaya.User
                 double zoom = (double)data["zoom"];
                 string address = data["address"].ToString();
 
-                if (!IsValid(lat, lon)) return;
-
-                lastLat = lat;
-                lastLon = lon;
-                lastZoom = zoom;
+                if (!IsValid(lat, lon))
+                    return;
 
                 isProcessing = true;
 
@@ -97,11 +108,16 @@ namespace Kursovaya.User
                     {
                         SelectedAddress = address;
 
-                        Properties.Settings.Default.LastLat = lastLat;
-                        Properties.Settings.Default.LastLon = lastLon;
-                        Properties.Settings.Default.LastZoom = lastZoom;
+                        // сохраняем ТОЛЬКО подтверждённый адрес
+                        lastLat = lat;
+                        lastLon = lon;
+                        lastZoom = zoom;
+
+                        Properties.Settings.Default.LastLat = lat;
+                        Properties.Settings.Default.LastLon = lon;
+                        Properties.Settings.Default.LastZoom = zoom;
                         Properties.Settings.Default.Save();
-                        MessageBox.Show($"SAVE: {lat}, {lon}, zoom={zoom}");
+
                         DialogResult = DialogResult.OK;
                         Close();
                     }

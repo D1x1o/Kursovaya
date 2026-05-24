@@ -1327,5 +1327,12 @@ namespace Kursovaya.User
         {
             phoneTextBox.SelectionStart = 0;
         }
+
+        private void UserCart_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.LastLat = 0;
+            Properties.Settings.Default.LastLon = 0;
+            Properties.Settings.Default.LastZoom = 0;
+        }
     }
 }
