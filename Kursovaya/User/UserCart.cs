@@ -118,9 +118,21 @@ namespace Kursovaya.User
 
             // Читаем JSON из файла tables.json
             JObject config;
+
             try
             {
-                string jsonText = File.ReadAllText("tables.json");
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+
+                // Создаем папку, если её нет
+                if (!Directory.Exists(pepeShopFolder))
+                {
+                    Directory.CreateDirectory(pepeShopFolder);
+                }
+
+                string path = Path.Combine(pepeShopFolder, "tables.json");
+
+                string jsonText = File.ReadAllText(path);
                 config = JObject.Parse(jsonText);
             }
             catch (Exception ex)
@@ -1145,7 +1157,9 @@ namespace Kursovaya.User
             int i = 0;
             try
             {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+                string path = Path.Combine(pepeShopFolder, "tables.json");
                 if (File.Exists(path))
                 {
 

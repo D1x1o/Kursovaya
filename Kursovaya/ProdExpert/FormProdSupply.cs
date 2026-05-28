@@ -69,8 +69,9 @@ UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'cpu_c
 UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'cases'             FROM cases
 UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'case_coolers'       FROM case_coolers
 UNION ALL SELECT id, concat(produser, space(1), model) as model, inStock, 'storage'            FROM storage ";
-
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+            string path = Path.Combine(pepeShopFolder, "tables.json");
             if (File.Exists(path))
             {
 

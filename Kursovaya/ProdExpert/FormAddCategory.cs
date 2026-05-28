@@ -200,13 +200,13 @@ namespace Kursovaya.ProdExpert
                 // формирование sql запроса для создания таблицы
                 string sql = $@"
             CREATE TABLE `{tableName}` (
-             id INT PRIMARY KEY AUTO_INCREMENT, // автоматический идентификатор
-             model varchar(255) NOT NULL, // поле модели
-             produser varchar(255) NOT NULL, // поле производителя
-                 {string.Join(",\n    ", columnsSql)}, // пользовательские поля
-               inStock int NOT NULL DEFAULT 0, // количество на складе
-                image varchar(255) NULL, // путь к изображению
-              cost int NOT NULL // стоимость
+             id INT PRIMARY KEY AUTO_INCREMENT,
+             model varchar(255) NOT NULL,
+             produser varchar(255) NOT NULL,
+                 {string.Join(",\n    ", columnsSql)},
+               inStock int NOT NULL DEFAULT 0,
+                image varchar(255) NULL,
+              cost int NOT NULL 
             );";
 
                 SaveToJSON(); // сохранение информации о таблице в json файл
@@ -346,7 +346,15 @@ namespace Kursovaya.ProdExpert
 
         private void SaveToJSON() // метод сохранения информации о таблице в json файл
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json"); // формирование пути к json файлу
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+
+            // Проверка существования папки и создание при необходимости
+            if (!Directory.Exists(pepeShopFolder))
+            {
+                Directory.CreateDirectory(pepeShopFolder);
+            }
+            string path = Path.Combine(pepeShopFolder, "tables.json");
 
             // создание json объекта для новой таблицы
             JObject table = new JObject

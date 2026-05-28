@@ -24,10 +24,31 @@ namespace Kursovaya
         {
             InitializeComponent();
             TestDataBaseConn();
+            EnsurePepeShopJson();
             pwdTextBox.UseSystemPasswordChar = true; // скрываем пароль
             CopyDefaultImagesToAppData(); // метод копирования изображений
-            blockTimer.Interval = 1000; // 1 секунда
+            blockTimer.Interval = 1000; // 1 секунда            
             blockTimer.Tick += BlockTimer_Tick;
+        }
+        public static string EnsurePepeShopJson()
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string folderPath = Path.Combine(appDataPath, "pepeShop");
+            string filePath = Path.Combine(folderPath, "tables.json");
+
+            // создаём папку, если нет
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            // создаём json файл, если нет
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllText(filePath, "{}");
+            }
+
+            return filePath;
         }
         private void BlockTimer_Tick(object sender, EventArgs e)
         {

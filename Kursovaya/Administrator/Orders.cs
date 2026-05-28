@@ -431,7 +431,11 @@ ORDER BY o.idorder; ";
             counts.Add(row.Cells["count_power_supplier"].Value != null && int.TryParse(row.Cells["count_power_supplier"].Value.ToString(), out int c9) ? c9 : 0);
 
             // читаем JSON
-            string json = File.ReadAllText("tables.json");
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+            string path = Path.Combine(pepeShopFolder, "tables.json");
+
+            string json = File.ReadAllText(path);
 
             // десериализуем через обёртку
             TablesWrapper wrapper = JsonConvert.DeserializeObject<TablesWrapper>(json);

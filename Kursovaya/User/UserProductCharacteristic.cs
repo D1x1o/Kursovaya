@@ -131,7 +131,15 @@ namespace Kursovaya.User
                             if (theme != "processors" && theme != "motherboards" && theme != "videocards" && theme != "cpu_cooler" && theme != "case" && theme != "case_coolers" && theme != "power_supplier"
                                 && theme != "thermo_interface" && theme != "ram" && theme != "storage")
                             {
-                                var json = File.ReadAllText("tables.json");
+                                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                                string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+
+                                if (!Directory.Exists(pepeShopFolder))
+                                {
+                                    Directory.CreateDirectory(pepeShopFolder);
+                                }
+
+                                var json = File.ReadAllText(Path.Combine(pepeShopFolder, "tables.json"));
                                 var root = JObject.Parse(json);
 
                                 foreach (var table in root["tables"])

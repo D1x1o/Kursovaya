@@ -35,7 +35,9 @@ namespace Kursovaya.ProdExpert
             else if (theme == "Накопители") { theme = "storage"; }
             else
             {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+                string path = Path.Combine(pepeShopFolder, "tables.json");
                 if (File.Exists(path))
                 {
 
@@ -160,7 +162,9 @@ namespace Kursovaya.ProdExpert
                             else if (columnName == "composition") { columnName = "Состав"; }
                             else
                             {
-                                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                                string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+                                string path = Path.Combine(pepeShopFolder, "tables.json");
                                 if (File.Exists(path))
                                 {
 

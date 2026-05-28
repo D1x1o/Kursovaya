@@ -80,7 +80,9 @@ namespace Kursovaya
 
         private static void LoadFromJson()
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+            string path = Path.Combine(pepeShopFolder, "tables.json");
 
             if (!File.Exists(path))
                 return;

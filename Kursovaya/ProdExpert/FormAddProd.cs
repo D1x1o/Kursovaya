@@ -58,7 +58,10 @@ namespace Kursovaya.ProdExpert
                     new Category { SystemName = "thermo_interface", DisplayName = "Термопаста" },
                 };
                 // если есть категории добавленные пользователем, берем данные из Json
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+                string path = Path.Combine(pepeShopFolder, "tables.json");
+
                 if (File.Exists(path))
                 {
 

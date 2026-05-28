@@ -51,7 +51,11 @@ namespace Kursovaya.Administrator
             categoryComboBox.Items.Add("Корпусные кулеры"); // добавление категории корпусных кулеров
             categoryComboBox.Items.Add("Накопители"); // добавление категории накопителей
             categoryComboBox.Items.Add("Термопаста"); // добавление категории термопасты
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json"); // формирование пути к json файлу
+
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+            string path = Path.Combine(pepeShopFolder, "tables.json");
+
             if (File.Exists(path)) // проверка существования файла
             {
                 string json = File.ReadAllText(path); // чтение содержимого json файла
@@ -112,7 +116,9 @@ namespace Kursovaya.Administrator
                     theme = "thermo_interface"; // системное имя для термопасты
                     break;
                 default: // для других категорий из json
-                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json"); // путь к json файлу
+                    string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                    string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+                    string path = Path.Combine(pepeShopFolder, "tables.json");
                     if (File.Exists(path)) // проверка существования файла
                     {
                         string json = File.ReadAllText(path); // чтение json

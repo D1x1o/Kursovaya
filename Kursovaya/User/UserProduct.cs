@@ -74,7 +74,9 @@ namespace Kursovaya.User
         {
             try
             {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+                string path = Path.Combine(pepeShopFolder, "tables.json");
 
                 if (!File.Exists(path))
                 {
@@ -154,7 +156,9 @@ namespace Kursovaya.User
         public void renameHeadersAnotherTable()
         {
             // путь к JSON
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tables.json");
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+            string path = Path.Combine(pepeShopFolder, "tables.json");
             JObject root = JObject.Parse(File.ReadAllText(path));
 
             // получаем таблицу по systemName (например, "users")
@@ -573,7 +577,11 @@ namespace Kursovaya.User
             }            
             else
             {
-                var json = File.ReadAllText("tables.json");
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+                string path = Path.Combine(pepeShopFolder, "tables.json");
+
+                var json = File.ReadAllText(path);
                 var root = JObject.Parse(json);
 
                 foreach (var table in root["tables"])
