@@ -80,7 +80,7 @@ UNION ALL SELECT id, model, inStock, 'storage'            FROM storage ";
             {
 
                 string json = File.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(json))
+                if (string.IsNullOrWhiteSpace(json) || json.Length < 3)
                 {
 
                 }

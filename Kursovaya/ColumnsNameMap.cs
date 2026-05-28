@@ -89,7 +89,7 @@ namespace Kursovaya
 
             string json = File.ReadAllText(path);
 
-            if (string.IsNullOrWhiteSpace(json))
+            if (string.IsNullOrWhiteSpace(json) || json.Length < 3)
                 return;
 
             JObject root = JObject.Parse(json);

@@ -59,7 +59,7 @@ namespace Kursovaya.Administrator
             if (File.Exists(path)) // проверка существования файла
             {
                 string json = File.ReadAllText(path); // чтение содержимого json файла
-                if (string.IsNullOrWhiteSpace(json)) // проверка на пустоту содержимого
+                if (string.IsNullOrWhiteSpace(json) || json.Length<3) // проверка на пустоту содержимого
                 {
                     // пустой блок для случая пустого json
                 }

@@ -142,5 +142,17 @@ namespace Kursovaya {
                 this["thermo_interface"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool extra_items {
+            get {
+                return ((bool)(this["extra_items"]));
+            }
+            set {
+                this["extra_items"] = value;
+            }
+        }
     }
 }

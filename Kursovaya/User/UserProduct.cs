@@ -84,7 +84,7 @@ namespace Kursovaya.User
                 }
 
                 string json = File.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(json))
+                if (string.IsNullOrWhiteSpace(json) || json.Length < 3)
                 {
                     anotherTablesСВ.Enabled = false;
                     return;
@@ -690,6 +690,7 @@ namespace Kursovaya.User
                 else if (theme == "case") { checkedItems.Default.cases = true; }
                 else if (theme == "cpu_cooler") { checkedItems.Default.cpu_cooler = true; }
                 else if (theme == "thermo_interface") { checkedItems.Default.thermo_interface = true; }
+                else { checkedItems.Default.extra_items = true; }
                 ShowCart.Enabled = true;
             }
         }
@@ -1176,6 +1177,7 @@ namespace Kursovaya.User
                         checkedItems.Default.case_coolers = false;
                         checkedItems.Default.cpu_cooler = false;
                         checkedItems.Default.thermo_interface = false;
+                        checkedItems.Default.extra_items = false;
                         //checkedItems.Default.'case' = false;
                     }
                 }

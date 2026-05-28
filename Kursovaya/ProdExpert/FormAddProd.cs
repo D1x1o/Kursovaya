@@ -66,7 +66,7 @@ namespace Kursovaya.ProdExpert
                 {
 
                     string json = File.ReadAllText(path);
-                    if (string.IsNullOrWhiteSpace(json))
+                    if (string.IsNullOrWhiteSpace(json) || json.Length < 3)
                     {
 
                     }
@@ -105,6 +105,7 @@ namespace Kursovaya.ProdExpert
                     return;
 
                 string theme = categoryComboBox.SelectedValue.ToString(); // получаем выбранную категорию
+                if (theme == "case") theme = "cases";
                 globalTheme = theme; // сохраняем ваыбранную категорию
                 fillDgv(theme); // заполняем DGV в зависимости от выбранной категории
 

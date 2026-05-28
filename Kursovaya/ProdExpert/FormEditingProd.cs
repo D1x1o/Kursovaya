@@ -458,6 +458,7 @@ namespace Kursovaya.ProdExpert
             {
                 SaveChanges(globalTheme, globalIdProduct);
             }
+            Close();
         }
     }
 }

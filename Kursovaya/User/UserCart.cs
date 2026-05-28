@@ -22,7 +22,8 @@ namespace Kursovaya.User
 {
     public partial class UserCart : Form
     {
-        string filePath = "tables.json";
+        bool flag = false;
+        string filePath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop"), "tables.json");
         public Dictionary<string, int> ArrPosInDGV = new Dictionary<string, int>
         {
 
@@ -36,6 +37,7 @@ namespace Kursovaya.User
         {
             InitializeComponent();
             fillDGV(user.Default.userID);
+            
             checkBuildOption();
             buildCheckBox.Checked = false;
             if (checkAmount())
@@ -223,7 +225,7 @@ namespace Kursovaya.User
                 bool exist_extra = false;
                 if (count_extra == 0)
                 { exist_extra = false; }
-                else { exist_extra = true; }
+                else { exist_extra = true; flag = true; }
                 if (!(
                 checkedItems.Default.processors == false &&
                 checkedItems.Default.motherboards == false &&
@@ -234,8 +236,10 @@ namespace Kursovaya.User
                 checkedItems.Default.cpu_cooler == false &&
                 checkedItems.Default.thermo_interface == false &&
                 checkedItems.Default.storage == false &&
-                checkedItems.Default.power_supplier == false))
+                checkedItems.Default.power_supplier == false
+                ))
                 {
+                    
                     using (MySqlConnection conn = new MySqlConnection(ConnStr))
                     {
                         bool second = false;
@@ -299,7 +303,8 @@ namespace Kursovaya.User
                         {
                             if (second) query += ", "; second = true;
                             query += "concat(storage.produser, space(1), storage.model, space(1), storage.capacity_gb, space(1), 'ГБ') as storage ";
-                        }                        
+                        }
+                        
                         query += "FROM user_cart ";
                         if (checkedItems.Default.processors) query += "join processors ON id_processors = processors.id ";
                         if (checkedItems.Default.motherboards) query += "join motherboards ON id_motherboards = motherboards.id ";
@@ -313,13 +318,13 @@ namespace Kursovaya.User
                         if (checkedItems.Default.storage) query += "join storage ON id_storage = storage.id ";
                         query += $"WHERE iduser = {iduser};";
 
-                        //if(query == $"SELECT FROM user_cart WHERE iduser = {user.Default.userID};")
-                        //{
-                        //    query = "SELECT 'Ничего не найдено!' from user_cart where 1=1;";
-                        //    MySqlCommand cmd2 = new MySqlCommand(query, conn);
-                        //    string qwe = cmd2.ExecuteScalar().ToString();
-                        //    dataGridView1.Rows.Add(qwe);                        
-                        //}
+                        if (query == $"SELECT FROM user_cart WHERE iduser = {user.Default.userID};")
+                        {
+                            query = "SELECT 'Ничего не найдено!' from user_cart where 1=1;";
+                            MySqlCommand cmd2 = new MySqlCommand(query, conn);
+                            string qwe = cmd2.ExecuteScalar().ToString();
+                            dataGridView1.Rows.Add(qwe);
+                        }
                         MySqlCommand cmd = new MySqlCommand(query, conn);
                         MySqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
@@ -539,66 +544,64 @@ namespace Kursovaya.User
                         }
                     }
                     mathEndPriceNew();
-                    if (!dataGridView1.Columns.Contains("AmountInc"))
-                    {
-                        DataGridViewButtonColumn AmountInc = new DataGridViewButtonColumn();
-                        AmountInc.Name = "AmountInc";
-                        AmountInc.HeaderText = "Добавить";
-                        AmountInc.Text = "+";
-                        AmountInc.UseColumnTextForButtonValue = true;
-                        dataGridView1.AutoGenerateColumns = true;
-                        dataGridView1.Columns.Add(AmountInc);
-                    }
-                    if (!dataGridView1.Columns.Contains("AmountDec"))
-                    {
-                        DataGridViewButtonColumn AmountDec = new DataGridViewButtonColumn();
-                        AmountDec.Name = "AmountDec";
-                        AmountDec.HeaderText = "Убавить";
-                        AmountDec.Text = "-";
-                        AmountDec.UseColumnTextForButtonValue = true;
-                        dataGridView1.AutoGenerateColumns = true;
-                        dataGridView1.Columns.Add(AmountDec);
-                    }
-                    dataGridView1.Columns["Value"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    dataGridView1.Columns["Cost"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                    dataGridView1.Columns["type"].DisplayIndex = 0;
-                    dataGridView1.Columns["Value"].DisplayIndex = 1;
-                    dataGridView1.Columns["AmountInc"].DisplayIndex = 4;
-                    dataGridView1.Columns["Amount"].DisplayIndex = 3;
-                    dataGridView1.Columns["AmountDec"].DisplayIndex = 2;
-                    dataGridView1.Columns["Cost"].DisplayIndex = 5;
-                    dataGridView1.Columns["AmountInc"].Width = 100;
-                    dataGridView1.Columns["AmountDec"].Width = 100;
-                    dataGridView1.Columns["type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                    if (exist_extra == true)
-                    {
-                        AddItemsToDGV(GetAllExtraItems(), dataGridView1);
-                    }
-                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        dataGridView1.Rows[i].Cells["Amount"].Value = 1;
-                    }
-
-
-                    dataGridView1.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    setUi();
+                    
                     
                 }
-                else
+                if (flag == true)
                 {
-                    if(dataGridView1.Rows.Count < 1)
-                    {
-                        dataGridView1.Rows.Clear();
-                        dataGridView1.Columns.Clear();
-                        MessageBox.Show("Корзина пуста!", "Уведомление", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        makeBuyButton.Enabled = false;
-                        addresTextBox.Enabled = false;
-                        deliveryCB.Enabled = false;
-                        this.Hide();
-                    }                    
-                }
+                    
+                    AddItemsToDGV(GetAllExtraItems(), dataGridView1);
+                    setUi();
+                }                
 
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        public void setUi()
+        {
+            if (!dataGridView1.Columns.Contains("AmountInc"))
+            {
+                DataGridViewButtonColumn AmountInc = new DataGridViewButtonColumn();
+                AmountInc.Name = "AmountInc";
+                AmountInc.HeaderText = "Добавить";
+                AmountInc.Text = "+";
+                AmountInc.UseColumnTextForButtonValue = true;
+                dataGridView1.AutoGenerateColumns = true;
+                dataGridView1.Columns.Add(AmountInc);
+            }
+            if (!dataGridView1.Columns.Contains("AmountDec"))
+            {
+                DataGridViewButtonColumn AmountDec = new DataGridViewButtonColumn();
+                AmountDec.Name = "AmountDec";
+                AmountDec.HeaderText = "Убавить";
+                AmountDec.Text = "-";
+                AmountDec.UseColumnTextForButtonValue = true;
+                dataGridView1.AutoGenerateColumns = true;
+                dataGridView1.Columns.Add(AmountDec);
+            }
+            dataGridView1.Columns["Value"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns["Cost"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridView1.Columns["type"].DisplayIndex = 0;
+            dataGridView1.Columns["Value"].DisplayIndex = 1;
+            dataGridView1.Columns["AmountInc"].DisplayIndex = 4;
+            dataGridView1.Columns["Amount"].DisplayIndex = 3;
+            dataGridView1.Columns["AmountDec"].DisplayIndex = 2;
+            dataGridView1.Columns["Cost"].DisplayIndex = 5;
+            dataGridView1.Columns["AmountInc"].Width = 100;
+            dataGridView1.Columns["AmountDec"].Width = 100;
+            dataGridView1.Columns["type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            //if (exist_extra == true)
+            //{
+            //    AddItemsToDGV(GetAllExtraItems(), dataGridView1);
+            //}
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                dataGridView1.Rows[i].Cells["Amount"].Value = 1;
+            }
+
+
+            dataGridView1.Columns["Amount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
         public int mathCartPrice(bool discount)
@@ -708,6 +711,11 @@ namespace Kursovaya.User
                                 else if (tableColumnName == "storage")
                                 {
                                     query = $"INSERT INTO user_cart (iduser, id_storage) VALUES ({user.Default.userID}, 0) ON DUPLICATE KEY UPDATE id_storage = 0;";
+                                    checkedItems.Default.storage = false;
+                                }
+                                else
+                                {
+                                    query = $"INSERT INTO user_cart (iduser, extra_items) VALUES ({user.Default.userID}, 0) ON DUPLICATE KEY UPDATE extra_items = 0;";
                                     checkedItems.Default.storage = false;
                                 }
                                 query += "";
@@ -1153,50 +1161,59 @@ namespace Kursovaya.User
 
         private string getTableName(string model)
         {
-            List<string> tablesList = new List<string>();
-            int i = 0;
             try
             {
                 string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
                 string path = Path.Combine(pepeShopFolder, "tables.json");
-                if (File.Exists(path))
+
+                List<string> tablesList = new List<string>();
+
+                if (!File.Exists(path))
+                    return "";
+
+                string json = File.ReadAllText(path);
+
+                if (string.IsNullOrWhiteSpace(json) || json.Length < 3)
+                    return "";
+
+                JObject root = JObject.Parse(json);
+                JArray tables = (JArray)root["tables"];
+
+                foreach (JObject table in tables)
                 {
+                    tablesList.Add(table["systemName"]?.ToString());
+                }
 
-                    string json = File.ReadAllText(path);
-                    if (string.IsNullOrWhiteSpace(json))
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    conn.Open();
+
+                    foreach (string tableName in tablesList)
                     {
+                        string query = $"SELECT 1 FROM `{tableName}` WHERE concat(produser,space(1),model) = @model LIMIT 1";
 
-                    }
-                    else
-                    {
-                        JObject root = JObject.Parse(json);
-
-                        JArray tables = (JArray)root["tables"];
-                        foreach (JObject table in tables)
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
-                            tablesList[i] = table["systemName"].ToString();
+                            cmd.Parameters.AddWithValue("@model", model);
+
+                            var result = cmd.ExecuteScalar();
+
+                            if (result != null)
+                                return tableName;
                         }
-                    }
-                    bool next = false;
-                    string query = "";
-                    using (MySqlConnection conn = new MySqlConnection(ConnStr))
-                    {
-                        foreach(string tableName in tablesList)
-                        {
-                            if (next) query += "UNION ALL ";
-                            query = $"SELECT '{tableName}' AS table_name FROM {tableName} WHERE model = '{model}' ";
-                            next = true;
-                        }
-                        conn.Open();
-                        MySqlCommand cmd = new MySqlCommand(query, conn);
-                        return cmd.ExecuteScalar().ToString();
                     }
                 }
+
                 return "";
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); return ""; }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return "";
+            }
         }
+        
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {

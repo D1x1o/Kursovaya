@@ -67,7 +67,7 @@ namespace Kursovaya.ProdExpert
             {
 
                 string json = File.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(json))
+                if (string.IsNullOrWhiteSpace(json)|| json.Length<3)
                 {
 
                 }
@@ -431,7 +431,7 @@ namespace Kursovaya.ProdExpert
             try
             {
                 if (rowIndexforDeleting < 0) { return; }
-                DialogResult DR = MessageBox.Show($"Вы действительно хотите удалить изображение у {dataGridView1.Rows[rowIndexforDeleting].Cells[1].Value.ToString()}", "Подтверждение",
+                DialogResult DR = MessageBox.Show($"Вы действительно хотите удалить изображение?", "Подтверждение",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (DR == DialogResult.Yes)
                 {

@@ -37,7 +37,7 @@ namespace Kursovaya.Administrator
             dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             // добавляем в выпадающее меню элементы
             rowMenu.Items.Add("Редактировать", null, Edit_Click);
-            rowMenu.Items.Add("Получить чек", null, Check_Click);
+            //rowMenu.Items.Add("Получить чек", null, Check_Click);
             rowMenu.Items.Add("Возврат", null, Return_Click);
 
             dataGridView1.CellMouseDown += dataGridView1_CellMouseDown; // подписываемся на событие нажатия на нажатие на ячейку
@@ -52,6 +52,7 @@ namespace Kursovaya.Administrator
             string status = dataGridView1.SelectedRows[0].Cells["Статус"].Value.ToString(); // получаем айди заказа с которым работаем
             ReturnOrder EO = new ReturnOrder(id, status); // эзмепляр класса возврата заказа
             EO.ShowDialog(); // отображаем форму
+            LoadOrders();
         }
 
         private void FillQuarterComboBox() // функция запоняет выпадающий список кварталами года для получения отчёта
@@ -375,6 +376,7 @@ ORDER BY o.idorder; ";
             int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["idorder"].Value); // получаем айди товара с которым работаем
             EditOrder EO = new EditOrder(id); // эзмепляр класса редактирования заказа
             EO.ShowDialog(); // отображаем форму
+            LoadOrders();
         }
         string CleanValue(string value) // очищаем значение имени товара от лишнего
         {

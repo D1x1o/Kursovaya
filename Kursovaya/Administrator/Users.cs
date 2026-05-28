@@ -399,6 +399,7 @@ namespace Kursovaya.Administrator
                             MessageBox.Show("Пользователь удалён!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             filldgv();
                         }
+                        ClearTextBoxes();
                     }
                 }                
             }
