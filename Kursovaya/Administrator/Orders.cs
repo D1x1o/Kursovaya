@@ -248,6 +248,7 @@ ORDER BY o.idorder; ";
                     dataGridView1.Columns["Стоимость заказа"].Visible = false;
                     dataGridView1.Columns["FormattedExtra"].DisplayIndex = dataGridView1.ColumnCount - 7;
                     dataGridView1.Columns["orderSetUp"].DisplayIndex = 1;
+                    dataGridView1.Columns["orderSetUp"].Visible = false;
                     dataGridView1.Columns["orderSetUp"].HeaderText = "Состав заказа";
                     dataGridView1.Columns["Номер телефона"].DisplayIndex = dataGridView1.ColumnCount - 1;
                     dataGridView1.Columns["idorder"].Visible = false;
@@ -759,6 +760,13 @@ LEFT JOIN thermo_interface ti ON ti.id = o.id_thermo_interface
                     }
                 }
             }            
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string compound = dataGridView1.Rows[e.RowIndex].Cells["orderSetUp"].Value.ToString();
+            var od = new OrderDetail(compound);
+            od.ShowDialog();
         }
     }
 }
