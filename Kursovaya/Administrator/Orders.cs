@@ -542,8 +542,8 @@ ORDER BY o.idorder; ";
             }
 
             // Парсим выбранный квартал
-            string selected = quarterForReport.SelectedItem.ToString(); 
-                                                                      
+            string selected = quarterForReport.SelectedItem.ToString();
+
             string[] parts = selected.Split(',');
             int quarter = int.Parse(parts[0].Split(':')[1].Trim());
             int year = int.Parse(parts[1].Split(':')[1].Trim());
@@ -553,35 +553,35 @@ ORDER BY o.idorder; ";
             DateTime startDate = new DateTime(year, startMonth, 1);
             DateTime endDate = startDate.AddMonths(3).AddSeconds(-1);
 
-            // Загружаем данные из БД по дате            
+            // Загружаем данные из БД
             DataTable dt = new DataTable();
 
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
                 conn.Open();
+
+                // SQL 
                 string query = $@"SELECT o.idorder as 'Номер заказа',
-    
 
-    CONCAT(pr.produser, ' ', pr.model, ' (x', o.count_processors, ')') AS 'Процессор',
-    CONCAT(mb.produser, ' ', mb.model, ' (x', o.count_motherboards, ')') AS 'Материнская плата',
-    CONCAT(vc.vender, ' ', vc.model, ' (x', o.count_videocards, ')') AS 'Видеокарта',
-    CONCAT(r.produser, ' ', r.model, ' ', r.capacity_gb, ' ГБ (x', o.count_ram, ')') AS 'ОЗУ',
-    CONCAT(cc.produser, ' ', cc.model, ' (x', o.count_cpu_coolers, ')') AS 'Кулер CPU',
-    CONCAT(ca.produser, ' ', ca.model, ' (x', o.count_cases, ')') AS 'Корпус',
-    CONCAT(cf.produser, ' ', cf.model, ' (x', o.count_case_fan, ')') AS 'Вентиляторы корпуса',
-    CONCAT(st.produser, ' ', st.model, ' ', st.capacity_gb, ' ГБ (x', o.count_storage, ')') AS 'Накопитель',
-    CONCAT(ps.produser, ' ', ps.model, ' ', ps.power, ' ВАТТ (x', o.count_power_supplier, ')') AS 'Блок питания',
-    CONCAT(ti.produser, ' ', ti.model, ' (x', o.count_thermo_interface, ')') AS 'Термопаста',
-    CASE WHEN o.delivery = 'True' THEN 'Да' ELSE 'Нет' END AS 'Доставка',
-    CASE WHEN o.build = 'True' THEN 'Да' ELSE 'Нет' END AS 'Сборка',
+CONCAT(pr.produser, ' ', pr.model, ' (x', o.count_processors, ')') AS 'Процессор',
+CONCAT(mb.produser, ' ', mb.model, ' (x', o.count_motherboards, ')') AS 'Материнская плата',
+CONCAT(vc.vender, ' ', vc.model, ' (x', o.count_videocards, ')') AS 'Видеокарта',
+CONCAT(r.produser, ' ', r.model, ' ', r.capacity_gb, ' ГБ (x', o.count_ram, ')') AS 'ОЗУ',
+CONCAT(cc.produser, ' ', cc.model, ' (x', o.count_cpu_coolers, ')') AS 'Кулер CPU',
+CONCAT(ca.produser, ' ', ca.model, ' (x', o.count_cases, ')') AS 'Корпус',
+CONCAT(cf.produser, ' ', cf.model, ' (x', o.count_case_fan, ')') AS 'Вентиляторы корпуса',
+CONCAT(st.produser, ' ', st.model, ' ', st.capacity_gb, ' ГБ (x', o.count_storage, ')') AS 'Накопитель',
+CONCAT(ps.produser, ' ', ps.model, ' ', ps.power, ' ВАТТ (x', o.count_power_supplier, ')') AS 'Блок питания',
+CONCAT(ti.produser, ' ', ti.model, ' (x', o.count_thermo_interface, ')') AS 'Термопаста',
+CASE WHEN o.delivery = 'True' THEN 'Да' ELSE 'Нет' END AS 'Доставка',
+CASE WHEN o.build = 'True' THEN 'Да' ELSE 'Нет' END AS 'Сборка',
 
-    o.deliveryaddress AS 'Адрес',
-    o.ordertime AS 'Дата заказа',
-    o.ordercomplitetime AS 'Дата выполнения',
-    s.status AS 'Статус',
-    phone_number AS 'Номер телефона',
-    result_cost AS 'Стоимость заказа' 
-
+o.deliveryaddress AS 'Адрес',
+o.ordertime AS 'Дата заказа',
+o.ordercomplitetime AS 'Дата выполнения',
+s.status AS 'Статус',
+phone_number AS 'Номер телефона',
+result_cost AS 'Стоимость заказа'
 
 FROM `order` o
 LEFT JOIN processors pr ON pr.id = o.id_processors
@@ -596,7 +596,10 @@ LEFT JOIN power_supplier ps ON ps.id = o.id_power_supplier
 LEFT JOIN statuses s ON s.id = o.status
 LEFT JOIN thermo_interface ti ON ti.id = o.id_thermo_interface
 
-                         WHERE ordertime BETWEEN '{startDate.ToString("yyyy-MM-dd")}' AND '{endDate.ToString("yyyy-MM-dd")}' ORDER BY o.idorder ";
+WHERE ordertime BETWEEN '{startDate.ToString("yyyy-MM-dd")}'
+AND '{endDate.ToString("yyyy-MM-dd")}'
+ORDER BY o.idorder";
+
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
@@ -605,115 +608,335 @@ LEFT JOIN thermo_interface ti ON ti.id = o.id_thermo_interface
 
             if (dt.Rows.Count == 0)
             {
-                MessageBox.Show("Заказы за выбранный квартал отсутствуют!");
+                MessageBox.Show("Заказы за выбранный квартал отсутствуют!","Ошибка",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return;
             }
 
-            // создаем Excel
+            // Excel
             Excel.Application excelApp = new Excel.Application();
             Excel.Workbook workbook = excelApp.Workbooks.Add();
             Excel.Worksheet sheet = workbook.Sheets[1];
 
             try
             {
-                int totalColumns = dt.Columns.Count;
+                int orderColumn = dt.Columns["Номер заказа"].Ordinal;
+                int dateColumn = dt.Columns["Дата заказа"].Ordinal;
+                int priceColumn = dt.Columns["Стоимость заказа"].Ordinal;
 
-                // Первый ряд: pepeShop
-                Excel.Range firstRow = sheet.Range[sheet.Cells[1, 1], sheet.Cells[1, totalColumns]];
+                // Заголовки таблицы
+                string[] headers =
+                {
+            "Номер заказа",
+            "Дата оформления",
+            "Стоимость заказа"
+        };
+
+                // ===== ПЕРВАЯ СТРОКА =====
+                Excel.Range firstRow = sheet.Range[sheet.Cells[1, 1], sheet.Cells[1, 3]];
                 firstRow.Merge();
+
                 firstRow.Value = "pepeShop - отчёт о заказах";
                 firstRow.Font.Bold = true;
                 firstRow.Font.Size = 18;
                 firstRow.Interior.Color = Color.FromArgb(226, 239, 218);
                 firstRow.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-                firstRow.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
-                firstRow.WrapText = true; // перенос текста
+                firstRow.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
 
-                // Второй ряд: selected
-                Excel.Range secondRow = sheet.Range[sheet.Cells[2, 1], sheet.Cells[2, totalColumns]];
+                // ===== ВТОРАЯ СТРОКА =====
+                Excel.Range secondRow = sheet.Range[sheet.Cells[2, 1], sheet.Cells[2, 3]];
                 secondRow.Merge();
-                secondRow.Value = "Период: "+selected;
+
+                secondRow.Value = "Период: " + selected;
                 secondRow.Font.Bold = true;
-                secondRow.Font.Size = 16;
+                secondRow.Font.Size = 15;
                 secondRow.Interior.Color = Color.FromArgb(226, 239, 218);
                 secondRow.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-                secondRow.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
-                secondRow.WrapText = true;
+                secondRow.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
 
-                // Третий ряд: заголовки
-                for (int i = 0; i < totalColumns; i++)
+                // ===== ЗАГОЛОВКИ =====
+                for (int i = 0; i < headers.Length; i++)
                 {
                     Excel.Range headerCell = sheet.Cells[6, i + 1];
-                    headerCell.Value = dt.Columns[i].ColumnName;
+
+                    headerCell.Value = headers[i];
                     headerCell.Font.Bold = true;
-                    headerCell.Interior.Color = Color.FromArgb(237, 237, 250);
+                    headerCell.Font.Size = 12;
+                    headerCell.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                    headerCell.Interior.Color = Color.FromArgb(180, 198, 231);
+                    headerCell.Font.Color = Color.White;
                     headerCell.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-                    headerCell.WrapText = true;
                 }
 
-                // Данные начиная с четвертой строки
+                double totalRevenue = 0;
+
+                // Доход по месяцам
+                Dictionary<string, double> monthlyRevenue =
+                    new Dictionary<string, double>();
+
+                // ===== ДАННЫЕ =====
                 for (int r = 0; r < dt.Rows.Count; r++)
                 {
-                    for (int c = 0; c < totalColumns; c++)
+                    int excelRow = r + 7;
+
+                    // Номер заказа
+                    sheet.Cells[excelRow, 1] = dt.Rows[r][orderColumn];
+
+                    // Дата
+                    DateTime orderDate =
+                        Convert.ToDateTime(dt.Rows[r][dateColumn]);
+
+                    sheet.Cells[excelRow, 2] =
+                        orderDate.ToString("dd.MM.yyyy");
+
+                    // Стоимость
+                    double price =
+                        Convert.ToDouble(dt.Rows[r][priceColumn]);
+
+                    sheet.Cells[excelRow, 3] = price;
+
+                    totalRevenue += price;
+
+                    // Прибыль по месяцам
+                    string monthName = orderDate.ToString("MMMM");
+
+                    if (!monthlyRevenue.ContainsKey(monthName))
+                        monthlyRevenue[monthName] = 0;
+
+                    monthlyRevenue[monthName] += price;
+
+                    // Оформление строк
+                    for (int c = 1; c <= 3; c++)
                     {
-                        Excel.Range dataCell = sheet.Cells[r + 7, c + 1];
-                        dataCell.Value = dt.Rows[r][c];
-                        dataCell.Interior.Color = Color.FromArgb(237, 237, 250);
-                        dataCell.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                        Excel.Range dataCell = sheet.Cells[excelRow, c];
+
+                        dataCell.Borders.LineStyle =
+                            Excel.XlLineStyle.xlContinuous;
+
+                        dataCell.HorizontalAlignment =
+                            Excel.XlHAlign.xlHAlignCenter;
+
                         dataCell.WrapText = true;
+
+                        // Чередование цветов
+                        if (r % 2 == 0)
+                            dataCell.Interior.Color =
+                                Color.FromArgb(242, 242, 242);
+                        else
+                            dataCell.Interior.Color =
+                                Color.FromArgb(255, 255, 255);
                     }
-                }
-                // Определяем последнюю строку с данными
-                int firstDataRow = 7; // твоя первая строка с данными
-                int lastDataRow = firstDataRow + dt.Rows.Count - 1;
-                int lastColumn = totalColumns;
 
-                // Считаем сумму по последнему столбцу
-                double sum = 0;
-                for (int r = 0; r < dt.Rows.Count; r++)
+                    // Формат валюты
+                    Excel.Range priceCell = sheet.Cells[excelRow, 3];
+                    priceCell.NumberFormat = "#,##0 ₽";
+                }
+
+                // ===== ИТОГ =====
+                int totalRow = dt.Rows.Count + 7;
+
+                Excel.Range totalLabel = sheet.Cells[totalRow, 2];
+                totalLabel.Value = "Выручка за квартал:";
+                totalLabel.Font.Bold = true;
+                totalLabel.Font.Size = 12;
+                totalLabel.Interior.Color = Color.FromArgb(198, 224, 180);
+                totalLabel.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                totalLabel.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                Excel.Range totalValue = sheet.Cells[totalRow, 3];
+                totalValue.Value = totalRevenue;
+                totalValue.Font.Bold = true;
+                totalValue.Font.Size = 12;
+                totalValue.NumberFormat = "#,##0 ₽";
+                totalValue.Interior.Color = Color.FromArgb(198, 224, 180);
+                totalValue.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                totalValue.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                // ===== ТАБЛИЦА ПРИБЫЛИ ПО МЕСЯЦАМ =====
+                int chartStartRow = totalRow + 5;
+
+                // Заголовок блока
+                Excel.Range profitTitle =
+                    sheet.Range[sheet.Cells[chartStartRow, 1],
+                    sheet.Cells[chartStartRow, 2]];
+
+                profitTitle.Merge();
+
+                profitTitle.Value = "Прибыль по месяцам";
+                profitTitle.Font.Bold = true;
+                profitTitle.Font.Size = 14;
+                profitTitle.HorizontalAlignment =
+                    Excel.XlHAlign.xlHAlignCenter;
+
+                profitTitle.Interior.Color =
+                    Color.FromArgb(180, 198, 231);
+
+                profitTitle.Font.Color = Color.White;
+
+                profitTitle.Borders.LineStyle =
+                    Excel.XlLineStyle.xlContinuous;
+
+                // Заголовки таблицы
+                chartStartRow++;
+
+                Excel.Range monthHeader =
+                    sheet.Cells[chartStartRow, 1];
+
+                monthHeader.Value = "Месяц";
+                monthHeader.Font.Bold = true;
+                monthHeader.HorizontalAlignment =
+                    Excel.XlHAlign.xlHAlignCenter;
+
+                monthHeader.Interior.Color =
+                    Color.FromArgb(221, 235, 247);
+
+                monthHeader.Borders.LineStyle =
+                    Excel.XlLineStyle.xlContinuous;
+
+                Excel.Range profitHeader =
+                    sheet.Cells[chartStartRow, 2];
+
+                profitHeader.Value = "Прибыль";
+                profitHeader.Font.Bold = true;
+                profitHeader.HorizontalAlignment =
+                    Excel.XlHAlign.xlHAlignCenter;
+
+                profitHeader.Interior.Color =
+                    Color.FromArgb(221, 235, 247);
+
+                profitHeader.Borders.LineStyle =
+                    Excel.XlLineStyle.xlContinuous;
+
+                // Данные таблицы
+                int currentRow = chartStartRow + 1;
+
+                foreach (var item in monthlyRevenue)
                 {
-                    object val = dt.Rows[r][lastColumn - 1]; // последний столбец
-                    if (val != DBNull.Value && double.TryParse(val.ToString(), out double number))
-                    {
-                        sum += number;
-                    }
+                    Excel.Range monthCell =
+                        sheet.Cells[currentRow, 1];
+
+                    monthCell.Value = item.Key;
+                    monthCell.Borders.LineStyle =
+                        Excel.XlLineStyle.xlContinuous;
+
+                    monthCell.HorizontalAlignment =
+                        Excel.XlHAlign.xlHAlignCenter;
+
+                    Excel.Range valueCell =
+                        sheet.Cells[currentRow, 2];
+
+                    valueCell.Value = item.Value;
+                    valueCell.NumberFormat = "#,##0 ₽";
+
+                    valueCell.Borders.LineStyle =
+                        Excel.XlLineStyle.xlContinuous;
+
+                    valueCell.HorizontalAlignment =
+                        Excel.XlHAlign.xlHAlignCenter;
+
+                    // Красивое чередование цветов
+                    Excel.Range rowRange =
+                        sheet.Range[sheet.Cells[currentRow, 1],
+                        sheet.Cells[currentRow, 2]];
+
+                    if ((currentRow % 2) == 0)
+                        rowRange.Interior.Color =
+                            Color.FromArgb(242, 242, 242);
+                    else
+                        rowRange.Interior.Color =
+                            Color.FromArgb(255, 255, 255);
+
+                    currentRow++;
                 }
 
-                // Добавляем новую строку "Итого"
-                Excel.Range totalRowLabel = sheet.Cells[lastDataRow + 1, lastColumn - 1];
-                totalRowLabel.Value = "Прибыль за квартал:";
-                totalRowLabel.Font.Bold = true;
-                totalRowLabel.Interior.Color = Color.FromArgb(226, 239, 218);
-                totalRowLabel.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-                totalRowLabel.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
-                totalRowLabel.WrapText = true;
+                // Итог таблицы
+                Excel.Range totalMonthLabel =
+                    sheet.Cells[currentRow, 1];
 
-                // Сумма в последнем столбце
-                Excel.Range totalRowValue = sheet.Cells[lastDataRow + 1, lastColumn];
-                totalRowValue.Value = sum;
-                totalRowValue.Font.Bold = true;
-                totalRowValue.Interior.Color = Color.FromArgb(226, 239, 218);
-                totalRowValue.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
-                totalRowValue.WrapText = true;
+                totalMonthLabel.Value = "ИТОГО";
+                totalMonthLabel.Font.Bold = true;
 
-                // Автоширина 
-                sheet.Columns.AutoFit();
-                for (int i = 1; i <= totalColumns; i++)
-                {
-                    Excel.Range col = sheet.Columns[i];                    
-                    col.ColumnWidth = 18;
-                }
-                // Делаем видимым
+                totalMonthLabel.Interior.Color =
+                    Color.FromArgb(198, 224, 180);
+
+                totalMonthLabel.Borders.LineStyle =
+                    Excel.XlLineStyle.xlContinuous;
+
+                totalMonthLabel.HorizontalAlignment =
+                    Excel.XlHAlign.xlHAlignCenter;
+
+                Excel.Range totalMonthValue =
+                    sheet.Cells[currentRow, 2];
+
+                totalMonthValue.Value = totalRevenue;
+                totalMonthValue.Font.Bold = true;
+                totalMonthValue.NumberFormat = "#,##0 ₽";
+
+                totalMonthValue.Interior.Color =
+                    Color.FromArgb(198, 224, 180);
+
+                totalMonthValue.Borders.LineStyle =
+                    Excel.XlLineStyle.xlContinuous;
+
+                totalMonthValue.HorizontalAlignment =
+                    Excel.XlHAlign.xlHAlignCenter;
+
+                // ===== КРУГОВАЯ ДИАГРАММА =====
+                Excel.ChartObjects charts =
+                    (Excel.ChartObjects)sheet.ChartObjects();
+
+                Excel.ChartObject chartObject =
+                    charts.Add(380, 120, 500, 320);
+
+                Excel.Chart chart = chartObject.Chart;
+
+                Excel.Range chartRange =
+                    sheet.Range[
+                        sheet.Cells[chartStartRow, 1],
+                        sheet.Cells[currentRow - 1, 2]
+                    ];
+
+                chart.SetSourceData(chartRange);
+
+                chart.ChartType = Excel.XlChartType.xlPie;
+
+                // Заголовок диаграммы
+                chart.HasTitle = true;
+
+                chart.ChartTitle.Text =
+                    "Процентное соотношение прибыли по месяцам";
+
+                // Легенда
+                chart.HasLegend = true;
+
+                chart.Legend.Position =
+                    Excel.XlLegendPosition.xlLegendPositionRight;
+
+                // Подписи процентов
+                Excel.Series series =
+                    (Excel.Series)chart.SeriesCollection(1);
+
+                series.HasDataLabels = true;
+
+                series.DataLabels().ShowPercentage = true;
+                series.DataLabels().ShowCategoryName = true;
+
+                // ===== ШИРИНА СТОЛБЦОВ =====
+                sheet.Columns[1].ColumnWidth = 22;
+                sheet.Columns[2].ColumnWidth = 24;
+                sheet.Columns[3].ColumnWidth = 24;
+
+                // ===== ВИДИМОСТЬ EXCEL =====
                 excelApp.Visible = true;
             }
             finally
             {
-                // Не закрываем и не сохраняем, оставляем для пользователя
                 Marshal.ReleaseComObject(sheet);
                 Marshal.ReleaseComObject(workbook);
                 Marshal.ReleaseComObject(excelApp);
             }
         }
+
+
         string GetSafe(DataRow r, string col)
         {
             return r[col] == DBNull.Value ? "" : r[col].ToString();
