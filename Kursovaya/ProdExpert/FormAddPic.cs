@@ -48,64 +48,74 @@ namespace Kursovaya.ProdExpert
         // отображаем в выпадающем списке все категори
         public void SetComboBox()
         {
-            categoryComboBox.Items.Clear();
-            categoryComboBox.Items.Add("Процессоры");
-            categoryComboBox.Items.Add("Видеокарты");
-            categoryComboBox.Items.Add("Материские платы");
-            categoryComboBox.Items.Add("Оперативная память");
-            categoryComboBox.Items.Add("Кулеры");
-            categoryComboBox.Items.Add("Корпусы");
-            categoryComboBox.Items.Add("Блоки питания");
-            categoryComboBox.Items.Add("Корпусные кулеры");
-            categoryComboBox.Items.Add("Накопители");
-            categoryComboBox.Items.Add("Термопаста"); 
-            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
-            string path = Path.Combine(pepeShopFolder, "tables.json");
-
-            if (File.Exists(path))
+            try
             {
+                categoryComboBox.Items.Clear();
+                categoryComboBox.Items.Add("Процессоры");
+                categoryComboBox.Items.Add("Видеокарты");
+                categoryComboBox.Items.Add("Материские платы");
+                categoryComboBox.Items.Add("Оперативная память");
+                categoryComboBox.Items.Add("Кулеры");
+                categoryComboBox.Items.Add("Корпусы");
+                categoryComboBox.Items.Add("Блоки питания");
+                categoryComboBox.Items.Add("Корпусные кулеры");
+                categoryComboBox.Items.Add("Накопители");
+                categoryComboBox.Items.Add("Термопаста");
+                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string pepeShopFolder = Path.Combine(appDataPath, "pepeShop");
+                string path = Path.Combine(pepeShopFolder, "tables.json");
 
-                string json = File.ReadAllText(path);
-                if (string.IsNullOrWhiteSpace(json)|| json.Length<3)
+                if (File.Exists(path))
                 {
 
-                }
-                else
-                {
-                    JObject root = JObject.Parse(json);
-
-                    JArray tables = (JArray)root["tables"];
-                    foreach (JObject table in tables)
+                    string json = File.ReadAllText(path);
+                    if (string.IsNullOrWhiteSpace(json) || json.Length < 3)
                     {
-                        categoryComboBox.Items.Add(table["displayName"].ToString());                        
-                    }
-                }
 
+                    }
+                    else
+                    {
+                        JObject root = JObject.Parse(json);
+
+                        JArray tables = (JArray)root["tables"];
+                        foreach (JObject table in tables)
+                        {
+                            categoryComboBox.Items.Add(table["displayName"].ToString());
+                        }
+                    }
+
+                }
             }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         // обработчик ввода в строку поиска
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
-            dataGridView1.Columns.Clear();
-            pageOffset = 0;
-            dgvPage = 1;
-            actualPageLabel.Text = dgvPage.ToString();
-            fillDGV();
+            try
+            {
+                dataGridView1.Columns.Clear();
+                pageOffset = 0;
+                dgvPage = 1;
+                actualPageLabel.Text = dgvPage.ToString();
+                fillDGV();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         // обработчик выбора элемента в выпадающем списке
         private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            searchTextBox.Enabled = true;
-            dataGridView1.Columns.Clear();
-            searchTextBox.Text = "";
-            pageOffset = 0;
-            dgvPage = 1;
-            actualPageLabel.Text = dgvPage.ToString();
-            fillDGV();
-            
-
+            try
+            {
+                searchTextBox.Enabled = true;
+                dataGridView1.Columns.Clear();
+                searchTextBox.Text = "";
+                pageOffset = 0;
+                dgvPage = 1;
+                actualPageLabel.Text = dgvPage.ToString();
+                fillDGV();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         // функция отображения данных
         private void fillDGV()
@@ -176,7 +186,7 @@ namespace Kursovaya.ProdExpert
                         }
                         break;
                 }
-                string query = "SELECT id, ";
+                string query = "SELECT id, image, ";
                 if (theme == "processors") { query += "concat(processors.produser, space(1), processors.model) as Процессоры "; }
                 else if (theme == "motherboards") { query += "concat(motherboards.produser, space(1), motherboards.model) as 'Материнские платы' "; }
                 else if (theme == "videocards") { query += "concat(videocards.produser, space(1), videocards.vender, space(1), videocards.model) as Видеокарты "; }
@@ -198,14 +208,14 @@ namespace Kursovaya.ProdExpert
                 query += $"LIMIT 10 OFFSET {pageOffset};"; // ограничиваем количество записей на одной странице 
 
                 try
-                {
+                {                    
                     using (MySqlConnection conn = new MySqlConnection(connStr)) // выполняем запрос
                     {
                         conn.Open();
                         MySqlCommand cmd = new MySqlCommand(query, conn);
                         MySqlDataReader reader = cmd.ExecuteReader();
                         System.Data.DataTable dt = new System.Data.DataTable();
-                        dt.Load(reader);
+                        dt.Load(reader);                        
                         dataGridView1.DataSource = dt; // отображаем полученные данные на DGV 
                         conn.Close();
                     }
@@ -234,35 +244,8 @@ namespace Kursovaya.ProdExpert
                         dataGridView1.AutoGenerateColumns = true;
                         dataGridView1.Columns.Add(buttonColumn);
                     }
-                    //if (!dataGridView1.Columns.Contains("imageColumn"))
-                    //{
-                    //    DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
-                    //    imageColumn.Name = "imageColumn";
-                    //    imageColumn.HeaderText = "Изображение";
-                    //    imageColumn.ImageLayout = DataGridViewImageCellLayout.Zoom;
-
-                    //    dataGridView1.Columns.Add(imageColumn);
-                    //    dataGridView1.RowTemplate.Height = 80;
-                    //    dataGridView1.Columns["imageColumn"].Width = 80;
-                    //}
-                    //foreach (DataGridViewRow row in dataGridView1.Rows) { 
-                    //    if (!string.IsNullOrWhiteSpace(row.Cells["image"].Value?.ToString())) 
-                    //    { string path = row.Cells["image"].Value.ToString();
-                    //        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop"); 
-                    //        string imagePath = Path.Combine(imgFolder, path);
-                    //        using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
-                    //        {
-                    //            row.Cells["imageColumn"].Value = System.Drawing.Image.FromStream(fs);
-                    //        }
-                    //    } 
-                    //    else 
-                    //    {
-                    //        string imgFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pepeShop/img"); 
-                    //        string imagePath = Path.Combine(imgFolder, "no-image.png");
-                    //        row.Cells["imageColumn"].Value = System.Drawing.Image.FromFile(imagePath); 
-                    //    } 
-                    //}
                     dataGridView1.Columns["id"].Visible = false; // скрываем столбец айди
+                    dataGridView1.Columns["image1"].Visible = false;
                     dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells; // устанавиваем для столбца ширину
                     dataGridView1.Columns[1].DisplayIndex = 0; // указываем каким по счету будет столбец
                     dataGridView1.Columns["image"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; //устанавиваем для столбца ширину

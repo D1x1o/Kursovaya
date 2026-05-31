@@ -40,6 +40,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.categoryComboBox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,7 +99,7 @@
             this.ForwardPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ForwardPageButton.ForeColor = System.Drawing.Color.Black;
             this.ForwardPageButton.Location = new System.Drawing.Point(640, 397);
-            this.ForwardPageButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ForwardPageButton.Margin = new System.Windows.Forms.Padding(2);
             this.ForwardPageButton.Name = "ForwardPageButton";
             this.ForwardPageButton.Size = new System.Drawing.Size(52, 33);
             this.ForwardPageButton.TabIndex = 11;
@@ -113,7 +114,7 @@
             this.BackPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackPageButton.ForeColor = System.Drawing.Color.Black;
             this.BackPageButton.Location = new System.Drawing.Point(583, 397);
-            this.BackPageButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BackPageButton.Margin = new System.Windows.Forms.Padding(2);
             this.BackPageButton.Name = "BackPageButton";
             this.BackPageButton.Size = new System.Drawing.Size(52, 33);
             this.BackPageButton.TabIndex = 12;
@@ -127,7 +128,7 @@
             this.searchTextBox.Enabled = false;
             this.searchTextBox.ForeColor = System.Drawing.Color.White;
             this.searchTextBox.Location = new System.Drawing.Point(151, 7);
-            this.searchTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.searchTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.searchTextBox.MaxLength = 50;
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(224, 26);
@@ -146,7 +147,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dataGridView1.Location = new System.Drawing.Point(10, 38);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(682, 355);
             this.dataGridView1.TabIndex = 9;
@@ -191,6 +192,19 @@
             this.categoryComboBox.TabIndex = 6;
             this.categoryComboBox.SelectedIndexChanged += new System.EventHandler(this.categoryComboBox_SelectedIndexChanged);
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(11, 405);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(175, 20);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Товаров в категории: ";
+            this.label4.Visible = false;
+            // 
             // FormEditProd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -201,6 +215,7 @@
             this.Controls.Add(this.allPageLabel);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.actualPageLabel);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ForwardPageButton);
             this.Controls.Add(this.BackPageButton);
@@ -210,7 +225,7 @@
             this.Controls.Add(this.categoryComboBox);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
             this.Name = "FormEditProd";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -234,5 +249,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox categoryComboBox;
+        private System.Windows.Forms.Label label4;
     }
 }

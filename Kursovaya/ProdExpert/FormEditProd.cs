@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -207,7 +208,13 @@ namespace Kursovaya.ProdExpert
                         query2 = $"SELECT count(*) FROM {theme} WHERE concat(produser, space(1), model) LIKE '%{searchTextBox.Text}%'";
                     }
                     MySqlCommand cmd = new MySqlCommand(query2, conn);
+                    label4.Visible = true;
+                    label4.Text = $"Товаров в категории: {Convert.ToInt32(cmd.ExecuteScalar())}";
                     allPage = Convert.ToInt32(Math.Ceiling((double)Convert.ToInt32(cmd.ExecuteScalar()) / 10));
+                    string query3 = $"SELECT count(*) FROM {theme}";
+                    MySqlCommand cmd2 = new MySqlCommand(query3, conn); label4.Visible = true;
+                    label4.Text = $"Товаров в категории: {Convert.ToInt32(cmd2.ExecuteScalar())}";
+
                 }
                 if (!dataGridView1.Columns.Contains("ActionColumn"))
                 {
