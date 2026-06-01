@@ -108,6 +108,11 @@ namespace Kursovaya.Administrator
                     using (var writer = new StreamWriter(fullPath))
                     {
                         writer.WriteLine($"-- MySQL Backup: {databaseName} - {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                        writer.WriteLine($"DROP DATABASE IF EXISTS `{databaseName}`;");
+                        writer.WriteLine($"CREATE DATABASE `{databaseName}`;");
+                        writer.WriteLine($"USE `{databaseName}`;");
+                        writer.WriteLine();
+
                         writer.WriteLine("/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\n");
 
                         var tables = new List<string>();
@@ -169,9 +174,29 @@ namespace Kursovaya.Administrator
                                         {
                                             var val = reader.GetValue(i);
 
-                                            if (val is string || val is DateTime || val is TimeSpan)
+                                            if (val is DateTime dt)
                                             {
-                                                writer.Write($"'{val.ToString().Replace("'", "''")}'");
+                                                writer.Write($"'{dt:yyyy-MM-dd HH:mm:ss}'");
+                                            }
+                                            else if (val is float f)
+                                            {
+                                                writer.Write(f.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                                            }
+                                            else if (val is double d)
+                                            {
+                                                writer.Write(d.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                                            }
+                                            else if (val is decimal m)
+                                            {
+                                                writer.Write(m.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                                            }
+                                            else if (val is TimeSpan ts)
+                                            {
+                                                writer.Write($"'{ts}'");
+                                            }
+                                            else if (val is string s)
+                                            {
+                                                writer.Write($"'{s.Replace("'", "''")}'");
                                             }
                                             else if (val is bool)
                                             {
