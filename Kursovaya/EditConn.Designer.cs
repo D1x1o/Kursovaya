@@ -43,6 +43,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(13, 9);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -53,6 +54,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(25, 75);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
@@ -63,7 +65,7 @@
             // serverAddres
             // 
             this.serverAddres.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.serverAddres.ForeColor = System.Drawing.Color.White;
+            this.serverAddres.ForeColor = System.Drawing.Color.Black;
             this.serverAddres.Location = new System.Drawing.Point(29, 102);
             this.serverAddres.MaxLength = 21;
             this.serverAddres.Name = "serverAddres";
@@ -73,6 +75,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(25, 136);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
@@ -83,7 +86,7 @@
             // serverUser
             // 
             this.serverUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.serverUser.ForeColor = System.Drawing.Color.White;
+            this.serverUser.ForeColor = System.Drawing.Color.Black;
             this.serverUser.Location = new System.Drawing.Point(29, 163);
             this.serverUser.MaxLength = 100;
             this.serverUser.Name = "serverUser";
@@ -93,6 +96,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(25, 199);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
@@ -103,7 +107,7 @@
             // serverPassword
             // 
             this.serverPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.serverPassword.ForeColor = System.Drawing.Color.White;
+            this.serverPassword.ForeColor = System.Drawing.Color.Black;
             this.serverPassword.Location = new System.Drawing.Point(29, 226);
             this.serverPassword.MaxLength = 100;
             this.serverPassword.Name = "serverPassword";
@@ -116,6 +120,7 @@
             this.saveConnData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.saveConnData.Enabled = false;
             this.saveConnData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.saveConnData.ForeColor = System.Drawing.Color.Black;
             this.saveConnData.Location = new System.Drawing.Point(29, 337);
             this.saveConnData.Name = "saveConnData";
             this.saveConnData.Size = new System.Drawing.Size(196, 40);
@@ -128,6 +133,7 @@
             // 
             this.checkConnectionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
             this.checkConnectionButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkConnectionButton.ForeColor = System.Drawing.Color.Black;
             this.checkConnectionButton.Location = new System.Drawing.Point(29, 261);
             this.checkConnectionButton.Name = "checkConnectionButton";
             this.checkConnectionButton.Size = new System.Drawing.Size(196, 70);
@@ -140,7 +146,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(91)))), ((int)(((byte)(104)))));
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(258, 389);
             this.Controls.Add(this.checkConnectionButton);
             this.Controls.Add(this.saveConnData);

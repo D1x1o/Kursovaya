@@ -356,7 +356,7 @@ namespace Kursovaya.ProdExpert
 
                         string destPath = Path.Combine(imgFolder, uniqueName); // получаем путь куда нужно поместить новое изображение (в нашу папку в AppData)
 
-                        CompressImageToTargetSize(filePath, destPath, 5 * 1024 * 1024); // копируем выбранное пользователем изображение в нашу папку в AppData
+                        CompressImageToTargetSize(filePath, destPath, 1 * 1024 * 1024); // копируем выбранное пользователем изображение в нашу папку в AppData
 
                         using (MySqlConnection conn = new MySqlConnection(connStr))
                         {
