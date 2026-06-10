@@ -61,12 +61,12 @@ namespace Kursovaya.User
             // 
             this.deliveryCB.AutoSize = true;
             this.deliveryCB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.deliveryCB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deliveryCB.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.deliveryCB.ForeColor = System.Drawing.Color.White;
             this.deliveryCB.Location = new System.Drawing.Point(17, 510);
             this.deliveryCB.Margin = new System.Windows.Forms.Padding(6);
             this.deliveryCB.Name = "deliveryCB";
-            this.deliveryCB.Size = new System.Drawing.Size(111, 28);
+            this.deliveryCB.Size = new System.Drawing.Size(120, 29);
             this.deliveryCB.TabIndex = 1;
             this.deliveryCB.Text = "Доставка";
             this.deliveryCB.UseVisualStyleBackColor = false;
@@ -76,12 +76,12 @@ namespace Kursovaya.User
             // 
             this.buildCheckBox.AutoSize = true;
             this.buildCheckBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.buildCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buildCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.buildCheckBox.ForeColor = System.Drawing.Color.White;
             this.buildCheckBox.Location = new System.Drawing.Point(17, 470);
             this.buildCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.buildCheckBox.Name = "buildCheckBox";
-            this.buildCheckBox.Size = new System.Drawing.Size(96, 28);
+            this.buildCheckBox.Size = new System.Drawing.Size(105, 29);
             this.buildCheckBox.TabIndex = 2;
             this.buildCheckBox.Text = "Сборка ";
             this.buildCheckBox.UseVisualStyleBackColor = false;
@@ -100,11 +100,11 @@ namespace Kursovaya.User
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(14, 602);
+            this.label2.Location = new System.Drawing.Point(14, 598);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(133, 20);
+            this.label2.Size = new System.Drawing.Size(156, 24);
             this.label2.TabIndex = 3;
             this.label2.Text = "Адрес доставки";
             this.label2.Visible = false;
@@ -208,7 +208,7 @@ namespace Kursovaya.User
             // 
             this.deliveryPrice.AutoSize = true;
             this.deliveryPrice.ForeColor = System.Drawing.Color.Black;
-            this.deliveryPrice.Location = new System.Drawing.Point(290, 512);
+            this.deliveryPrice.Location = new System.Drawing.Point(308, 510);
             this.deliveryPrice.Name = "deliveryPrice";
             this.deliveryPrice.Size = new System.Drawing.Size(71, 24);
             this.deliveryPrice.TabIndex = 3;
@@ -218,11 +218,11 @@ namespace Kursovaya.User
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(116, 470);
+            this.label6.Location = new System.Drawing.Point(103, 472);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(145, 16);
+            this.label6.Size = new System.Drawing.Size(199, 24);
             this.label6.TabIndex = 3;
             this.label6.Text = "(Скидка на доставку)";
             // 
@@ -230,7 +230,7 @@ namespace Kursovaya.User
             // 
             this.buildPrice.AutoSize = true;
             this.buildPrice.ForeColor = System.Drawing.Color.Black;
-            this.buildPrice.Location = new System.Drawing.Point(290, 472);
+            this.buildPrice.Location = new System.Drawing.Point(308, 472);
             this.buildPrice.Name = "buildPrice";
             this.buildPrice.Size = new System.Drawing.Size(71, 24);
             this.buildPrice.TabIndex = 3;
@@ -239,11 +239,11 @@ namespace Kursovaya.User
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(598, 446);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(124, 20);
+            this.label5.Size = new System.Drawing.Size(143, 24);
             this.label5.TabIndex = 3;
             this.label5.Text = "Дата доставки";
             this.label5.Visible = false;
@@ -275,11 +275,11 @@ namespace Kursovaya.User
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(14, 547);
+            this.label7.Location = new System.Drawing.Point(14, 543);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(142, 20);
+            this.label7.Size = new System.Drawing.Size(162, 24);
             this.label7.TabIndex = 3;
             this.label7.Text = "Номер телефона";
             // 
@@ -328,12 +328,12 @@ namespace Kursovaya.User
             // 
             this.checkbox.AutoSize = true;
             this.checkbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(150)))), ((int)(((byte)(125)))));
-            this.checkbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkbox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.checkbox.ForeColor = System.Drawing.Color.White;
-            this.checkbox.Location = new System.Drawing.Point(1014, 588);
+            this.checkbox.Location = new System.Drawing.Point(1005, 572);
             this.checkbox.Margin = new System.Windows.Forms.Padding(6);
             this.checkbox.Name = "checkbox";
-            this.checkbox.Size = new System.Drawing.Size(57, 28);
+            this.checkbox.Size = new System.Drawing.Size(66, 29);
             this.checkbox.TabIndex = 1;
             this.checkbox.Text = "Чек";
             this.checkbox.UseVisualStyleBackColor = false;
@@ -342,11 +342,11 @@ namespace Kursovaya.User
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(881, 602);
+            this.label8.Location = new System.Drawing.Point(945, 598);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(110, 20);
+            this.label8.Size = new System.Drawing.Size(126, 24);
             this.label8.TabIndex = 3;
             this.label8.Text = "Формат чека";
             this.label8.Visible = false;

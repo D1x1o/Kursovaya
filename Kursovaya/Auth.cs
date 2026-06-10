@@ -363,5 +363,10 @@ namespace Kursovaya
         {
             pwdTextBox.UseSystemPasswordChar = !pwdTextBox.UseSystemPasswordChar;
         }
+
+        private void Auth_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
