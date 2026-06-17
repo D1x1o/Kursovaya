@@ -964,24 +964,28 @@ ORDER BY o.idorder";
             }
             if (dataGridView1.Columns[e.ColumnIndex].Name == "Дата выполнения")
             {
-                if (e.Value != null && DateTime.TryParse(e.Value.ToString(), out DateTime completeDate))
+                if (dataGridView1.Rows[e.RowIndex].Cells["Статус"].Value.ToString() != "Выполен")
                 {
-                    DateTime today = DateTime.Today;
-                    TimeSpan diff = completeDate.Date - today;
+                    if (e.Value != null && DateTime.TryParse(e.Value.ToString(), out DateTime completeDate))
+                    {
+                        DateTime today = DateTime.Today;
+                        TimeSpan diff = completeDate.Date - today;
 
-                    // Дата уже прошла — мягко красный
-                    if (completeDate.Date < today)
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor =
-                            Color.FromArgb(255, 220, 220);
-                    }
-                    // Меньше 7 дней — мягко жёлтый
-                    else if (diff.TotalDays <= 7)
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor =
-                            Color.FromArgb(255, 245, 200);
+                        // Дата уже прошла — мягко красный
+                        if (completeDate.Date < today)
+                        {
+                            dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor =
+                                Color.FromArgb(255, 220, 220);
+                        }
+                        // Меньше 7 дней — мягко жёлтый
+                        else if (diff.TotalDays <= 7)
+                        {
+                            dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor =
+                                Color.FromArgb(255, 245, 200);
+                        }
                     }
                 }
+                
             }            
         }
 
