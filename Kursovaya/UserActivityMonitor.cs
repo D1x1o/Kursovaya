@@ -22,9 +22,10 @@ namespace Kursovaya
             if((DateTime.Now - LastActivity).TotalSeconds > TimeoutSeconds)
             {
                 timer.Stop();
-                new Auth().ShowDialog();
+                
                 MessageBox.Show("Сессия истекла из за неактивности", "Сессия", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                foreach(Form f in Application.OpenForms)
+                new Auth().ShowDialog();
+                foreach (Form f in Application.OpenForms)
                 {
                     if (!(f is Auth)) f.Hide();
                 }

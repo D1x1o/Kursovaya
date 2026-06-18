@@ -147,6 +147,10 @@ namespace Kursovaya.Administrator
                     MessageBox.Show("Пользователь с таким логином существует!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                if (userPatronymicTextBox.Text == "Необязательное поле")
+                {
+                    userPatronymicTextBox.Text = "";
+                }
                 string query = $"INSERT INTO staff (name, surname, patronymic, role, login, password, activity) VALUES ('{userNameTextBox.Text}', '{userSurnameTextBox.Text}', '{userPatronymicTextBox.Text}', {userRoleComboBox.SelectedValue}, '{userLoginTextBox.Text.Trim()}', '{GetHashPwd(userPasswordTextBox.Text)}', 0);";
                 using (MySqlConnection conn = new MySqlConnection(connStr))
                 {
